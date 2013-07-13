@@ -30,7 +30,6 @@ THEEND
 IO.popen("find \"#{SEARCH_DIRECTORY}\" -name \"*.o\" -exec nm -o {} \\;") { |f| 
 	 f.each do |line|  
 
-
       # Gathering only OBC_CLASSES
       match = /_OBJC_CLASS_\$_/.match line
 
@@ -57,3 +56,4 @@ puts <<-THEEND
     }
   ;  
 THEEND
+

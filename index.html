@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+text {
+  stroke: #000;
+  font: 10px sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+</style>
+<body>
+<script src="d3.v3.min.js"></script>
+<script src="origin.js"></script>
+<script>
+
+//  ===================================================
+//  =============== REGEXP-BASED COLORING =============
+//  ===================================================
+
+// Each item thet matches specified regexps will be placed to correspondent group with unique color
+//
+var groupsMatchers = [
+  "^NI",  // Nimbus
+  "^UI",  // UIKit
+  "^NS",  // Foundation
+  "^YL",  // Some progress bar
+  "^CA",  // Core animations
+  "^GS",  // My project
+  "^GSProgress",  // Some Progress bar
+
+
+];
+
+
+//  ===================================================
+//  =============== CONFIGURABLE PARAMS  ==============
+//  ===================================================
+
+var width = 1024,
+    height = 800;
+
+// Think about it like it's neytrons - more charge, more dinstance
+var default_charge_value = -100; 
+
+var default_link_distance = 20;   
+
+// How far can we change default_link_distance?
+// 0   - I don't care
+// 0.5 - Change it as you want, but it's preferrable to have default_link_distance 
+// 1   - One does not change default_link_distance
+var default_link_strength = 0.5;
+
+// Should I comment this?
+var deafult_circle_radius = 10;
+
+// you can set it to true, but this will not help to understanf what's going on
+var show_texts_near_circles = false;
+var default_max_texts_length = 10;
+
+
+//  ===================================================
+//  =============== CONFIGURABLE PARAMS ENDS ==========
+//  ===================================================
+
+
+
+//  ===================================================
+//  =============== PARSING ===========================
+//  ===================================================
+var correctGraph = {};
+var correctNodes = [];
+var correctLinks = [];
+var nodesSet = {};
+
+for (var i = 0; i < dependencies.links.length; i++) {
+  var object = dependencies.links[i];
+  nodesSet[object.source] = "1";
+  nodesSet[object.dest] = "1";
+};
+
+var idx = 0;
+for (var p in nodesSet) {
+  var groupId = 0;
+
+  for (var i = 0; i < groupsMatchers.length; i++) {
+    var re = new RegExp(groupsMatchers[i],"");
+    if (p.match(re)) {
+      groupId = i + 1;
+    }
+  };
+
+  correctNodes.push({
+    "name" : p,
+    "group" : groupId,
+    "weight" : (idx + 1) * 1000
+  });
+  nodesSet[p] = idx;
+  console.log("Adding " + p + " as " + idx);
+  idx++;
+}
+
+for (var i = 0; i < dependencies.links.length; i++) {
+  var link = dependencies.links[i];
+  var sourceIdx = nodesSet[link.source];
+  var destIdx = nodesSet[link.dest];
+  correctLinks.push({
+    "source" : sourceIdx,
+    "target" : destIdx,
+    "value" : 1
+  });
+}
+
+
+correctGraph["nodes"] = correctNodes;
+correctGraph["links"] = correctLinks;
+
+
+//  ===================================================
+//  =============== PARSING ENDS  =====================
+//  ===================================================
+
+
+
+//  ===================================================
+//  =============== http://d3js.org/ Magic ===========
+//  ===================================================
+
+
+var graph = correctGraph;
+
+// https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
+var color = d3.scale.category10();
+
+var force = d3.layout.force()
+    .charge(default_charge_value)
+    .linkDistance(default_link_distance)
+    .size([width, height]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .linkStrength(default_link_strength)
+      .start();
+
+  var link = svg.selectAll(".link")
+      .data(graph.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+ var node = svg.selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("g")
+      .attr("class", "node");
+
+  node.append("circle")
+      .attr("r", deafult_circle_radius)
+      .attr("class", "node2")
+      .style("fill", function(d) { return color(d.group) }).call(force.drag);
+
+
+  // Uncomment to have names near the classes
+
+  if (show_texts_near_circles) {
+     node.append("text")
+         .attr("dy", ".9em")
+         .style("text-anchor", "middle")
+         .text(function(d) { return d.name.substring(0,default_max_texts_length) });
+  }
+ 
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  });
+
+</script>

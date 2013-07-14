@@ -4,16 +4,13 @@ Objective-C Dependency Visualizer
 This is the tool, that is used generated .obj (.o) files from your Objective-C files, to generate dependency graph.  
 All visualisations was done by [d3js](http://d3js.org/) library, which is just awesome!  
 
-# Requirements
+## Requirements
 Any Xcode project will be enough 
 
-# Results
+## Results
 Something like this (http://image) or this (http://image) or, may be this
 
-# What should I do?  
-
-### Step 0 - Sources  
-Clone or download files from this repository  
+## What should I do?  
 
 ### Step 1 - Open index.html  
 You should see cute dependency graph of some of my projects  

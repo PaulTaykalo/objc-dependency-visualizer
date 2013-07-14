@@ -13,13 +13,17 @@ Something like this (http://image) or this (http://image) or, may be this
 ## What should I do?  
 
 ### Step 1 - Open index.html  
-You should see cute dependency graph of some of my projects  
+You should see cute dependency graph of some Pod target of my project  
 If you want to have it for your project, proceed to next Step
 
 ### Step 2 - Build your Xcode project  
 ### Step 3 - Run ./generate-objc-dependencies-to-json.rb script  
 `./generate-objc-dependencies-to-json.rb <path_to_folder_with_object_files>`  
 `./generate-objc-dependencies-to-json.rb ~/Library/Developer/Xcode/DerivedData/YOURPROJECTNAME-efsbjtrozyranpekmckkebzycitp/Build/Intermediates/YOURPROJECTNAME.build/Debug-iphonesimulator/YOURPROJECTNAME.build/Objects-normal/i386`  
+
+~/Library/Developer/Xcode/ _DerivedData_ /  
+ YOURPROJECTNAME-efsbjtrozyranpekmckkebzycitp/Build/ _Intermediates_ /   
+   YOURPROJECTNAME.build/Debug-iphonesimulator/YOURPROJECTNAME.build/ _Objects-normal_ /i386  
 
 If you make it right, you'll see something like that  
 ```
@@ -44,6 +48,6 @@ Now you should see dependency graph of your project
 
 ### Step 6 - Tuning  
 You can play with some parameters in index.html  
-You can change graph generation in ruby script
+You can change graph generation in ruby script  
 You can go to [d3js site](http://d3js.org/) and see what else you can do with this library  
 You can share your images to twitter with #objc-dv hashtag

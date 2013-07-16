@@ -15,8 +15,10 @@ If you want to have it for your project, proceed to next Step
 
 ### Step 2 - Build your Xcode project  
 ### Step 3 - Run ./generate-objc-dependencies-to-json.rb script  
-`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX>`
-`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX> -t <TARGET_PREFIX>`
+`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX>`  
+OR  
+`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX> -t <TARGET_PREFIX>`  
+OR  
 `./generate-objc-dependencies-to-json.rb -p <PATH_TO_FOLDER_WITH_OBJECT_FILES>`
 
 If you make it right, you'll see something like that  

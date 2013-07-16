@@ -37,7 +37,7 @@ var dependencies = {
 ```
 
 ### Step 4 - Grab output from Step #3 and save it to origin.js  
-`./generate-objc-dependencies-to-json.rb <path_to_folder_with_object_files>  > origin.js`  
+`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX>  > origin.js`  
 
 ### Step 5 - Open/Refresh index.html
 Now you should see dependency graph of your project  

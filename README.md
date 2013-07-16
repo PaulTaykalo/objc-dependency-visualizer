@@ -15,12 +15,9 @@ If you want to have it for your project, proceed to next Step
 
 ### Step 2 - Build your Xcode project  
 ### Step 3 - Run ./generate-objc-dependencies-to-json.rb script  
-`./generate-objc-dependencies-to-json.rb <path_to_folder_with_object_files>`  
-`./generate-objc-dependencies-to-json.rb ~/Library/Developer/Xcode/DerivedData/YOURPROJECTNAME-efsbjtrozyranpekmckkebzycitp/Build/Intermediates/YOURPROJECTNAME.build/Debug-iphonesimulator/YOURPROJECTNAME.build/Objects-normal/i386`  
-
-~/Library/Developer/Xcode/ _DerivedData_ /  
- YOURPROJECTNAME-efsbjtrozyranpekmckkebzycitp/Build/ _Intermediates_ /   
-   YOURPROJECTNAME.build/Debug-iphonesimulator/YOURPROJECTNAME.build/ _Objects-normal_ /i386  
+`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX>`
+`./generate-objc-dependencies-to-json.rb -s <PROJECT_PREFIX> -t <TARGET_PREFIX>`
+`./generate-objc-dependencies-to-json.rb -p <PATH_TO_FOLDER_WITH_OBJECT_FILES>`
 
 If you make it right, you'll see something like that  
 ```

@@ -27,25 +27,6 @@ text {
 <script>
 
 //  ===================================================
-//  =============== REGEXP-BASED COLORING =============
-//  ===================================================
-
-// Each item thet matches specified regexps will be placed to correspondent group with unique color
-//
-var groupsMatchers = [
-  "^NI",  // Nimbus
-  "^UI",  // UIKit
-  "^NS",  // Foundation
-  "^YL",  // Some progress bar
-  "^CA",  // Core animations
-  "^GS",  // My project
-  "^GSProgress",  // Some Progress bar
-
-
-];
-
-
-//  ===================================================
 //  =============== CONFIGURABLE PARAMS  ==============
 //  ===================================================
 
@@ -70,6 +51,17 @@ var deafult_circle_radius = 10;
 var show_texts_near_circles = false;
 var default_max_texts_length = 100;
 
+// Should we use regexp-based  grouping or not
+var use_regexp_color_grouping_matchers = false;
+
+// Each item thet matches specified regexps will be placed to correspondent group with unique color
+var regexp_color_matchers = [
+  "^NI",  // Nimbus
+  "^UI",  // UIKit
+  "^NS",  // Foundation
+  "^CA",  // Core animations
+];
+
 
 //  ===================================================
 //  =============== CONFIGURABLE PARAMS ENDS ==========
@@ -84,31 +76,76 @@ var correctGraph = {};
 var correctNodes = [];
 var correctLinks = [];
 var nodesSet = {};
+var prefixes = {};
 
 for (var i = 0; i < dependencies.links.length; i++) {
   var object = dependencies.links[i];
   nodesSet[object.source] = "1";
   nodesSet[object.dest] = "1";
+
+  // Grouping by prefixes
+  var sourcePrefix = object.source.substring(0,2);
+  var destPrefix = object.dest.substring(0,2);
+
+
+  if (!(sourcePrefix in prefixes)) {
+    prefixes[sourcePrefix] = 1
+  } else {
+    prefixes[sourcePrefix]++;
+  }
+
+  if (!(destPrefix in prefixes)) {
+    prefixes[destPrefix] = 1
+  } else {
+    prefixes[destPrefix]++;
+  }
+
 };
+
+// Sort prefixes
+var prefixes_groups = {};
+var prefixes_arr = [];
+for (var key in prefixes) {
+    prefixes_arr.push( {key : key, value:prefixes[key] });
+}
+
+var sorted_prefixes = prefixes_arr.slice(0).sort(function(a, b) {
+   return b.value - a.value;
+});
+
 
 var idx = 0;
 for (var p in nodesSet) {
   var groupId = 0;
 
-  for (var i = 0; i < groupsMatchers.length; i++) {
-    var re = new RegExp(groupsMatchers[i],"");
-    if (p.match(re)) {
-      groupId = i + 1;
-    }
-  };
 
+  if (use_regexp_color_grouping_matchers)  {
+    for (var i = 0; i < regexp_color_matchers.length; i++) {
+      var re = new RegExp(regexp_color_matchers[i],"");
+      if (p.match(re)) {
+        groupId = i + 1;
+      }
+    };
+  } else {
+     for (var i in sorted_prefixes) {
+     var str = sorted_prefixes[i].key;
+     console.log("Checking " + p + " for " + str)
+       if (p.slice(0, str.length) == str) {
+         groupId = i;
+         break;
+       }
+     }
+  }
+
+
+  // It's time to create node :)
   correctNodes.push({
     "name" : p,
     "group" : groupId,
     "weight" : (idx + 1) * 1000
   });
   nodesSet[p] = idx;
-  console.log("Adding " + p + " as " + idx);
+  console.log("Adding " + p + " as " + idx + " group #" + groupId);
   idx++;
 }
 

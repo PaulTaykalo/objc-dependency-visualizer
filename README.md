@@ -84,4 +84,4 @@ In order to remove some classes from resulting graph, you can specify additional
 You can go to [d3js site](http://d3js.org/) and see what else you can do with this library  
 
 ### Step 7 - Sharing  
-You can share your images to twitter with #objc-dv hashtag
+You can share your images to twitter with [#objc-dv](https://twitter.com/search/realtime?q=%23objc-dv) hashtag

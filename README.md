@@ -71,7 +71,7 @@ var default_link_strength = 0.5;
 // Should I comment this?
 var deafult_circle_radius = 10;
 
-// you can set it to true, but this will not help to understanf what's going on
+// you can set it to true, but this will not help to understand what's going on
 var show_texts_near_circles = false;
 var default_max_texts_length = 100;
 ```
@@ -83,4 +83,4 @@ In order to remove some classes from resulting graph, you can specify additional
 You can go to [d3js site](http://d3js.org/) and see what else you can do with this library  
 
 ### Step 7 - Sharing  
-You can share your images to twitter with [#objcdv](https://twitter.com/search/realtime?q=%23objcdv) hashtag
+You can share your images to twitter with [#objc-dv](https://twitter.com/search/realtime?q=%23objc-dv) hashtag

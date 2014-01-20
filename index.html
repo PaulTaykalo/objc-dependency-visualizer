@@ -10,6 +10,9 @@
 .link {
   stroke: #999;
   stroke-opacity: .6;
+  fill: none;
+  /*stroke: #666;*/
+  stroke-width: 1.5px;
 }
 
 text {
@@ -17,12 +20,13 @@ text {
   font: 10px sans-serif;
   font-weight: normal;
   font-style: normal;
+  pointer-events: none;
 }
 
 
 </style>
 <body>
-<script src="Scripts/d3.v3.min.js"></script>
+<script src="Scripts/d3.v3.js"></script>
 <script src="origin.js"></script>
 <script>
 
@@ -30,11 +34,11 @@ text {
 //  =============== CONFIGURABLE PARAMS  ==============
 //  ===================================================
 
-var width = 1024,
+var width = 1900,
     height = 800;
 
 // Think about it like it's neytrons - more charge, more dinstance
-var default_charge_value = -100; 
+var default_charge_value = -600; 
 
 var default_link_distance = 20;   
 
@@ -42,10 +46,10 @@ var default_link_distance = 20;
 // 0   - I don't care
 // 0.5 - Change it as you want, but it's preferrable to have default_link_distance 
 // 1   - One does not change default_link_distance
-var default_link_strength = 0.5;
+var default_link_strength = 0.4;
 
 // Should I comment this?
-var deafult_circle_radius = 10;
+var deafult_circle_radius = 20;
 
 // you can set it to true, but this will not help to understanf what's going on
 var show_texts_near_circles = false;
@@ -80,8 +84,28 @@ var prefixes = {};
 
 for (var i = 0; i < dependencies.links.length; i++) {
   var object = dependencies.links[i];
-  nodesSet[object.source] = "1";
-  nodesSet[object.dest] = "1";
+
+  var source = nodesSet[object.source];
+  if (source == null) {
+     source = {
+        name : object.source, 
+        source : 1,
+        dest   : 0
+     }
+     nodesSet[object.source] = source;
+  }
+  source.source++;
+
+  var dest = nodesSet[object.dest];
+  if (dest == null) {
+     dest = {
+        name : object.dest, 
+        source : 0,
+        dest   : 1
+     }
+     nodesSet[object.dest] = dest;
+  }
+  dest.dest++;
 
   // Grouping by prefixes
   var sourcePrefix = object.source.substring(0,2);
@@ -129,7 +153,7 @@ for (var p in nodesSet) {
   } else {
      for (var i in sorted_prefixes) {
      var str = sorted_prefixes[i].key;
-     console.log("Checking " + p + " for " + str)
+     // console.log("Checking " + p + " for " + str)
        if (p.slice(0, str.length) == str) {
          groupId = i;
          break;
@@ -140,24 +164,31 @@ for (var p in nodesSet) {
 
   // It's time to create node :)
   correctNodes.push({
-    "name" : p,
-    "group" : groupId,
-    "weight" : (idx + 1) * 1000
+    idx : idx,
+    name : p,
+    group : groupId,
+    source : nodesSet[p].source,
+    dest : nodesSet[p].dest,
+    weight : nodesSet[p].source
   });
-  nodesSet[p] = idx;
-  console.log("Adding " + p + " as " + idx + " group #" + groupId);
+  console.log( " Pushing node : IDX="+idx+", name="+p+", groupId="+groupId+", source="+nodesSet[p].source+", dest="+nodesSet[p].dest+", weight="+nodesSet[p].source );
+  nodesSet[p].idx = idx;
   idx++;
 }
 
 for (var i = 0; i < dependencies.links.length; i++) {
   var link = dependencies.links[i];
-  var sourceIdx = nodesSet[link.source];
-  var destIdx = nodesSet[link.dest];
+  var sourceIdx = nodesSet[link.source].idx;
+  var destIdx = nodesSet[link.dest].idx;
   correctLinks.push({
-    "source" : sourceIdx,
-    "target" : destIdx,
-    "value" : 1
+    source : sourceIdx,
+    target : destIdx,
+    value : nodesSet[link.source].source,
+    sourceNode : nodesSet[link.source],
+    targetNode : nodesSet[link.dest]
   });
+    console.log( "Pushing link : source="+sourceIdx+", target="+destIdx);
+
 }
 
 
@@ -182,7 +213,7 @@ var graph = correctGraph;
 var color = d3.scale.category10();
 
 var force = d3.layout.force()
-    .charge(default_charge_value)
+    .charge(function(d) { return -d.weight * 200;})
     .linkDistance(default_link_distance)
     .size([width, height]);
 
@@ -191,44 +222,80 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 
   force
-      .nodes(graph.nodes)
+      .nodes(d3.values(graph.nodes))
       .links(graph.links)
       .linkStrength(default_link_strength)
       .start();
 
-  var link = svg.selectAll(".link")
-      .data(graph.links)
-    .enter().append("line")
-      .attr("class", "link")
-      .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+svg.append("defs").selectAll("marker")
+    .data(["suit"])
+  .enter().append("marker")
+    .attr("id", function(d) { return d; })
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 10)
+    .attr("refY", 0)
+    .attr("markerWidth", 10)
+    .attr("markerHeight", 10)
+    .attr("orient", "auto")
+  .append("path")
+    .attr("d", "M0,-5L10,0L0,5");
 
- var node = svg.selectAll(".node")
-      .data(graph.nodes)
-    .enter().append("g")
-      .attr("class", "node");
-
-  node.append("circle")
-      .attr("r", deafult_circle_radius)
-      .attr("class", "node2")
-      .style("fill", function(d) { return color(d.group) }).call(force.drag);
+var link = svg.append("g").selectAll("path")
+    .data(graph.links).
+    enter().append("path")
+    .attr("class", "link")
+    .attr("marker-end", "url(#suit)")
+    .style("stroke-width", function(d) { return Math.sqrt(1); })
 
 
-  // Uncomment to have names near the classes
+var node = svg.append("g").selectAll(".node")
+    .data(graph.nodes)
+    .enter().append("circle")
+    .attr("r", radius)
+    .style("fill", function(d) { return color(d.group) })
+    .call(force.drag);
 
+ //  // Uncomment to have names near the classes
+
+  var text = null;
   if (show_texts_near_circles) {
-     node.append("text")
-         .attr("dy", ".9em")
-         .style("text-anchor", "middle")
-         .text(function(d) { return d.name.substring(0,default_max_texts_length) });
+   text = svg.append("g").selectAll("text")
+    .data(force.nodes())
+     .enter().append("text")
+    .style("text-anchor", "middle")
+    .text(function(d) { return d.name.substring(0,default_max_texts_length) });
   }
  
   force.on("tick", function() {
-    link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
-
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    link.attr("d", linkArc);
+    node.attr("transform", transform );
+    if (text != null) {
+     text.attr("transform", transform);
+    }
   });
+
+  function linkArc(d) {
+  var dx = d.target.x - d.source.x,
+      dy = d.target.y - d.source.y,
+      dr = Math.sqrt(dx * dx + dy * dy);
+
+  var rsource = radius(d.sourceNode)/dr;
+  var rdest = radius(d.targetNode)/dr;
+  var startX = d.source.x + dx * rsource;      
+  var startY = d.source.y + dy * rsource;      
+
+  var endX = d.target.x - dx * rdest;      
+  var endY = d.target.y - dy * rdest;      
+
+  return "M" + startX+ "," + startY + "L" + endX+ "," + endY;
+}
+
+function transform(d) {
+  return "translate(" + d.x + "," + d.y + ")";
+}
+
+function radius(d) {
+  return deafult_circle_radius + d.source * deafult_circle_radius / 5;
+}
 
 </script>

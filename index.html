@@ -3,15 +3,14 @@
 <style>
 
 .node {
-  stroke: #fff;
-  stroke-width: 1.5px;
+  stroke: #000;
+  stroke-width: 0.5px;
 }
 
 .link {
   stroke: #999;
   stroke-opacity: .6;
   fill: none;
-  /*stroke: #666;*/
   stroke-width: 1.5px;
 }
 
@@ -23,6 +22,11 @@ text {
   pointer-events: none;
 }
 
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
 
 </style>
 <body>
@@ -37,19 +41,16 @@ text {
 var width = 1900,
     height = 800;
 
-// Think about it like it's neytrons - more charge, more dinstance
-var default_charge_value = -600; 
-
-var default_link_distance = 20;   
+var default_link_distance = 10;   
 
 // How far can we change default_link_distance?
 // 0   - I don't care
 // 0.5 - Change it as you want, but it's preferrable to have default_link_distance 
 // 1   - One does not change default_link_distance
-var default_link_strength = 0.4;
+var default_link_strength = 0.7;
 
 // Should I comment this?
-var deafult_circle_radius = 20;
+var deafult_circle_radius = 15;
 
 // you can set it to true, but this will not help to understanf what's going on
 var show_texts_near_circles = false;
@@ -58,6 +59,8 @@ var default_max_texts_length = 100;
 // Should we use regexp-based  grouping or not
 var use_regexp_color_grouping_matchers = false;
 
+var charge_multiplier = 100;
+
 // Each item thet matches specified regexps will be placed to correspondent group with unique color
 var regexp_color_matchers = [
   "^NI",  // Nimbus
@@ -65,156 +68,28 @@ var regexp_color_matchers = [
   "^NS",  // Foundation
   "^CA",  // Core animations
 ];
+</script>
+<script src="Scripts/parse.js"></script>
+<form>
+  <label><input type="range" name="circle_size" min="10" max="50" value="15"> Circle size</label><br>
+  <label><input type="range" name="charge_multiplier" min="10" max="500" value="100"> Charge multiplier</label><br>
+  <label><input type="range" name="link_strength" min="1" max="10" value="7"> Link strength</label><br>
+  <label><input type="checkbox" name="show_texts_near_circles" checked="false"> Show names</label><br>
 
-
-//  ===================================================
-//  =============== CONFIGURABLE PARAMS ENDS ==========
-//  ===================================================
-
-
-
-//  ===================================================
-//  =============== PARSING ===========================
-//  ===================================================
-var correctGraph = {};
-var correctNodes = [];
-var correctLinks = [];
-var nodesSet = {};
-var prefixes = {};
-
-for (var i = 0; i < dependencies.links.length; i++) {
-  var object = dependencies.links[i];
-
-  var source = nodesSet[object.source];
-  if (source == null) {
-     source = {
-        name : object.source, 
-        source : 1,
-        dest   : 0
-     }
-     nodesSet[object.source] = source;
-  }
-  source.source++;
-
-  var dest = nodesSet[object.dest];
-  if (dest == null) {
-     dest = {
-        name : object.dest, 
-        source : 0,
-        dest   : 1
-     }
-     nodesSet[object.dest] = dest;
-  }
-  dest.dest++;
-
-  // Grouping by prefixes
-  var sourcePrefix = object.source.substring(0,2);
-  var destPrefix = object.dest.substring(0,2);
-
-
-  if (!(sourcePrefix in prefixes)) {
-    prefixes[sourcePrefix] = 1
-  } else {
-    prefixes[sourcePrefix]++;
-  }
-
-  if (!(destPrefix in prefixes)) {
-    prefixes[destPrefix] = 1
-  } else {
-    prefixes[destPrefix]++;
-  }
-
-};
-
-// Sort prefixes
-var prefixes_groups = {};
-var prefixes_arr = [];
-for (var key in prefixes) {
-    prefixes_arr.push( {key : key, value:prefixes[key] });
-}
-
-var sorted_prefixes = prefixes_arr.slice(0).sort(function(a, b) {
-   return b.value - a.value;
-});
-
-
-var idx = 0;
-for (var p in nodesSet) {
-  var groupId = 0;
-
-
-  if (use_regexp_color_grouping_matchers)  {
-    for (var i = 0; i < regexp_color_matchers.length; i++) {
-      var re = new RegExp(regexp_color_matchers[i],"");
-      if (p.match(re)) {
-        groupId = i + 1;
-      }
-    };
-  } else {
-     for (var i in sorted_prefixes) {
-     var str = sorted_prefixes[i].key;
-     // console.log("Checking " + p + " for " + str)
-       if (p.slice(0, str.length) == str) {
-         groupId = i;
-         break;
-       }
-     }
-  }
-
-
-  // It's time to create node :)
-  correctNodes.push({
-    idx : idx,
-    name : p,
-    group : groupId,
-    source : nodesSet[p].source,
-    dest : nodesSet[p].dest,
-    weight : nodesSet[p].source
-  });
-  console.log( " Pushing node : IDX="+idx+", name="+p+", groupId="+groupId+", source="+nodesSet[p].source+", dest="+nodesSet[p].dest+", weight="+nodesSet[p].source );
-  nodesSet[p].idx = idx;
-  idx++;
-}
-
-for (var i = 0; i < dependencies.links.length; i++) {
-  var link = dependencies.links[i];
-  var sourceIdx = nodesSet[link.source].idx;
-  var destIdx = nodesSet[link.dest].idx;
-  correctLinks.push({
-    source : sourceIdx,
-    target : destIdx,
-    value : nodesSet[link.source].source,
-    sourceNode : nodesSet[link.source],
-    targetNode : nodesSet[link.dest]
-  });
-    console.log( "Pushing link : source="+sourceIdx+", target="+destIdx);
-
-}
-
-
-correctGraph["nodes"] = correctNodes;
-correctGraph["links"] = correctLinks;
-
-
-//  ===================================================
-//  =============== PARSING ENDS  =====================
-//  ===================================================
-
+</form>
+<script>
 
 
 //  ===================================================
 //  =============== http://d3js.org/ Magic ===========
 //  ===================================================
 
-
-var graph = correctGraph;
-
 // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
 var color = d3.scale.category10();
 
 var force = d3.layout.force()
-    .charge(function(d) { return -d.weight * 200;})
-    .linkDistance(default_link_distance)
+    .charge(function(d) { return -d.weight * charge_multiplier;})
+    .linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
     .size([width, height]);
 
 var svg = d3.select("body").append("svg")
@@ -222,8 +97,8 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 
   force
-      .nodes(d3.values(graph.nodes))
-      .links(graph.links)
+      .nodes(d3.values(dependecy_graph.nodes))
+      .links(dependecy_graph.links)
       .linkStrength(default_link_strength)
       .start();
 
@@ -241,7 +116,7 @@ svg.append("defs").selectAll("marker")
     .attr("d", "M0,-5L10,0L0,5");
 
 var link = svg.append("g").selectAll("path")
-    .data(graph.links).
+    .data(dependecy_graph.links).
     enter().append("path")
     .attr("class", "link")
     .attr("marker-end", "url(#suit)")
@@ -249,53 +124,84 @@ var link = svg.append("g").selectAll("path")
 
 
 var node = svg.append("g").selectAll(".node")
-    .data(graph.nodes)
+    .data(dependecy_graph.nodes)
     .enter().append("circle")
     .attr("r", radius)
     .style("fill", function(d) { return color(d.group) })
+    .attr("class", "node")
+    .attr("source", function(d) { return d.source})
+    .attr("dest", function(d) { return d.dest})
+
     .call(force.drag);
 
  //  // Uncomment to have names near the classes
 
   var text = null;
-  if (show_texts_near_circles) {
    text = svg.append("g").selectAll("text")
     .data(force.nodes())
      .enter().append("text")
     .style("text-anchor", "middle")
     .text(function(d) { return d.name.substring(0,default_max_texts_length) });
-  }
  
   force.on("tick", function() {
+    svg.selectAll(".node").attr("r", radius);
     link.attr("d", linkArc);
     node.attr("transform", transform );
-    if (text != null) {
+    if (show_texts_near_circles) {
      text.attr("transform", transform);
     }
   });
 
   function linkArc(d) {
-  var dx = d.target.x - d.source.x,
+    var dx = d.target.x - d.source.x,
       dy = d.target.y - d.source.y,
       dr = Math.sqrt(dx * dx + dy * dy);
 
-  var rsource = radius(d.sourceNode)/dr;
-  var rdest = radius(d.targetNode)/dr;
-  var startX = d.source.x + dx * rsource;      
-  var startY = d.source.y + dy * rsource;      
+    var rsource = radius(d.sourceNode)/dr;
+    var rdest = radius(d.targetNode)/dr;
+    var startX = d.source.x + dx * rsource;      
+    var startY = d.source.y + dy * rsource;      
 
-  var endX = d.target.x - dx * rdest;      
-  var endY = d.target.y - dy * rdest;      
+    var endX = d.target.x - dx * rdest;      
+    var endY = d.target.y - dy * rdest;      
 
-  return "M" + startX+ "," + startY + "L" + endX+ "," + endY;
-}
+    return "M" + startX+ "," + startY + "L" + endX+ "," + endY;
+  }
 
-function transform(d) {
-  return "translate(" + d.x + "," + d.y + ")";
-}
+  function transform(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+  }
 
-function radius(d) {
-  return deafult_circle_radius + d.source * deafult_circle_radius / 5;
-}
+  function radius(d) {
+    return deafult_circle_radius + deafult_circle_radius * d.source / 10;
+  }
+
+  d3.selectAll("input").on("change", function change() {
+  if (this.name == "circle_size") {
+    deafult_circle_radius = parseInt(this.value);
+    force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
+    force.start();
+  }
+
+  if (this.name == "charge_multiplier") {
+    charge_multiplier = parseInt(this.value);
+    // // deafult_circle_radius = parseInt(this.value);
+    // // force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
+    // force.charge(function(d) { return -d.weight * charge_multiplier;})
+    force.start();
+  }
+  if (this.name == "link_strength") {
+    default_link_strength = parseInt(this.value) / 10;
+    force.linkStrength(default_link_strength);
+    force.start();
+  }
+
+  if (this.name == "show_texts_near_circles") {
+    console.log("Text value changed to '" + this.checked +'"');
+    text.attr("visibility", this.checked ? "visible" : "hidden")
+    show_texts_near_circles = this.checked
+  }
+
+});
 
 </script>

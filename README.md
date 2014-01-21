@@ -7,6 +7,15 @@ This tool was made just for fun, but images can show how big your project is, ho
 
 ![Image example](https://pbs.twimg.com/media/BecW8fRCcAAPdP4.png:large)  
 
+### Step 000 - One line to rule them All
+This will clone project, and run it on the latest modified project
+```
+git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;\
+cd objc-dependency-visualizer ;\
+./generate-objc-dependencies-to-json.rb -s "" > origin.js ;
+open index.html
+```
+
 ### Step 0 - Download sources
 
 ### Step 1 - Open index.html  

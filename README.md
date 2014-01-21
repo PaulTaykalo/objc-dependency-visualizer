@@ -7,7 +7,7 @@ This tool was made just for fun, but images can show how big your project is, ho
 
 ![Image example](https://pbs.twimg.com/media/BecW8fRCcAAPdP4.png:large)  
 
-### Step 000 - One line to rule them All
+### Step Last - For those who don't like to read docs
 This will clone project, and run it on the latest modified project
 ```
 git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;\

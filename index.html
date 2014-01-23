@@ -75,8 +75,27 @@ var regexp_color_matchers = [
   <label><input type="range" name="charge_multiplier" min="10" max="500" value="100"> Charge multiplier</label><br>
   <label><input type="range" name="link_strength" min="1" max="10" value="7"> Link strength</label><br>
   <label><input type="checkbox" name="show_texts_near_circles" checked="false"> Show names</label><br>
+  <div id="myDiv">
+        <input type="text" id="txt_1" onkeydown="newTextBox(this)" />
+   </div>
 
 </form>
+<script type="text/javascript">
+
+function newTextBox(element){
+   if(!element.value){
+       element.parentNode.removeChild( element.nextElementSibling);
+       return;
+   }
+   else if(element.nextElementSibling)
+       return;
+    var newTxt = element.cloneNode();
+    newTxt.id = 'txt_'+( parseInt( element.id.substring(element.id.indexOf('_')+1)) + 1);
+    newTxt.value='';
+    element.parentNode.appendChild(newTxt);
+}  
+
+</script>
 <script>
 
 

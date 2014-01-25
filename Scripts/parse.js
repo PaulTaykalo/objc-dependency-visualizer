@@ -1,132 +1,121 @@
 //  ===================================================
 //  =============== PARSING ===========================
 //  ===================================================
-var correctGraph = {};
-var correctNodes = [];
-var correctLinks = [];
-var nodesSet = {};
-var prefixes = {};
+// Input 
+// { links : [ {source: sourceName, dest : destName} * ] }
+// Output:
+!function () {
+  var objcdv = {
+    version: "0.0.1"
+  };
+  objcdv.parse_dependencies_graph = function (dependencies, regexp_color_matchers) {
 
-for (var i = 0; i < dependencies.links.length; i++) {
-  var object = dependencies.links[i];
+    var nodes = [];
+    var links = [];
 
-  var source = nodesSet[object.source];
-  if (source == null) {
-     source = {
-        name : object.source, 
-        source : 1,
-        dest   : 0
-     }
-     nodesSet[object.source] = source;
-  }
-  source.source++;
+    var nodesSet = {};
+    var prefixes = {};
 
-  var dest = nodesSet[object.dest];
-  if (dest == null) {
-     dest = {
-        name : object.dest, 
-        source : 0,
-        dest   : 1
-     }
-     nodesSet[object.dest] = dest;
-  }
-  dest.dest++;
+    var node_index = 0;
 
-  // Grouping by prefixes
-  var sourcePrefix = object.source.substring(0,2);
-  var destPrefix = object.dest.substring(0,2);
+    // Parse all dependencies
+    // In format 
 
+    var input_links = dependencies.links;
 
-  if (!(sourcePrefix in prefixes)) {
-    prefixes[sourcePrefix] = 1
-  } else {
-    prefixes[sourcePrefix]++;
-  }
-
-  if (!(destPrefix in prefixes)) {
-    prefixes[destPrefix] = 1
-  } else {
-    prefixes[destPrefix]++;
-  }
-
-};
-
-// Sort prefixes
-var prefixes_groups = {};
-var prefixes_arr = [];
-for (var key in prefixes) {
-    prefixes_arr.push( {key : key, value:prefixes[key] });
-}
-
-var sorted_prefixes = prefixes_arr.slice(0).sort(function(a, b) {
-   return b.value - a.value;
-});
-
-
-var idx = 0;
-for (var p in nodesSet) {
-  var groupId = 0;
-
-
-  if (use_regexp_color_grouping_matchers)  {
-    for (var i = 0; i < regexp_color_matchers.length; i++) {
-      var re = new RegExp(regexp_color_matchers[i],"");
-      if (p.match(re)) {
-        groupId = i + 1;
+    var updatePrefixesDistribution = function(name) {
+      var prefix = name.substring(0, 2);
+      if (!(prefix in prefixes)) {
+        prefixes[prefix] = 1;
+      } else {
+        prefixes[prefix]++;
       }
-    };
-  } else {
-     for (var i in sorted_prefixes) {
-     var str = sorted_prefixes[i].key;
-     // console.log("Checking " + p + " for " + str)
-       if (p.slice(0, str.length) == str) {
-         groupId = i;
-         break;
+    }
+
+    for (var i = 0; i < input_links.length; i++) {
+      var link = input_links[i];
+
+      var source_node = nodesSet[link.source];
+      if (source_node == null) {
+        nodesSet[link.source] = source_node = { idx :node_index++, name: link.source, source: 1, dest: 0  }
+      }
+      source_node.source++;
+
+      var dest_node = nodesSet[link.dest];
+      if (dest_node == null) {
+        nodesSet[link.dest] = dest_node = { idx :node_index++, name: link.dest, source: 0, dest: 1 }
+      }
+      dest_node.dest++;
+
+
+      // Grouping by prefixes
+      updatePrefixesDistribution(link.source);
+      updatePrefixesDistribution(link.dest);
+
+      // Remapping links objects
+      links.push({
+       
+        // d3 js properties
+        source: source_node.idx,
+        target: dest_node.idx,
+
+        // Additional link information
+        sourceNode: source_node,
+        targetNode: dest_node
+      });
+
+      console.log("Pushing link : source=" + source_node.idx + ", target=" + dest_node.idx);
+    }
+
+   
+    // Sorting prefixes, based on theirs frequency
+    var prefixes_arr = [];
+    for (var key in prefixes) {
+      prefixes_arr.push({key: key, value: prefixes[key] });
+    }
+    var sorted_prefixes = prefixes_arr.slice(0).sort(function (a, b) {
+      return b.value - a.value;
+    });
+
+    // If we dont' have regexp_color_matchers, we'll set them up, based on prefixes
+    var group_regexp_identifiers = regexp_color_matchers;
+    if (group_regexp_identifiers == null) {
+       group_regexp_identifiers = [];
+       for (var i = 0; i < sorted_prefixes.length; i++) {
+           group_regexp_identifiers.push("^" + sorted_prefixes[i].key+".*");
        }
-     }
+    }
+
+    // Setting up nodes groups, based on the group_regexp_identifiers
+    var idx = 0;
+    for (var p in nodesSet) {
+
+      node = nodesSet[p];
+      node.group = 0;
+      node.weight = node.source;  // Calculating node weignt, based on the amount of item it depends on
+
+      for (var regexp_index = 0; regexp_index < group_regexp_identifiers.length; regexp_index++) {
+        var re = new RegExp(group_regexp_identifiers[regexp_index], "");
+        if (p.match(re)) {
+          node.group = regexp_index + 1;
+          break;
+        }
+      }
+
+      nodes.push(node);
+       console.log(" Pushing node : IDX=" + idx + ", name=" + p + ", groupId=" + node.group + ", source=" + node.source + ", dest=" + node.dest + ", weight=" + node.weight);
+      idx++;
+    }
+
+    return { nodes : nodes, links: links };
   }
 
+  if (typeof define === "function" && define.amd) {
+    define(objcdv);
+  } else if (typeof module === "object" && module.exports) {
+    module.exports = objcdv;
+  } else {
+    this.objcdv = objcdv;
+  }
+}();
 
-  // It's time to create node :)
-  correctNodes.push({
-    idx : idx,
-    name : p,
-    group : groupId,
-    source : nodesSet[p].source,
-    dest : nodesSet[p].dest,
-    weight : nodesSet[p].source
-  });
-  console.log( " Pushing node : IDX="+idx+", name="+p+", groupId="+groupId+", source="+nodesSet[p].source+", dest="+nodesSet[p].dest+", weight="+nodesSet[p].source );
-  nodesSet[p].idx = idx;
-  idx++;
-}
-
-for (var i = 0; i < dependencies.links.length; i++) {
-  var link = dependencies.links[i];
-  var sourceIdx = nodesSet[link.source].idx;
-  var destIdx = nodesSet[link.dest].idx;
-  correctLinks.push({
-    source : sourceIdx,
-    target : destIdx,
-    value : nodesSet[link.source].source,
-    sourceNode : nodesSet[link.source],
-    targetNode : nodesSet[link.dest]
-  });
-    console.log( "Pushing link : source="+sourceIdx+", target="+destIdx);
-
-}
-
-
-correctGraph["nodes"] = correctNodes;
-correctGraph["links"] = correctLinks;
-
-
-//  ===================================================
-//  =============== PARSING ENDS  =====================
-//  ===================================================
-
-//  ===================================================
-//  =============== CONFIGURABLE PARAMS ENDS ==========
-//  ===================================================
-
-var dependecy_graph = correctGraph;

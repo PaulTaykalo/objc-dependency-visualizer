@@ -71,9 +71,9 @@ var regexp_color_matchers = [
 </script>
 <script src="Scripts/parse.js"></script>
 <form>
-  <label><input type="range" name="circle_size" min="10" max="50" value="15"> Circle size</label><br>
-  <label><input type="range" name="charge_multiplier" min="10" max="500" value="100"> Charge multiplier</label><br>
-  <label><input type="range" name="link_strength" min="1" max="10" value="7"> Link strength</label><br>
+  <label><input type="range" name="circle_size" min="1" max="50" value="15"> Circle size</label><br>
+  <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"> Charge multiplier</label><br>
+  <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
   <label><input type="checkbox" name="show_texts_near_circles" checked="false"> Show names</label><br>
   <div id="myDiv">
         <input type="text" id="txt_1" onkeydown="newTextBox(this)" />
@@ -98,6 +98,7 @@ function newTextBox(element){
 </script>
 <script>
 
+var dependecy_graph = objcdv.parse_dependencies_graph(dependencies);
 
 //  ===================================================
 //  =============== http://d3js.org/ Magic ===========
@@ -106,14 +107,22 @@ function newTextBox(element){
 // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
 var color = d3.scale.category10();
 
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
 var force = d3.layout.force()
     .charge(function(d) { return -d.weight * charge_multiplier;})
     .linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
-    .size([width, height]);
+    .size([x, y]);
+
 
 var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", x)
+    .attr("height", y);
 
   force
       .nodes(d3.values(dependecy_graph.nodes))
@@ -150,8 +159,64 @@ var node = svg.append("g").selectAll(".node")
     .attr("class", "node")
     .attr("source", function(d) { return d.source})
     .attr("dest", function(d) { return d.dest})
+    .call(force.drag)
+    .on("mouseover", function(d) { 
+        // I would like to insert an if statement to do all of these things to the connected nodes
+        // if(isConnected(d, o)) {
+          // d3.selectAll(".node").style("stroke-width", 6); 
+                
+                    // Figure out the neighboring node id's with brute strength because the graph is small
+                    var nodeNeighbors = dependecy_graph.links.filter(function(link) {
+                        // Filter the list of links to only those links that have our target 
+                        // node as a source or target
+                        return link.source.index === d.index || link.target.index === d.index;})
+                    .map(function(link) {
+                        // Map the list of links to a simple array of the neighboring indices - this is
+                        // technically not required but makes the code below simpler because we can use         
+                        // indexOf instead of iterating and searching ourselves.
+                        return link.source.index === d.index ? link.target.index : link.source.index; });
+                
+                    // Reset all circles - we will do this in mouseout also
+                    svg.selectAll('circle').style('fill-opacity', 0.1);
+                    svg.selectAll('circle').style('stroke-opacity', 0.1);
+                    svg.selectAll('path').style('stroke-opacity', 0.1);
+                    svg.selectAll('path').style('fill-opacity', 0.1);
+                    
+                    // now we select the neighboring circles and apply whatever style we want. 
+                    // Note that we could also filter a selection of links in this way if we want to 
+                    // Highlight those as well
+                    svg.selectAll('circle').filter(function(node) {
+                        // I filter the selection of all circles to only those that hold a node with an
+                        // index in my listg of neighbors
+                        return nodeNeighbors.indexOf(node.index) > -1;
+                    })
+                    .style('fill-opacity', 1);
+               
+          // d3.select(this).select("circle").style("stroke", "orange"); 
+          // d3.select(this).select("text").style("font", "20px sans-serif");
+          // d3.selectAll("rect." + d.location).style("stroke-width", 6);
+          // d3.selectAll("rect." + d.location).style("stroke", "orange");
+          // d3.selectAll("text." + d.location).style("font", "20px sans-serif");
+          // d3.selectAll("tr." + d.name).style("background-color", "orange");
+          //}
+        })
+      .on("mouseout",  function(d) { 
+        // if(isConnected(d, o)) {
+          // svg.selectAll('circle').style('stroke', 'gray');
+          svg.selectAll('circle').style('fill-opacity', 1);
+          svg.selectAll('circle').style('stroke-opacity', 1);
+          svg.selectAll('path').style('stroke-opacity', 1);
+          svg.selectAll('path').style('fill-opacity', 1);
 
-    .call(force.drag);
+                    
+          //d3.select(this).select("circle").style("stroke", "gray"); 
+          // d3.select(this).select("text").style("font", "12px sans-serif");
+          // d3.selectAll("rect." + d.location).style("stroke-width", 1.5);
+          // d3.selectAll("rect." + d.location).style("stroke", "gray");
+          // d3.selectAll("text." + d.location).style("font", "12px sans-serif");
+          // d3.selectAll("tr." + d.name).style("background-color", "white");
+          // //}
+        });
 
  //  // Uncomment to have names near the classes
 
@@ -222,5 +287,14 @@ var node = svg.append("g").selectAll(".node")
   }
 
 });
+
+   function updateWindow(){
+     x = w.innerWidth || e.clientWidth || g.clientWidth;
+     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+     svg.attr("width", x).attr("height", y);
+     force.size([x, y]).start();
+  }
+  window.onresize = updateWindow;
 
 </script>

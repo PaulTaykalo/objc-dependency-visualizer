@@ -12,10 +12,31 @@
   stroke-opacity: .6;
   fill: none;
   stroke-width: 1.5px;
+  pointer-events: none;
 }
+
+.marker_target {
+  stroke: #999;
+  fill:#999;
+  pointer-events: none;
+}
+
+.marker_dependency {
+  stroke: #900;
+  fill:#900;
+  pointer-events: none;
+}
+
+.marker_dependants {
+  stroke: #090;
+  fill:#090;
+  pointer-events: none;
+}
+
 
 text {
   stroke: #000;
+  stroke-width: 0.5px;
   font: 10px sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -74,39 +95,14 @@ var regexp_color_matchers = [
   <label><input type="range" name="circle_size" min="1" max="50" value="15"> Circle size</label><br>
   <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"> Charge multiplier</label><br>
   <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
-  <label><input type="checkbox" name="show_texts_near_circles" checked="false"> Show names</label><br>
-  <div id="myDiv">
-        <input type="text" id="txt_1" onkeydown="newTextBox(this)" />
-   </div>
-
+  <label><input type="checkbox" name="show_texts_near_circles"> Show names</label><br>
 </form>
 <script type="text/javascript">
-
-function newTextBox(element){
-   if(!element.value){
-       element.parentNode.removeChild( element.nextElementSibling);
-       return;
-   }
-   else if(element.nextElementSibling)
-       return;
-    var newTxt = element.cloneNode();
-    newTxt.id = 'txt_'+( parseInt( element.id.substring(element.id.indexOf('_')+1)) + 1);
-    newTxt.value='';
-    element.parentNode.appendChild(newTxt);
-}  
 
 </script>
 <script>
 
-var dependecy_graph = objcdv.parse_dependencies_graph(dependencies);
-
-//  ===================================================
-//  =============== http://d3js.org/ Magic ===========
-//  ===================================================
-
-// https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
-var color = d3.scale.category10();
-
+var dependecy_graph = objcdv.parse_dependencies_graph(dependencies, use_regexp_color_grouping_matchers ? regexp_color_matchers : null);
 var w = window,
     d = document,
     e = d.documentElement,
@@ -114,24 +110,50 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
+
+//  ===================================================
+//  =============== http://d3js.org/ Magic ===========
+//  ===================================================
+
+// https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
+var color = d3.scale.category10();
+var selectedIdx = -1
+var selectedobject = {}
+
 var force = d3.layout.force()
-    .charge(function(d) { return -d.weight * charge_multiplier;})
-    .linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
+    .charge(function(d) { return d.filtered ? 0 : -d.weight * charge_multiplier})
+    .linkDistance(function(l) { return l.source.filtered || l.target.filtered  ? 500 : radius(l.source) + radius(l.target) + default_link_distance})
+    .gravity(.05)
     .size([x, y]);
 
-
 var svg = d3.select("body").append("svg")
-    .attr("width", x)
-    .attr("height", y);
+      .attr("width", x)
+      .attr("height", y)
+      .attr("pointer-events", "all")
+    .append('g')
+      .call(d3.behavior.zoom().on("zoom", redraw))
+    .append('g');
+
+svg.append('rect')
+    .attr('width', x)
+    .attr('height', y)
+    .attr('fill', 'white');    
+
+
+function redraw() {
+  svg.attr("transform",
+      "translate(" + d3.event.translate + ")"
+      + " scale(" + d3.event.scale + ")");
+}    
 
   force
       .nodes(d3.values(dependecy_graph.nodes))
       .links(dependecy_graph.links)
-      .linkStrength(default_link_strength)
+      .linkStrength(function(l) { return l.source.index === selectedIdx || l.target.index === selectedIdx || selectedIdx == -1  ? default_link_strength : 0})
       .start();
 
 svg.append("defs").selectAll("marker")
-    .data(["suit"])
+    .data(["target", "dependency", "dependants"])
   .enter().append("marker")
     .attr("id", function(d) { return d; })
     .attr("viewBox", "0 -5 10 10")
@@ -140,6 +162,7 @@ svg.append("defs").selectAll("marker")
     .attr("markerWidth", 10)
     .attr("markerHeight", 10)
     .attr("orient", "auto")
+    .attr("class", function(d) { return "marker_"+d})
   .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
@@ -147,7 +170,7 @@ var link = svg.append("g").selectAll("path")
     .data(dependecy_graph.links).
     enter().append("path")
     .attr("class", "link")
-    .attr("marker-end", "url(#suit)")
+    .attr("marker-end", "url(#target)")
     .style("stroke-width", function(d) { return Math.sqrt(1); })
 
 
@@ -159,64 +182,97 @@ var node = svg.append("g").selectAll(".node")
     .attr("class", "node")
     .attr("source", function(d) { return d.source})
     .attr("dest", function(d) { return d.dest})
-    .call(force.drag)
-    .on("mouseover", function(d) { 
-        // I would like to insert an if statement to do all of these things to the connected nodes
-        // if(isConnected(d, o)) {
-          // d3.selectAll(".node").style("stroke-width", 6); 
-                
-                    // Figure out the neighboring node id's with brute strength because the graph is small
-                    var nodeNeighbors = dependecy_graph.links.filter(function(link) {
-                        // Filter the list of links to only those links that have our target 
-                        // node as a source or target
-                        return link.source.index === d.index || link.target.index === d.index;})
-                    .map(function(link) {
-                        // Map the list of links to a simple array of the neighboring indices - this is
-                        // technically not required but makes the code below simpler because we can use         
-                        // indexOf instead of iterating and searching ourselves.
-                        return link.source.index === d.index ? link.target.index : link.source.index; });
-                
-                    // Reset all circles - we will do this in mouseout also
-                    svg.selectAll('circle').style('fill-opacity', 0.1);
-                    svg.selectAll('circle').style('stroke-opacity', 0.1);
-                    svg.selectAll('path').style('stroke-opacity', 0.1);
-                    svg.selectAll('path').style('fill-opacity', 0.1);
-                    
-                    // now we select the neighboring circles and apply whatever style we want. 
-                    // Note that we could also filter a selection of links in this way if we want to 
-                    // Highlight those as well
-                    svg.selectAll('circle').filter(function(node) {
-                        // I filter the selection of all circles to only those that hold a node with an
-                        // index in my listg of neighbors
-                        return nodeNeighbors.indexOf(node.index) > -1;
-                    })
-                    .style('fill-opacity', 1);
-               
-          // d3.select(this).select("circle").style("stroke", "orange"); 
-          // d3.select(this).select("text").style("font", "20px sans-serif");
-          // d3.selectAll("rect." + d.location).style("stroke-width", 6);
-          // d3.selectAll("rect." + d.location).style("stroke", "orange");
-          // d3.selectAll("text." + d.location).style("font", "20px sans-serif");
-          // d3.selectAll("tr." + d.name).style("background-color", "orange");
-          //}
-        })
-      .on("mouseout",  function(d) { 
-        // if(isConnected(d, o)) {
-          // svg.selectAll('circle').style('stroke', 'gray');
-          svg.selectAll('circle').style('fill-opacity', 1);
-          svg.selectAll('circle').style('stroke-opacity', 1);
-          svg.selectAll('path').style('stroke-opacity', 1);
-          svg.selectAll('path').style('fill-opacity', 1);
+    .on("click", function(d) { 
+        if (d3.event.defaultPrevented) return
+        if (d.idx == selectedIdx) {
+          delete d.fixed
+          selectedIdx = -1
+          svg.selectAll('circle, path, text')
+          .each(function(node) {
+             node.filtered = false
+          }).transition()
+          .style('fill-opacity', 1)
+          .style('stroke-opacity', 1);
 
-                    
-          //d3.select(this).select("circle").style("stroke", "gray"); 
-          // d3.select(this).select("text").style("font", "12px sans-serif");
-          // d3.selectAll("rect." + d.location).style("stroke-width", 1.5);
-          // d3.selectAll("rect." + d.location).style("stroke", "gray");
-          // d3.selectAll("text." + d.location).style("font", "12px sans-serif");
-          // d3.selectAll("tr." + d.name).style("background-color", "white");
-          // //}
-        });
+          svg.selectAll('.link')
+          .transition()
+          .attr("marker-end", "url(#target)")      
+          .style('fill-opacity', 1)
+          .style('stroke-opacity', 1);
+          force.start();
+          return
+        }
+
+        delete selectedobject.fixed
+        selectedIdx = d.idx
+        selectedobject = d
+        selectedobject.fixed = true
+
+        // Figure out the neighboring node id's with brute strength because the graph is small
+        var nodeNeighbors = dependecy_graph.links.filter(function(link) {
+            // Filter the list of links to only those links that have our target 
+            // node as a source or target
+            return link.source.index === d.index || link.target.index === d.index;})
+        .map(function(link) {
+            // Map the list of links to a simple array of the neighboring indices - this is
+            // technically not required but makes the code below simpler because we can use         
+            // indexOf instead of iterating and searching ourselves.
+            return link.source.index === d.index ? link.target.index : link.source.index; });
+    
+        // Fade out all circles
+        svg.selectAll('circle').each(function(node){
+          node.filtered = true;
+          node.neighbours = false;
+        }).transition()
+          .style('fill-opacity', 0.3)
+          .style('stroke-opacity', 0.3)
+
+        svg.selectAll('text').transition()
+          .style('fill-opacity', 0.0)
+          .style('stroke-opacity', 0.0)
+
+
+        svg.selectAll('.link').transition()
+        .attr("marker-end", "")
+        .style('fill-opacity', 0.1)
+        .style('stroke-opacity', 0.1)
+
+        
+        // Higlight all neighbours
+        svg.selectAll('circle, text').filter(function(node) {
+            // I filter the selection of all circles to only those that hold a node with an
+            // index in my listg of neighbors
+            return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
+        }).each(function(node) {
+           node.filtered = false;
+           node.neighbours = true;
+        }).transition()
+        .style('fill-opacity', 1);
+
+
+        svg.selectAll('.link').filter(function(link) {
+            // I filter the selection of all circles to only those that hold a node with an
+            // index in my listg of neighbors
+            return link.source.index === d.index
+        }).transition()
+        .attr("marker-end", "url(#dependency)")
+        .style('fill-opacity', 1)
+        .style('stroke-opacity', 1)
+
+        svg.selectAll('.link').filter(function(link) {
+            // I filter the selection of all circles to only those that hold a node with an
+            // index in my listg of neighbors
+            return link.target.index === d.index
+        }).transition()
+        .attr("marker-end", "url(#dependants)")
+        .style('fill-opacity', 1)
+        .style('stroke-opacity', 1)
+
+
+
+
+        force.start();
+    })
 
  //  // Uncomment to have names near the classes
 
@@ -225,6 +281,7 @@ var node = svg.append("g").selectAll(".node")
     .data(force.nodes())
      .enter().append("text")
     .style("text-anchor", "middle")
+    .attr("visibility", "hidden")
     .text(function(d) { return d.name.substring(0,default_max_texts_length) });
  
   force.on("tick", function() {
@@ -289,10 +346,10 @@ var node = svg.append("g").selectAll(".node")
 });
 
    function updateWindow(){
-     x = w.innerWidth || e.clientWidth || g.clientWidth;
+     x = w.innerWidth || e.clientWidth || g.clientWidth ;
      y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-     svg.attr("width", x).attr("height", y);
+     svg.attr("width", x ).attr("height", y);
      force.size([x, y]).start();
   }
   window.onresize = updateWindow;

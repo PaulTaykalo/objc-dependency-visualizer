@@ -97,9 +97,7 @@ var regexp_color_matchers = [
   <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
   <label><input type="checkbox" name="show_texts_near_circles"> Show names</label><br>
 </form>
-<script type="text/javascript">
-
-</script>
+<div id="chart"></div>
 <script>
 
 var dependecy_graph = objcdv.parse_dependencies_graph(dependencies, use_regexp_color_grouping_matchers ? regexp_color_matchers : null);
@@ -120,25 +118,27 @@ var color = d3.scale.category10();
 var selectedIdx = -1
 var selectedobject = {}
 
+
+
 var force = d3.layout.force()
     .charge(function(d) { return d.filtered ? 0 : -d.weight * charge_multiplier})
     .linkDistance(function(l) { return l.source.filtered || l.target.filtered  ? 500 : radius(l.source) + radius(l.target) + default_link_distance})
     .gravity(.05)
     .size([x, y]);
 
-var svg = d3.select("body").append("svg")
+var container = d3.select("#chart").append("svg")
       .attr("width", x)
       .attr("height", y)
-      .attr("pointer-events", "all")
-    .append('g')
-      .call(d3.behavior.zoom().on("zoom", redraw))
-    .append('g');
 
-svg.append('rect')
-    .attr('width', x)
-    .attr('height', y)
-    .attr('fill', 'white');    
+var scroller = container
+     .append("rect")
+     .attr("width", x)
+     .attr("height", y)
+     .style("fill", "none")
+     .style("pointer-events", "all")
+     .call(d3.behavior.zoom().on("zoom", redraw))
 
+var svg = container.append('g')
 
 function redraw() {
   svg.attr("transform",
@@ -174,7 +174,7 @@ var link = svg.append("g").selectAll("path")
     .style("stroke-width", function(d) { return Math.sqrt(1); })
 
 
-var node = svg.append("g").selectAll(".node")
+var node = svg.append("g").selectAll("circle.node")
     .data(dependecy_graph.nodes)
     .enter().append("circle")
     .attr("r", radius)
@@ -182,6 +182,7 @@ var node = svg.append("g").selectAll(".node")
     .attr("class", "node")
     .attr("source", function(d) { return d.source})
     .attr("dest", function(d) { return d.dest})
+    .call(force.drag)
     .on("click", function(d) { 
         if (d3.event.defaultPrevented) return
         if (d.idx == selectedIdx) {
@@ -293,6 +294,14 @@ var node = svg.append("g").selectAll(".node")
     }
   });
 
+//     .append('g');
+
+// svg.append('rect')
+//     .attr('width', x)
+//     .attr('height', y)
+//     .attr('fill', 'white');    
+
+
   function linkArc(d) {
     var dx = d.target.x - d.source.x,
       dy = d.target.y - d.source.y,
@@ -349,7 +358,7 @@ var node = svg.append("g").selectAll(".node")
      x = w.innerWidth || e.clientWidth || g.clientWidth ;
      y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-     svg.attr("width", x ).attr("height", y);
+     container.attr("width", x ).attr("height", y);
      force.size([x, y]).start();
   }
   window.onresize = updateWindow;

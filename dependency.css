@@ -11,6 +11,7 @@ text.filtered {
 }
 
 .link.filtered {
+  stroke: #ddd;
   fill-opacity:0.1;
   stroke-opacity:0.1;
 }

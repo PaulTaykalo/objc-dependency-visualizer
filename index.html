@@ -16,6 +16,7 @@
     <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"/> Charge multiplier</label><br>
     <label><input type="range" name="link_strength" min="0.1" max="100" value="7"/> Link strength</label><br>
     <label><input type="checkbox" name="show_texts_near_circles"/> Show names</label><br>
+    <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%;"><br>
 
   </form>
   <div id="chart">
@@ -47,7 +48,7 @@ var default_max_texts_length = 100;
 // Should we use regexp-based  grouping or not
 var use_regexp_color_grouping_matchers = false;
 
-var charge_multiplier = 100;
+var charge_multiplier = 200;
 
 // Each item thet matches specified regexps will be placed to correspondent group with unique color
 var regexp_color_matchers = [
@@ -104,7 +105,7 @@ var force = d3.layout.force()
     .size([x, y])
     .nodes(d3.values(dependecy_graph.nodes))
     .links(dependecy_graph.links)
-    .linkStrength(function(l) { return l.source.index === selectedIdx || l.target.index === selectedIdx || selectedIdx == -1  ? default_link_strength : 0})
+    .linkStrength(function(l) { return l.source.filtered || l.target.filtered ? 0 : default_link_strength})
     .start();
 
 var svg = container.append('g')
@@ -222,6 +223,7 @@ w.onresize = function(){
 function deselect_node(d) { 
   delete d.fixed
   selectedIdx = -1
+  selectedobject = {};
   svg.selectAll('circle, path, text')
     .classed('filtered', false)
     .each(function(node) {
@@ -335,5 +337,42 @@ function select_node(d) {
       force.start();
     }
 
+  });
+</script>
+
+
+<script>
+  //  ===================================================
+  //  =============== LIVE FILTERING      ==============
+  //  ===================================================
+  d3.select("#search_input").on("input", function () {
+    // Filter all items
+    console.log("Input changed to" + this.value)
+    deselect_node(selectedobject);
+
+    if (this.value && this.value.length) {
+        var re = new RegExp(this.value, "i");
+        svg.selectAll('circle, text')
+          .classed('filtered', function(node) {
+             var filtered = !node.name.match(re);
+             node.filtered = filtered;
+             node.neighbours = !filtered;
+             return filtered;
+          })
+          .transition()
+
+       svg.selectAll('.link')
+        .classed('filtered', function(l) {
+             var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+             return filtered;
+        })
+        .attr("marker-end", function (l) {
+           var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+           return filtered ? "" : "url(#default)"
+        })
+        .transition()
+   
+       force.start();   
+    }
   });
 </script>

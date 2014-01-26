@@ -1,0 +1,47 @@
+
+.node {
+  stroke: #000;
+  stroke-width: 0.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+  fill: none;
+  stroke-width: 1.5px;
+  pointer-events: none;
+}
+
+.marker_default {
+  stroke: #999;
+  fill:#999;
+  pointer-events: none;
+}
+
+.marker_dependency {
+  stroke: #900;
+  fill:#900;
+  pointer-events: none;
+}
+
+.marker_dependants {
+  stroke: #090;
+  fill:#090;
+  pointer-events: none;
+}
+
+
+text {
+  stroke: #000;
+  stroke-width: 0.5px;
+  font: 10px sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  pointer-events: none;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

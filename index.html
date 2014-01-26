@@ -1,66 +1,32 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
-
-.node {
-  stroke: #000;
-  stroke-width: 0.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-  fill: none;
-  stroke-width: 1.5px;
-  pointer-events: none;
-}
-
-.marker_target {
-  stroke: #999;
-  fill:#999;
-  pointer-events: none;
-}
-
-.marker_dependency {
-  stroke: #900;
-  fill:#900;
-  pointer-events: none;
-}
-
-.marker_dependants {
-  stroke: #090;
-  fill:#090;
-  pointer-events: none;
-}
-
-
-text {
-  stroke: #000;
-  stroke-width: 0.5px;
-  font: 10px sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  pointer-events: none;
-}
-
-form {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
-</style>
+<head>
+  <link rel="stylesheet" type="text/css" href="dependency.css">
+</head>
 <body>
-<script src="Scripts/d3.v3.js"></script>
-<script src="origin.js"></script>
+  <script src="Scripts/d3.v3.js"></script>
+  <script src="origin.js"></script>
+  
+  <!-- ================================================= -->
+  <!-- ===========ACTUAL HTML           ================ -->
+  <!-- ================================================= -->
+
+  <form>
+    <label><input type="range" name="circle_size" min="1" max="50" value="15"> Circle size</label><br>
+    <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"> Charge multiplier</label><br>
+    <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
+    <label><input type="checkbox" name="show_texts_near_circles"> Show names</label><br>
+  </form>
+  <div id="chart">
+    <!-- Here the SVG will be placed-->
+  </div>
+
+<script src="Scripts/parse.js"></script>
 <script>
 
 //  ===================================================
 //  =============== CONFIGURABLE PARAMS  ==============
 //  ===================================================
-
-var width = 1900,
-    height = 800;
 
 var default_link_distance = 10;   
 
@@ -89,25 +55,15 @@ var regexp_color_matchers = [
   "^NS",  // Foundation
   "^CA",  // Core animations
 ];
-</script>
-<script src="Scripts/parse.js"></script>
-<form>
-  <label><input type="range" name="circle_size" min="1" max="50" value="15"> Circle size</label><br>
-  <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"> Charge multiplier</label><br>
-  <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
-  <label><input type="checkbox" name="show_texts_near_circles"> Show names</label><br>
-</form>
-<div id="chart"></div>
-<script>
 
 var dependecy_graph = objcdv.parse_dependencies_graph(dependencies, use_regexp_color_grouping_matchers ? regexp_color_matchers : null);
+
 var w = window,
     d = document,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0],
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-
 
 //  ===================================================
 //  =============== http://d3js.org/ Magic ===========
@@ -118,42 +74,46 @@ var color = d3.scale.category10();
 var selectedIdx = -1
 var selectedobject = {}
 
-
-
-var force = d3.layout.force()
-    .charge(function(d) { return d.filtered ? 0 : -d.weight * charge_multiplier})
-    .linkDistance(function(l) { return l.source.filtered || l.target.filtered  ? 500 : radius(l.source) + radius(l.target) + default_link_distance})
-    .gravity(.05)
-    .size([x, y]);
-
 var container = d3.select("#chart").append("svg")
       .attr("width", x)
       .attr("height", y)
 
-var scroller = container
-     .append("rect")
-     .attr("width", x)
-     .attr("height", y)
-     .style("fill", "none")
-     .style("pointer-events", "all")
-     .call(d3.behavior.zoom().on("zoom", redraw))
+//  ===================================================
+//  =============== ZOOM LOGIC ========================
+//  ===================================================
+
+container.append("rect")
+  .attr("width", x)
+  .attr("height", y)
+  .style("fill", "none")
+  .style("pointer-events", "all")
+  .call(d3.behavior.zoom().on("zoom", redraw))
+
+  function redraw() {
+    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+  }    
+
+//  ===================================================
+//  =============== FORCE LAYOUT ======================
+//  ===================================================
+
+var force = d3.layout.force()
+    .charge(function(d) { return d.filtered ? 0 : -d.weight * charge_multiplier})
+    .linkDistance(function(l) { return l.source.filtered || l.target.filtered  ? 500 : radius(l.source) + radius(l.target) + default_link_distance})
+    .size([x, y])
+    .nodes(d3.values(dependecy_graph.nodes))
+    .links(dependecy_graph.links)
+    .linkStrength(function(l) { return l.source.index === selectedIdx || l.target.index === selectedIdx || selectedIdx == -1  ? default_link_strength : 0})
+    .start();
 
 var svg = container.append('g')
 
-function redraw() {
-  svg.attr("transform",
-      "translate(" + d3.event.translate + ")"
-      + " scale(" + d3.event.scale + ")");
-}    
-
-  force
-      .nodes(d3.values(dependecy_graph.nodes))
-      .links(dependecy_graph.links)
-      .linkStrength(function(l) { return l.source.index === selectedIdx || l.target.index === selectedIdx || selectedIdx == -1  ? default_link_strength : 0})
-      .start();
+//  ===================================================
+//  ===============  MARKERS SETUP   ==================
+//  ===================================================
 
 svg.append("defs").selectAll("marker")
-    .data(["target", "dependency", "dependants"])
+  .data(["default", "dependency", "dependants"])
   .enter().append("marker")
     .attr("id", function(d) { return d; })
     .attr("viewBox", "0 -5 10 10")
@@ -162,17 +122,25 @@ svg.append("defs").selectAll("marker")
     .attr("markerWidth", 10)
     .attr("markerHeight", 10)
     .attr("orient", "auto")
-    .attr("class", function(d) { return "marker_"+d})
+    .attr("class", function(d) { return "marker_" + d})
   .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
+
+//  ===================================================
+//  ===============  LINKS SETUP     ==================
+//  ===================================================
+
 var link = svg.append("g").selectAll("path")
-    .data(dependecy_graph.links).
-    enter().append("path")
+    .data(dependecy_graph.links)
+    .enter().append("path")
     .attr("class", "link")
-    .attr("marker-end", "url(#target)")
+    .attr("marker-end", "url(#default)")
     .style("stroke-width", function(d) { return Math.sqrt(1); })
 
+//  ===================================================
+//  ===============  NODES SETUP     ==================
+//  ===================================================
 
 var node = svg.append("g").selectAll("circle.node")
     .data(dependecy_graph.nodes)
@@ -197,7 +165,7 @@ var node = svg.append("g").selectAll("circle.node")
 
           svg.selectAll('.link')
           .transition()
-          .attr("marker-end", "url(#target)")      
+          .attr("marker-end", "url(#default)")      
           .style('fill-opacity', 1)
           .style('stroke-opacity', 1);
           force.start();
@@ -269,13 +237,9 @@ var node = svg.append("g").selectAll("circle.node")
         .style('fill-opacity', 1)
         .style('stroke-opacity', 1)
 
-
-
-
         force.start();
     })
 
- //  // Uncomment to have names near the classes
 
   var text = null;
    text = svg.append("g").selectAll("text")
@@ -287,22 +251,14 @@ var node = svg.append("g").selectAll("circle.node")
  
   force.on("tick", function() {
     svg.selectAll(".node").attr("r", radius);
-    link.attr("d", linkArc);
+    link.attr("d", link_line);
     node.attr("transform", transform );
     if (show_texts_near_circles) {
      text.attr("transform", transform);
     }
   });
 
-//     .append('g');
-
-// svg.append('rect')
-//     .attr('width', x)
-//     .attr('height', y)
-//     .attr('fill', 'white');    
-
-
-  function linkArc(d) {
+  function link_line(d) {
     var dx = d.target.x - d.source.x,
       dy = d.target.y - d.source.y,
       dr = Math.sqrt(dx * dx + dy * dy);
@@ -326,34 +282,6 @@ var node = svg.append("g").selectAll("circle.node")
     return deafult_circle_radius + deafult_circle_radius * d.source / 10;
   }
 
-  d3.selectAll("input").on("change", function change() {
-  if (this.name == "circle_size") {
-    deafult_circle_radius = parseInt(this.value);
-    force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
-    force.start();
-  }
-
-  if (this.name == "charge_multiplier") {
-    charge_multiplier = parseInt(this.value);
-    // // deafult_circle_radius = parseInt(this.value);
-    // // force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
-    // force.charge(function(d) { return -d.weight * charge_multiplier;})
-    force.start();
-  }
-  if (this.name == "link_strength") {
-    default_link_strength = parseInt(this.value) / 10;
-    force.linkStrength(default_link_strength);
-    force.start();
-  }
-
-  if (this.name == "show_texts_near_circles") {
-    console.log("Text value changed to '" + this.checked +'"');
-    text.attr("visibility", this.checked ? "visible" : "hidden")
-    show_texts_near_circles = this.checked
-  }
-
-});
-
    function updateWindow(){
      x = w.innerWidth || e.clientWidth || g.clientWidth ;
      y = w.innerHeight|| e.clientHeight|| g.clientHeight;
@@ -363,4 +291,35 @@ var node = svg.append("g").selectAll("circle.node")
   }
   window.onresize = updateWindow;
 
+</script>
+
+<script>
+  //  ===================================================
+  //  =============== INPUTS HANDLING      ==============
+  //  ===================================================
+  d3.selectAll("input").on("change", function change() {
+
+    if (this.name == "circle_size") {
+      deafult_circle_radius = parseInt(this.value);
+      force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
+      force.start();
+    }
+
+    if (this.name == "charge_multiplier") {
+      charge_multiplier = parseInt(this.value);
+      force.start();
+    }
+
+    if (this.name == "link_strength") {
+      default_link_strength = parseInt(this.value) / 10;
+      force.linkStrength(default_link_strength);
+      force.start();
+    }
+
+    if (this.name == "show_texts_near_circles") {
+      text.attr("visibility", this.checked ? "visible" : "hidden")
+      show_texts_near_circles = this.checked
+    }
+
+  });
 </script>

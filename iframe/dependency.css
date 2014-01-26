@@ -1,0 +1,65 @@
+
+
+.node.filtered {
+  fill-opacity:0.3;
+  stroke-opacity:0.3;
+}
+
+text.filtered {
+  fill-opacity:0;
+  stroke-opacity:0;
+}
+
+.link.filtered {
+  stroke: #ddd;
+  fill-opacity:0.1;
+  stroke-opacity:0.1;
+}
+
+.node {
+  stroke: #000;
+  stroke-width: 0.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+  fill: none;
+  stroke-width: 1.5px;
+  pointer-events: none;
+}
+
+.marker#default {
+  stroke: #999;
+  fill:#999;
+  pointer-events: none;
+}
+
+.marker#dependency {
+  stroke: #900;
+  fill:#900;
+  pointer-events: none;
+}
+
+.marker#dependants {
+  stroke: #090;
+  fill:#090;
+  pointer-events: none;
+}
+
+
+text {
+  stroke: #000;
+  stroke-width: 0.5px;
+  text-anchor:middle;
+  font: 10px sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  pointer-events: none;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

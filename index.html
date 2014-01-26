@@ -11,11 +11,12 @@
   <!-- ===========ACTUAL HTML           ================ -->
   <!-- ================================================= -->
 
-  <form>
-    <label><input type="range" name="circle_size" min="1" max="50" value="15"> Circle size</label><br>
-    <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"> Charge multiplier</label><br>
-    <label><input type="range" name="link_strength" min="0.1" max="100" value="7"> Link strength</label><br>
-    <label><input type="checkbox" name="show_texts_near_circles"> Show names</label><br>
+  <form id="form">
+    <label><input type="range" name="circle_size" min="1" max="50" value="15"/> Circle size</label><br>
+    <label><input type="range" name="charge_multiplier" min="1" max="500" value="100"/> Charge multiplier</label><br>
+    <label><input type="range" name="link_strength" min="0.1" max="100" value="7"/> Link strength</label><br>
+    <label><input type="checkbox" name="show_texts_near_circles"/> Show names</label><br>
+
   </form>
   <div id="chart">
     <!-- Here the SVG will be placed-->
@@ -37,7 +38,7 @@ var default_link_distance = 10;
 var default_link_strength = 0.7;
 
 // Should I comment this?
-var deafult_circle_radius = 15;
+var default_circle_radius = 15;
 
 // you can set it to true, but this will not help to understanf what's going on
 var show_texts_near_circles = false;
@@ -122,7 +123,7 @@ svg.append("defs").selectAll("marker")
     .attr("markerWidth", 10)
     .attr("markerHeight", 10)
     .attr("orient", "auto")
-    .attr("class", function(d) { return "marker_" + d})
+    .attr("class", "marker")
   .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
@@ -151,145 +152,157 @@ var node = svg.append("g").selectAll("circle.node")
     .attr("source", function(d) { return d.source})
     .attr("dest", function(d) { return d.dest})
     .call(force.drag)
-    .on("click", function(d) { 
-        if (d3.event.defaultPrevented) return
-        if (d.idx == selectedIdx) {
-          delete d.fixed
-          selectedIdx = -1
-          svg.selectAll('circle, path, text')
-          .each(function(node) {
-             node.filtered = false
-          }).transition()
-          .style('fill-opacity', 1)
-          .style('stroke-opacity', 1);
+    .on("click", select_node)
 
-          svg.selectAll('.link')
-          .transition()
-          .attr("marker-end", "url(#default)")      
-          .style('fill-opacity', 1)
-          .style('stroke-opacity', 1);
-          force.start();
-          return
-        }
+//  ===================================================
+//  ===============  TEXT NODES SETUP     =============
+//  ===================================================
 
-        delete selectedobject.fixed
-        selectedIdx = d.idx
-        selectedobject = d
-        selectedobject.fixed = true
+var text = svg.append("g").selectAll("text")
+  .data(force.nodes())
+  .enter().append("text")
+  .attr("visibility", "hidden")
+  .text(function(d) { return d.name.substring(0, default_max_texts_length) });
 
-        // Figure out the neighboring node id's with brute strength because the graph is small
-        var nodeNeighbors = dependecy_graph.links.filter(function(link) {
-            // Filter the list of links to only those links that have our target 
-            // node as a source or target
-            return link.source.index === d.index || link.target.index === d.index;})
-        .map(function(link) {
-            // Map the list of links to a simple array of the neighboring indices - this is
-            // technically not required but makes the code below simpler because we can use         
-            // indexOf instead of iterating and searching ourselves.
-            return link.source.index === d.index ? link.target.index : link.source.index; });
-    
-        // Fade out all circles
-        svg.selectAll('circle').each(function(node){
-          node.filtered = true;
-          node.neighbours = false;
-        }).transition()
-          .style('fill-opacity', 0.3)
-          .style('stroke-opacity', 0.3)
-
-        svg.selectAll('text').transition()
-          .style('fill-opacity', 0.0)
-          .style('stroke-opacity', 0.0)
-
-
-        svg.selectAll('.link').transition()
-        .attr("marker-end", "")
-        .style('fill-opacity', 0.1)
-        .style('stroke-opacity', 0.1)
-
-        
-        // Higlight all neighbours
-        svg.selectAll('circle, text').filter(function(node) {
-            // I filter the selection of all circles to only those that hold a node with an
-            // index in my listg of neighbors
-            return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
-        }).each(function(node) {
-           node.filtered = false;
-           node.neighbours = true;
-        }).transition()
-        .style('fill-opacity', 1);
-
-
-        svg.selectAll('.link').filter(function(link) {
-            // I filter the selection of all circles to only those that hold a node with an
-            // index in my listg of neighbors
-            return link.source.index === d.index
-        }).transition()
-        .attr("marker-end", "url(#dependency)")
-        .style('fill-opacity', 1)
-        .style('stroke-opacity', 1)
-
-        svg.selectAll('.link').filter(function(link) {
-            // I filter the selection of all circles to only those that hold a node with an
-            // index in my listg of neighbors
-            return link.target.index === d.index
-        }).transition()
-        .attr("marker-end", "url(#dependants)")
-        .style('fill-opacity', 1)
-        .style('stroke-opacity', 1)
-
-        force.start();
-    })
-
-
-  var text = null;
-   text = svg.append("g").selectAll("text")
-    .data(force.nodes())
-     .enter().append("text")
-    .style("text-anchor", "middle")
-    .attr("visibility", "hidden")
-    .text(function(d) { return d.name.substring(0,default_max_texts_length) });
+//  ===================================================
+//  ===============  FORCE UPDATE        =============
+//  ===================================================
  
-  force.on("tick", function() {
-    svg.selectAll(".node").attr("r", radius);
-    link.attr("d", link_line);
-    node.attr("transform", transform );
-    if (show_texts_near_circles) {
-     text.attr("transform", transform);
-    }
-  });
-
-  function link_line(d) {
-    var dx = d.target.x - d.source.x,
-      dy = d.target.y - d.source.y,
-      dr = Math.sqrt(dx * dx + dy * dy);
-
-    var rsource = radius(d.sourceNode)/dr;
-    var rdest = radius(d.targetNode)/dr;
-    var startX = d.source.x + dx * rsource;      
-    var startY = d.source.y + dy * rsource;      
-
-    var endX = d.target.x - dx * rdest;      
-    var endY = d.target.y - dy * rdest;      
-
-    return "M" + startX+ "," + startY + "L" + endX+ "," + endY;
+force.on("tick", function() {
+  svg.selectAll(".node").attr("r", radius);
+  link.attr("d", link_line);
+  node.attr("transform", transform );
+  if (show_texts_near_circles) {
+    text.attr("transform", transform);
   }
+});
 
-  function transform(d) {
-    return "translate(" + d.x + "," + d.y + ")";
-  }
+//  ===================================================
+//  ===============  HELPER FUNCTIONS     =============
+//  ===================================================
+function link_line(d) {
+  var dx = d.target.x - d.source.x,
+     dy = d.target.y - d.source.y,
+     dr = Math.sqrt(dx * dx + dy * dy);
 
-  function radius(d) {
-    return deafult_circle_radius + deafult_circle_radius * d.source / 10;
-  }
+  var rsource = radius(d.sourceNode)/dr;
+  var rdest = radius(d.targetNode)/dr;
+  var startX = d.source.x + dx * rsource;      
+  var startY = d.source.y + dy * rsource;      
 
-   function updateWindow(){
-     x = w.innerWidth || e.clientWidth || g.clientWidth ;
-     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+  var endX = d.target.x - dx * rdest;      
+  var endY = d.target.y - dy * rdest;      
+  return "M" + startX+ "," + startY + "L" + endX+ "," + endY;
+}
 
-     container.attr("width", x ).attr("height", y);
-     force.size([x, y]).start();
-  }
-  window.onresize = updateWindow;
+function transform(d) {
+  return "translate(" + d.x + "," + d.y + ")";
+}
+
+function radius(d) {
+  return default_circle_radius + default_circle_radius * d.source / 10;
+}
+ 
+/*
+Window resize update
+*/ 
+w.onresize = function(){
+   x = w.innerWidth || e.clientWidth || g.clientWidth ;
+   y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+   container.attr("width", x ).attr("height", y);
+   force.size([x, y]).start();
+};
+
+
+//  ===================================================
+//  ===============  SELECTING_NODE       =============
+//  ===================================================
+
+function deselect_node(d) { 
+  delete d.fixed
+  selectedIdx = -1
+  svg.selectAll('circle, path, text')
+    .classed('filtered', false)
+    .each(function(node) {
+     node.filtered = false
+    })
+    .transition()
+
+  svg.selectAll('.link')
+    .attr("marker-end", "url(#default)")      
+    .classed('filtered', false)
+    .transition()
+
+
+  force.start();
+  return
+}
+
+function select_node(d) { 
+  if (d3.event.defaultPrevented) return
+
+  // Deselect if needed
+  if (d.idx == selectedIdx) { deselect_node(d); return }
+
+  // Update selected object
+  delete selectedobject.fixed
+  selectedIdx = d.idx
+  selectedobject = d
+  selectedobject.fixed = true
+
+  // Figure out the neighboring node id's with brute strength because the graph is small
+  var nodeNeighbors = 
+  dependecy_graph.links
+    .filter(function(link) {
+        return link.source.index === d.index || link.target.index === d.index;})
+    .map(function(link) {
+        return link.source.index === d.index ? link.target.index : link.source.index; 
+      }
+    );
+
+  // Fade out all circles
+  svg.selectAll('circle')
+  .classed('filtered', true)
+  .each(function(node){
+    node.filtered = true;
+    node.neighbours = false;
+  }).transition()
+    
+
+  svg.selectAll('text')
+    .classed('filtered', true)
+    .transition()
+  
+
+  svg.selectAll('.link').
+    transition()
+    .attr("marker-end", "")
+
+
+  // Higlight all circle and texts
+  svg.selectAll('circle, text')
+    .filter(function(node) {
+        return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
+    })
+    .classed('filtered', false)
+    .each(function(node) {
+       node.filtered = false;
+       node.neighbours = true;
+    })
+    .transition()
+
+  // Higlight links
+  svg.selectAll('.link')
+    .filter(function(link) {
+      return link.source.index === d.index || link.target.index == d.index
+    })
+    .classed('filtered', false)
+    .attr("marker-end", function(l) { return l.source.index === d.index ? "url(#dependency)" : "url(#dependants)"})
+    .transition()
+
+  force.start();
+}
 
 </script>
 
@@ -300,7 +313,7 @@ var node = svg.append("g").selectAll("circle.node")
   d3.selectAll("input").on("change", function change() {
 
     if (this.name == "circle_size") {
-      deafult_circle_radius = parseInt(this.value);
+      default_circle_radius = parseInt(this.value);
       force.linkDistance(function(l) { return radius(l.source) + radius(l.target) + default_link_distance;})
       force.start();
     }
@@ -319,6 +332,7 @@ var node = svg.append("g").selectAll("circle.node")
     if (this.name == "show_texts_near_circles") {
       text.attr("visibility", this.checked ? "visible" : "hidden")
       show_texts_near_circles = this.checked
+      force.start();
     }
 
   });

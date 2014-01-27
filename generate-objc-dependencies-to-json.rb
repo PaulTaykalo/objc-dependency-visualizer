@@ -86,7 +86,7 @@ THEEND
 
 
 #Searching all the .o files and showing its information through nm call
-IO.popen("find \"#{options[:search_directory]}\" -name \"*.o\" -exec nm -o {} \\;") { |f| 
+IO.popen("find \"#{options[:search_directory]}\" -name \"*.o\" -exec  /usr/bin/nm -o {} \\;") { |f| 
 	 f.each do |line|  
 
       # Gathering only OBC_CLASSES

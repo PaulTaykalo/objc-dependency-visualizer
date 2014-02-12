@@ -7,8 +7,8 @@ This tool was made just for fun, but images can show how big your project is, ho
 
 ![Image example](https://pbs.twimg.com/media/BecW8fRCcAAPdP4.png:large)  
 
-### Step Last -2 - For those who don't like to download anything to theirs computers
-[Five it a try](http://paultaykalo.github.io/objc-dependency-visualizer/) without even downloading the project
+### Step Last -2 - See how it works on the example project
+[Give it a try](http://paultaykalo.github.io/objc-dependency-visualizer/) without even downloading the project
 
 ### Step Last -1 - For those who don't like to read docs
 This will clone project, and run it on the latest modified project

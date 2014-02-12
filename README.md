@@ -16,6 +16,9 @@ cd objc-dependency-visualizer ;
 open index.html
 ```
 
+Or [give it a try](http://paultaykalo.github.io/objc-dependency-visualizer/) without even downloading the project
+
+
 ### Step 0 - Download sources
 
 ### Step 1 - Open index.html  

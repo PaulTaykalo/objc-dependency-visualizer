@@ -16,6 +16,10 @@ cd objc-dependency-visualizer ;
 open index.html
 ```
 
+### Tell the world about the awesomeness of your project structure
+Share image to the Twitter with [#objc-dv](https://twitter.com/search/realtime?q=%23objc-dv) hashtag
+
+
 ### Hard way - or "I want to read what I'm doing!"
 
 Here's [detailed description](https://github.com/PaulTaykalo/objc-dependency-visualizer/wiki) of what's going on under the hood

@@ -37,12 +37,12 @@ if options[:project_name]
    end
   }
 
-  IO.popen("find ~/Library/Caches/appCode20/DerivedData -name \"#{options[:project_name]}*-*\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f| 
+  IO.popen("find ~/Library/Caches/appCode*/DerivedData -name \"#{options[:project_name]}*-*\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f| 
    f.each do |line|  
     paths << line
    end
   }
-
+  
   $stderr.puts "There were #{paths.length} directories found"
   if paths.empty?
     $stderr.puts "Cannot find projects that starts with '#{options[:project_name]}'"

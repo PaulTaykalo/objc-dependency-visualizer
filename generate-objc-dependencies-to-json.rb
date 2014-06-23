@@ -37,13 +37,7 @@ if options[:project_name]
    end
   }
 
-  IO.popen("find ~/Library/Caches/appCode20/DerivedData -name \"#{options[:project_name]}*-*\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f| 
-   f.each do |line|  
-    paths << line
-   end
-  }
-
-  IO.popen("find ~/Library/Caches/appCode30/DerivedData -name \"#{options[:project_name]}*-*\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f| 
+  IO.popen("find ~/Library/Caches/appCode*/DerivedData -name \"#{options[:project_name]}*-*\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f| 
    f.each do |line|  
     paths << line
    end

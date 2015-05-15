@@ -61,5 +61,11 @@ text {
 form {
   position: absolute;
   right: 10px;
+  top: 30px;
+}
+
+#simple-menu {
+  position: absolute;
+  right: 10px;
   top: 10px;
 }

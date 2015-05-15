@@ -8,7 +8,7 @@
   var objcdv = {
     version: "0.0.1"
   };
-  objcdv.parse_dependencies_graph = function (dependencies, regexp_color_matchers) {
+  objcdv.parse_dependencies_graph = function (dependencies) {
 
     var nodes = [];
     var links = [];
@@ -77,13 +77,9 @@
       return b.value - a.value;
     });
 
-    // If we dont' have regexp_color_matchers, we'll set them up, based on prefixes
-    var group_regexp_identifiers = regexp_color_matchers;
-    if (group_regexp_identifiers == null) {
-       group_regexp_identifiers = [];
-       for (var i = 0; i < sorted_prefixes.length; i++) {
-           group_regexp_identifiers.push("^" + sorted_prefixes[i].key+".*");
-       }
+    var group_regexp_identifiers = [];
+    for (var i = 0; i < sorted_prefixes.length; i++) {
+       group_regexp_identifiers.push("^" + sorted_prefixes[i].key+".*");
     }
 
     // Setting up nodes groups, based on the group_regexp_identifiers
@@ -103,7 +99,7 @@
       }
 
       nodes.push(node);
-       console.log(" Pushing node : IDX=" + idx + ", name=" + p + ", groupId=" + node.group + ", source=" + node.source + ", dest=" + node.dest + ", weight=" + node.weight);
+      console.log(" Pushing node : IDX=" + idx + ", name=" + p + ", groupId=" + node.group + ", source=" + node.source + ", dest=" + node.dest + ", weight=" + node.weight);
       idx++;
     }
 

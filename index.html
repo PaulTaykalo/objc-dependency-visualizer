@@ -2,8 +2,28 @@
 <meta charset="utf-8">
 <head>
   <link rel="stylesheet" type="text/css" href="dependency.css">
+  <link rel="stylesheet" href="Scripts/sidr/stylesheets/jquery.sidr.dark.css">
+  <style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    #editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        width: 700px;
+        left: 0;
+        height: 100%;
+    }
+    #sidr {
+      width: 700px;
+    }
+  </style>
 </head>
 <body>
+  <script type="text/javascript" src="Scripts/jquery/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="Scripts/sidr/jquery.sidr.js"></script>
+
   <script src="Scripts/d3.v3.js"></script>
   <script src="origin.js"></script>
   
@@ -19,9 +39,73 @@
     <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%;"><br>
 
   </form>
+
+  <a id="simple-menu" href="#sidr">Editor</a>
+
   <div id="chart">
     <!-- Here the SVG will be placed-->
   </div>
+
+<div id="sidr">
+  <pre id="editor">
+// This one is used by default
+// Groups are set based on the Prefixes
+function default_coloring(d) {
+  return color(d.group); 
+}
+
+// This function will group nodes based on the
+// Rgular expressions you've provided
+function regex_based_coloring(d) {
+  var className = d.name
+  
+  var rules = ["Magical", "Mapp", "^NS", "^UI",  "^NI", "AF", ""];
+//   var rules = ["ViewController", "View"]
+  
+  for (var i = 0; i &lt; rules.length; i++) {
+    var re = new RegExp(rules[i], "");
+    if (className.match(re)) {
+      return color(i + 1)
+    }
+  }
+  return "black";
+}
+
+// Filling out with default coloring
+// node.style("fill", default_coloring)
+node.style("fill", regex_based_coloring)
+  
+force.start()
+    
+    </pre>
+</div>
+
+<script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/javascript");
+
+    editor.getSession().on('change', function(e) {
+      try {
+        eval(editor.getSession().getValue())
+      } catch (err) {
+        console.log(err)
+      }
+     });
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#simple-menu').sidr(
+    { displace: false ,
+      onOpen: function() {
+         editor.resize()
+     }}
+    );
+});
+</script>
+
 <script src="Scripts/graph-actions-select.js"></script>
 <script src="Scripts/parse.js"></script>
 <script>
@@ -45,20 +129,9 @@ var default_circle_radius = 15;
 var show_texts_near_circles = false;
 var default_max_texts_length = 100;
 
-// Should we use regexp-based  grouping or not
-var use_regexp_color_grouping_matchers = false;
-
 var charge_multiplier = 200;
 
-// Each item thet matches specified regexps will be placed to correspondent group with unique color
-var regexp_color_matchers = [
-  "^NI",  // Nimbus
-  "^UI",  // UIKit
-  "^NS",  // Foundation
-  "^CA",  // Core animations
-];
-
-var dependecy_graph = objcdv.parse_dependencies_graph(dependencies, use_regexp_color_grouping_matchers ? regexp_color_matchers : null);
+var dependecy_graph = objcdv.parse_dependencies_graph(dependencies);
 
 var w = window,
     d = document,
@@ -73,9 +146,6 @@ var w = window,
 
 // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
 var color = d3.scale.category10();
-var selectedIdx = -1
-var selectedType = "normal"
-var selectedobject = {}
 
 var container = d3.select("#chart").append("svg")
       .attr("width", x)
@@ -90,11 +160,10 @@ container.append("rect")
   .attr("height", y)
   .style("fill", "none")
   .style("pointer-events", "all")
-  .call(d3.behavior.zoom().on("zoom", redraw))
-
-  function redraw() {
+  .call(d3.behavior.zoom().on("zoom", function() {
     svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-  }    
+  }))
+
 
 //  ===================================================
 //  =============== FORCE LAYOUT ======================

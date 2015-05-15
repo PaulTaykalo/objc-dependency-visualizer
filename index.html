@@ -2,8 +2,28 @@
 <meta charset="utf-8">
 <head>
   <link rel="stylesheet" type="text/css" href="dependency.css">
+  <link rel="stylesheet" href="Scripts/sidr/stylesheets/jquery.sidr.dark.css">
+  <style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    #editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        width: 700px;
+        left: 0;
+        height: 100%;
+    }
+    #sidr {
+      width: 700px;
+    }
+  </style>
 </head>
 <body>
+  <script type="text/javascript" src="Scripts/jquery/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="Scripts/sidr/jquery.sidr.js"></script>
+
   <script src="Scripts/d3.v3.js"></script>
   <script src="origin.js"></script>
   
@@ -19,10 +39,73 @@
     <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%;"><br>
 
   </form>
+
+  <a id="simple-menu" href="#sidr">Editor</a>
+
   <div id="chart">
     <!-- Here the SVG will be placed-->
   </div>
 
+<div id="sidr">
+  <pre id="editor">
+// This one is used by default
+// Groups are set based on the Prefixes
+function default_coloring(d) {
+  return color(d.group); 
+}
+
+// This function will group nodes based on the
+// Rgular expressions you've provided
+function regex_based_coloring(d) {
+  var className = d.name
+  
+  var rules = ["Magical", "Mapp", "^NS", "^UI",  "^NI", "AF", ""];
+//   var rules = ["ViewController", "View"]
+  
+  for (var i = 0; i &lt; rules.length; i++) {
+    var re = new RegExp(rules[i], "");
+    if (className.match(re)) {
+      return color(i + 1)
+    }
+  }
+  return "black";
+}
+
+// Filling out with default coloring
+node.style("fill", default_coloring)
+// node.style("fill", regex_based_coloring)
+  
+force.start()
+    </pre>
+</div>
+
+<script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/javascript");
+
+    editor.getSession().on('change', function(e) {
+      try {
+        eval(editor.getSession().getValue())
+      } catch (err) {
+        console.log(err)
+      }
+     });
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#simple-menu').sidr(
+    { displace: false ,
+      onOpen: function() {
+         editor.resize()
+     }}
+    );
+});
+</script>
+
+<script src="Scripts/graph-actions-select.js"></script>
 <script src="Scripts/parse.js"></script>
 <script>
 
@@ -45,20 +128,9 @@ var default_circle_radius = 15;
 var show_texts_near_circles = false;
 var default_max_texts_length = 100;
 
-// Should we use regexp-based  grouping or not
-var use_regexp_color_grouping_matchers = false;
-
 var charge_multiplier = 200;
 
-// Each item thet matches specified regexps will be placed to correspondent group with unique color
-var regexp_color_matchers = [
-  "^NI",  // Nimbus
-  "^UI",  // UIKit
-  "^NS",  // Foundation
-  "^CA",  // Core animations
-];
-
-var dependecy_graph = objcdv.parse_dependencies_graph(dependencies, use_regexp_color_grouping_matchers ? regexp_color_matchers : null);
+var dependecy_graph = objcdv.parse_dependencies_graph(dependencies);
 
 var w = window,
     d = document,
@@ -73,9 +145,6 @@ var w = window,
 
 // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
 var color = d3.scale.category10();
-var selectedIdx = -1
-var selectedType = "normal"
-var selectedobject = {}
 
 var container = d3.select("#chart").append("svg")
       .attr("width", x)
@@ -90,11 +159,10 @@ container.append("rect")
   .attr("height", y)
   .style("fill", "none")
   .style("pointer-events", "all")
-  .call(d3.behavior.zoom().on("zoom", redraw))
-
-  function redraw() {
+  .call(d3.behavior.zoom().on("zoom", function() {
     svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-  }    
+  }))
+
 
 //  ===================================================
 //  =============== FORCE LAYOUT ======================
@@ -139,7 +207,7 @@ var link = svg.append("g").selectAll("path")
     .enter().append("path")
     .attr("class", "link")
     .attr("marker-end", "url(#default)")
-    .style("stroke-width", function(d) { return Math.sqrt(1); })
+    .style("stroke-width", function(d) { return 1; })
 
 //  ===================================================
 //  ===============  NODES SETUP     ==================
@@ -154,8 +222,8 @@ var node = svg.append("g").selectAll("circle.node")
     .attr("source", function(d) { return d.source})
     .attr("dest", function(d) { return d.dest})
     .call(force.drag)
-    .on("click", select_node)
-    .on("contextmenu", select_recursively_node)
+    .on("click", function(d) { select_node(svg, d) } )
+    .on("contextmenu", function(d) { select_recursively_node(svg, d) } )
 
 //  ===================================================
 //  ===============  TEXT NODES SETUP     =============
@@ -218,200 +286,6 @@ w.onresize = function(){
 };
 
 
-//  ===================================================
-//  ===============  SELECTING_NODE       =============
-//  ===================================================
-
-function deselect_node(d) { 
-  delete d.fixed
-  selectedIdx = -1
-  selectedobject = {};
-  svg.selectAll('circle, path, text')
-    .classed('filtered', false)
-    .each(function(node) {
-     node.filtered = false
-    })
-    .transition()
-
-  svg.selectAll('.link')
-    .attr("marker-end", "url(#default)")      
-    .classed('filtered', false)
-    .transition()
-
-
-  force.start();
-  return
-}
-
-function select_node(d) { 
-  if (d3.event.defaultPrevented) return
-
-  // Deselect if needed
-  if (d.idx == selectedIdx && selectedType == "normal") { deselect_node(d); return }
-
-  // Update selected object
-  delete selectedobject.fixed
-  selectedIdx = d.idx
-  selectedobject = d
-  selectedobject.fixed = true
-  selectedType = "normal"
-
-  // Figure out the neighboring node id's with brute strength because the graph is small
-  var nodeNeighbors = 
-  dependecy_graph.links
-    .filter(function(link) {
-        return link.source.index === d.index || link.target.index === d.index;})
-    .map(function(link) {
-        return link.source.index === d.index ? link.target.index : link.source.index; 
-      }
-    );
-
-  // Fade out all circles
-  svg.selectAll('circle')
-  .classed('filtered', true)
-  .each(function(node){
-    node.filtered = true;
-    node.neighbours = false;
-  }).transition()
-    
-
-  svg.selectAll('text')
-    .classed('filtered', true)
-    .transition()
-  
-
-  svg.selectAll('.link').
-    transition()
-    .attr("marker-end", "")
-
-
-  // Higlight all circle and texts
-  svg.selectAll('circle, text')
-    .filter(function(node) {
-        return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
-    })
-    .classed('filtered', false)
-    .each(function(node) {
-       node.filtered = false;
-       node.neighbours = true;
-    })
-    .transition()
-
-  // Higlight links
-  svg.selectAll('.link')
-    .filter(function(link) {
-      return link.source.index === d.index || link.target.index == d.index
-    })
-    .classed('filtered', false)
-    .attr("marker-end", function(l) { return l.source.index === d.index ? "url(#dependency)" : "url(#dependants)"})
-    .transition()
-
-  force.start();
-}
-
-function select_recursively_node(d) { 
-  if (d3.event.defaultPrevented) return
-  
-  // Don't show context menu :)
-  d3.event.preventDefault()  
-
-  // Deselect if needed
-  if (d.idx == selectedIdx && selectedType == "recursive") { deselect_node(d); return }
-
-  // Update selected object
-  delete selectedobject.fixed
-  selectedIdx = d.idx
-  selectedobject = d
-  selectedobject.fixed = true
-  selectedType = "recursive"
-
-  // Figure out the neighboring node id's with brute strength because the graph is small
-  var neighbours = {}
-  var nodeNeighbors = 
-  dependecy_graph.links
-    .filter(function(link) {
-        return link.source.index === d.index})
-    .map(function(link) {
-        var idx = link.source.index === d.index ? link.target.index : link.source.index;
-        if (link.source.index === d.index) {
-          console.log("Step 0. Adding ",dependecy_graph.nodes[idx].name)
-          neighbours[idx] = 1;
-        }
-        return idx; 
-      }
-    );
-
-  // Next part - neighbours of neigbours
-  var currentsize = Object.keys(neighbours).length
-  var nextSize = 0;
-  var step = 1;
-  while (nextSize != currentsize) {
-    console.log("Current size " + currentsize + " Next size is " + nextSize)
-    currentsize = nextSize
-    dependecy_graph.links
-        .filter(function(link) {
-            return neighbours[link.source.index] != undefined})
-        .map(function(link) {
-            var idx = link.target.index;
-            console.log("Step "+step+". Adding ",dependecy_graph.nodes[idx].name + " From " + dependecy_graph.nodes[link.source.index].name )
-
-            neighbours[idx] = 1;
-            return idx;
-          }
-        );
-     nextSize = Object.keys(neighbours).length   
-     step = step + 1
-  }
-
-  neighbours[d.index] = 1
-  nodeNeighbors = Object.keys(neighbours).map(function(neibour) {
-      return parseInt(neibour);
-  })
-
-
-  // Fade out all circles
-  svg.selectAll('circle')
-  .classed('filtered', true)
-  .each(function(node){
-    node.filtered = true;
-    node.neighbours = false;
-  }).transition()
-    
-
-  svg.selectAll('text')
-    .classed('filtered', true)
-    .transition()
-  
-
-  svg.selectAll('.link').
-    transition()
-    .attr("marker-end", "")
-
-
-  // Higlight all circle and texts
-  svg.selectAll('circle, text')
-    .filter(function(node) {
-        return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
-    })
-    .classed('filtered', false)
-    .each(function(node) {
-       node.filtered = false;
-       node.neighbours = true;
-    })
-    .transition()
-
-  // Higlight links
-  svg.selectAll('.link')
-    .filter(function(link) {
-      return nodeNeighbors.indexOf(link.source.index) > -1
-    })
-    .classed('filtered', false)
-    .attr("marker-end", function(l) { return l.source.index === d.index ? "url(#dependency)" : "url(#dependants)"})
-    .transition()
-
-  force.start();
-}
-
 </script>
 
 <script>
@@ -454,7 +328,7 @@ function select_recursively_node(d) {
   d3.select("#search_input").on("input", function () {
     // Filter all items
     console.log("Input changed to" + this.value)
-    deselect_node(selectedobject);
+    deselect_selected_node(svg);
 
     if (this.value && this.value.length) {
         var re = new RegExp(this.value, "i");

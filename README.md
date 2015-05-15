@@ -5,7 +5,7 @@ This is the tool, that can use .o(object) files to generate dependency graph.
 All visualisations was done by [d3js](http://d3js.org/) library, which is just awesome!  
 This tool was made just for fun, but images can show how big your project is, how many classes it have, and how they linked to each other    
 
-![Image example](https://pbs.twimg.com/media/BecW8fRCcAAPdP4.png:large)  
+![Image example](https://pbs.twimg.com/media/CFDYofdUsAAzjSK.png:large)  
 
 ### Easiest way - For those who don't like to read docs
 This will clone project, and run it on the latest modified project

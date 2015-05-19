@@ -12,7 +12,7 @@ This will clone project, and run it on the latest modified project
 ```
 git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;
 cd objc-dependency-visualizer ;
-./generate-objc-dependencies-to-json.rb -s -d "" > origin.js ;
+./generate-objc-dependencies-to-json.rb -d -s "" > origin.js ;
 open index.html
 ```
 

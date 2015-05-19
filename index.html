@@ -242,7 +242,7 @@ var text = svg.append("g").selectAll("text")
 //  ===============  FORCE UPDATE        =============
 //  ===================================================
  
-force.on("tick", function() {
+force.on("tick", function(e) {
   svg.selectAll(".node").attr("r", radius);
   link.attr("d", link_line);
   node.attr("transform", transform );
@@ -328,34 +328,45 @@ w.onresize = function(){
   //  ===================================================
   //  =============== LIVE FILTERING      ==============
   //  ===================================================
+  
+  function live_filter_graph(regexp, classname, invert) {
+    classname = typeof classname !== 'undefined' ? classname : "filtered";
+    invert =    typeof invert !== 'undefined'    ? invert    : false;
+
+    var re = new RegExp(regexp, "i");
+    svg.selectAll('circle, text')
+      .classed(classname, function(node) {
+         var filtered = !node.name.match(re);
+         filtered = invert ? !filtered : filtered;
+         node.filtered = filtered;
+         node.neighbours = !filtered;
+         return filtered;
+      })
+      .transition()
+
+   svg.selectAll('.link')
+    .classed(classname, function(l) {
+         var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+         filtered = invert ? !filtered : filtered;
+         return filtered;
+    })
+    .attr("marker-end", function (l) {
+       var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+      filtered = invert ? !filtered : filtered;
+       return filtered ? "" : "url(#default)"
+    })
+    .transition()
+  }
+   
+
   d3.select("#search_input").on("input", function () {
     // Filter all items
     console.log("Input changed to" + this.value)
     deselect_selected_node(svg);
 
     if (this.value && this.value.length) {
-        var re = new RegExp(this.value, "i");
-        svg.selectAll('circle, text')
-          .classed('filtered', function(node) {
-             var filtered = !node.name.match(re);
-             node.filtered = filtered;
-             node.neighbours = !filtered;
-             return filtered;
-          })
-          .transition()
-
-       svg.selectAll('.link')
-        .classed('filtered', function(l) {
-             var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
-             return filtered;
-        })
-        .attr("marker-end", function (l) {
-           var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
-           return filtered ? "" : "url(#default)"
-        })
-        .transition()
-   
-       force.start();   
+      live_filter_graph(this.value, "filtered")
+      force.start();   
     }
   });
 </script>

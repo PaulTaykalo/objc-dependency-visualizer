@@ -16,6 +16,22 @@ text.filtered {
   stroke-opacity:0.1;
 }
 
+.node.skipped {
+  fill-opacity:0.0;
+  stroke-opacity:0.0;
+}
+
+text.skipped {
+  fill-opacity:0;
+  stroke-opacity:0;
+}
+
+.link.skipped {
+  stroke: #ddd;
+  fill-opacity:0.0;
+  stroke-opacity:0.0;
+}
+
 .node {
   stroke: #000;
   stroke-width: 0.5px;

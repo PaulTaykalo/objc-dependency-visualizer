@@ -5,7 +5,7 @@ require 'optparse'
 options = {}
 
 #Defaults
-options[:exclusion_prefixes] = "NS|UI|CA"
+options[:exclusion_prefixes] = "NS|UI|CA|CG|CI"
 
 
 parser = OptionParser.new do |o|
@@ -22,6 +22,10 @@ parser = OptionParser.new do |o|
   }
   o.on('-e PREFIXES', "Prefixes of classes those will be exсluded from visualization. \n\t\t\t\t\tNS|UI\n\t\t\t\t\tUI|CA|MF") { |exclusion_prefixes| 
     options[:exclusion_prefixes] = exclusion_prefixes
+  }
+
+  o.on("-d", "--use-dwarf-info", "Use DWARF Information also") { |v|
+    options[:use_dwarf] = v
   }
 
   o.separator "Common options:"
@@ -84,6 +88,7 @@ puts <<-THEEND
    	  [
 THEEND
 
+links = {}
 
 #Searching all the .o files and showing its information through nm call
 IO.popen("find \"#{options[:search_directory]}\" -name \"*.o\" -exec  /usr/bin/nm -o {} \\;") { |f| 
@@ -103,15 +108,57 @@ IO.popen("find \"#{options[:search_directory]}\" -name \"*.o\" -exec  /usr/bin/n
 
       			source,dest = /[^\w]*([^\.\/]+)\.o.*_OBJC_CLASS_\$_(.*)/.match(line)[1,2]
       			if source != dest 
-     				puts "            { \"source\" : \"#{source}\", \"dest\" : \"#{dest}\" },"
+              destinations = links[source] ? links[source] : (links[source] = {})
+              destinations[dest] = "set up"
       			end
       		end
-	  end
-    end
+	    end
+   end
 }  
 
+if options[:use_dwarf]
+
+  # Search files again
+  IO.popen("find \"#{options[:search_directory]}\" -name \"*.o\"") { |f| 
+     f.each do |line|  
+
+      # puts "Running dwarfdump #{line} | grep -A1 TAG_pointer_type"
+      source = /.*\/(.+)\.o/.match(line)[1]
+      IO.popen("dwarfdump #{line.strip} | grep -A1 TAG_pointer_type") { |fd| 
+        fd.each do |line2|
+          # Finding the name in types
+          # AT_type( {0x00000456} ( objc_object ) )
+          name = /.*?AT_type\(\s\{.*?\}.*\(\s((function|const)\s)?([A-Z][^\)]+?)\*?\s\).*/.match(line2)
+          if name != nil
+             dest = name[3] 
+             if /^(#{options[:exclusion_prefixes]})/.match(dest) == nil
+                if source != dest and dest != "BOOL"
+                  destinations = links[source] ? links[source] : (links[source] = {})
+                  destinations[dest] = "set up"
+                end
+             end 
+          end
+        end
+      }
+    end
+  }
+end
+
+sources_count = links.length
+links_count = 0
+links.each do |source, dest_hash|
+  links_count = links_count + dest_hash.length
+  dest_hash.each do |dest, _ |
+    puts "            { \"source\" : \"#{source}\", \"dest\" : \"#{dest}\" },"
+  end  
+end
+
+
+
 puts <<-THEEND
-         ]
+         ],
+     "source_files_count":#{sources_count},    
+     "links_count":#{links_count},    
     }
   ;  
 THEEND

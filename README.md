@@ -16,7 +16,7 @@ cd objc-dependency-visualizer ;
 open index.html
 ```
 
-### Using Swift project?
+### Easiest way for Swift projects
 ```
 git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;
 cd objc-dependency-visualizer ;

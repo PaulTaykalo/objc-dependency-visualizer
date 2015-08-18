@@ -1,4 +1,4 @@
-Objective-C Class Dependencies Visualizer
+Objective-C And Swift Dependencies Visualizer
 ==========================  
 
 This is the tool, that can use .o(object) files to generate dependency graph.  
@@ -13,6 +13,14 @@ This will clone project, and run it on the latest modified project
 git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;
 cd objc-dependency-visualizer ;
 ./generate-objc-dependencies-to-json.rb -d -s "" > origin.js ;
+open index.html
+```
+
+### Using Swift project?
+```
+git clone https://github.com/PaulTaykalo/objc-dependency-visualizer.git ;
+cd objc-dependency-visualizer ;
+./generate-objc-dependencies-to-json.rb -w -s "" > origin.js ;
 open index.html
 ```
 

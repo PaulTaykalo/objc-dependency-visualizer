@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'objc_dependency_tree_generator'
+generator = ObCDependencyTreeGenerator.new ObCDependencyTreeGenerator.parse_command_line_options
+puts generator.dependencies_to_s

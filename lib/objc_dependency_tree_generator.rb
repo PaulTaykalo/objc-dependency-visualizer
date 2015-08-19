@@ -1,7 +1,7 @@
 require 'optparse'
 require 'yaml'
 
-class ObCDependencyTreeGenerator
+class ObjCDependencyTreeGenerator
 
   def initialize(options)
     @options = options
@@ -55,6 +55,10 @@ class ObCDependencyTreeGenerator
   end
 
   def find_dependencies
+    if !@options or @options.empty?
+      return {}
+    end
+
     if !@options[:search_directory]
       paths = []
 

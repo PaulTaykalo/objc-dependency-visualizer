@@ -5,6 +5,8 @@ class ObjCDependencyTreeGenerator
 
   def initialize(options)
     @options = options
+    @options[:exclusion_prefixes] = "NS|UI|CA|CG|CI|CF" unless @options[:exclusion_prefixes]
+    @options[:derived_data_project_pattern] =  "*-*" unless @options[:derived_data_project_pattern]
   end
 
   def self.parse_command_line_options
@@ -60,11 +62,14 @@ class ObjCDependencyTreeGenerator
     end
 
     if !@options[:search_directory]
+      unless @options[:derived_data_paths]
+        return {}
+      end
       paths = []
 
       # looking for derived data
       @options[:derived_data_paths].each do |derived_data_path|
-        IO.popen("find #{derived_data_path} -name \"#{@options[:project_name]}#{derived_data_project_pattern}\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f|
+        IO.popen("find #{derived_data_path} -name \"#{@options[:project_name]}#{@options[:derived_data_project_pattern]}\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f|
           f.each do |line|
             paths << line
           end
@@ -195,9 +200,10 @@ class ObjCDependencyTreeGenerator
         IO.popen("find \"#{@options[:search_directory]}\" -name \"*.o\"") { |f|
           f.each do |line|
 
-            # puts "Running dwarfdump #{line} | grep -A1 TAG_pointer_type"
+            # puts "Running dwarfdump \"#{line}\" | grep -A1 TAG_pointer_type"
             source = /.*\/(.+)\.o/.match(line)[1]
-            IO.popen("dwarfdump #{line.strip} | grep -A1 TAG_pointer_type") { |fd|
+            destinations = links[source] ? links[source] : (links[source] = {})
+            IO.popen("dwarfdump \"#{line.strip}\" | grep -A1 TAG_pointer_type") { |fd|
               fd.each do |line2|
                 # Finding the name in types
                 # AT_type( {0x00000456} ( objc_object ) )
@@ -206,7 +212,6 @@ class ObjCDependencyTreeGenerator
                   dest = name[3]
                   if can_be_used_as_destination(dest, @options[:exclusion_prefixes])
                     if source != dest and dest != "BOOL"
-                      destinations = links[source] ? links[source] : (links[source] = {})
                       destinations[dest] = "set up"
                     end
                   end

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'optparse'
 require 'yaml'
 
@@ -69,7 +70,7 @@ class ObjCDependencyTreeGenerator
 
       # looking for derived data
       @options[:derived_data_paths].each do |derived_data_path|
-        IO.popen("find #{derived_data_path} -name \"#{@options[:project_name]}#{@options[:derived_data_project_pattern]}\" -type d -depth 1 -exec find {} -type d -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" \\; ") { |f|
+        IO.popen("find #{derived_data_path} -depth 1 -name \"#{@options[:project_name]}#{@options[:derived_data_project_pattern]}\" -type d  -exec find {} -name \"i386\" -o -name \"armv*\" -o -name \"x86_64\" -type d \\; ") { |f|
           f.each do |line|
             paths << line
           end

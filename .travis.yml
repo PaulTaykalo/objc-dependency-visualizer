@@ -1,0 +1,11 @@
+os: 
+  - osx
+osx_image: xcode6.4
+sudo: false
+cache: bundler
+language: 
+  - objective-c
+rvm:
+  - 1.9.3
+script:
+  - rake

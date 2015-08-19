@@ -38,30 +38,6 @@ def find_project_output_directory(derived_data_paths, project_prefix, project_su
   last_modified_dir
 end
 
-
-def object_files_in_dir(object_files_dir)
-  IO.popen("find \"#{object_files_dir}\" -name \"*.o\"") { |f|
-    f.each { |line| yield line }
-  }
-end
-
-def swift_deps_files_in_dir(object_files_dir)
-  Dir.glob("#{object_files_dir}/*.swiftdeps") { |file| yield file }
-end
-
-def symbol_names_in_files_in_dir(object_files_dir)
-  IO.popen("find \"#{object_files_dir}\" -name \"*.o\" -exec /usr/bin/nm -o {} \\;") { |f|
-    f.each { |line| yield line }
-  }
-end
-
-def dwarfdump_tag_pointers_in_file(filename)
-  IO.popen("dwarfdump \"#{filename.strip}\" | grep -A1 TAG_pointer_type") { |fd|
-    fd.each { |line| yield line }
-  }
-end
-
-
 def is_primitive_swift_type?(dest)
   /^(BOOL|Int|Int32|Int64|Int16|Int8|UInt|UInt32|UInt64|UInt16|UInt8|String|Character|Bool|Float|Double|Dictionary|Array|Set|AnyObject|Void)$/.match(dest) != nil
 end
@@ -71,5 +47,5 @@ def is_filtered_swift_type?(dest)
 end
 
 def is_valid_dest?(dest, exclusion_prefixes)
-  dest != nil and /^(#{exclusion_prefixes})/.match(dest) == nil and /^\w/.match(dest) != nil and !is_primitive_swift_type?(dest) and !is_filtered_swift_type?(dest)
+  dest != nil and /^(#{exclusion_prefixes})/.match(dest) == nil and /^(<\s)?\w/.match(dest) != nil and !is_primitive_swift_type?(dest) and !is_filtered_swift_type?(dest)
 end

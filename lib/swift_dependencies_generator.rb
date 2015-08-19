@@ -1,6 +1,6 @@
 class SwiftDependenciesGenerator
 
-  def self.generate_dependencies(object_files_dir)
+  def generate_dependencies(object_files_dir)
     # This thing need to be commented :) It's removes too many connections
     # YAML.add_domain_type("", "private") { |type, val|
     #   'AnyObject'
@@ -15,12 +15,13 @@ class SwiftDependenciesGenerator
       next unless provided_objs
 
       if provided_objs.length == 1
-        provided_objs.each { |source|
+        provided_objs.each do |source|
           yield source, nil
           top_level_deps.each do |dest|
             yield source, dest unless provided_objs.include?(dest)
           end
-        }
+        end
+
       else
 
         filename = '< ' + File.basename(my_text_file, '.swiftdeps') +' >'
@@ -35,6 +36,10 @@ class SwiftDependenciesGenerator
         end
       end
     end
+  end
+
+  def swift_deps_files_in_dir(object_files_dir)
+    Dir.glob("#{object_files_dir}/*.swiftdeps") { |file| yield file }
   end
 
 

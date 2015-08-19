@@ -9,9 +9,9 @@ class ObjCDependencyTreeGenerator
 
   def initialize(options)
     @options = options
-    @options[:exclusion_prefixes] = 'NS|UI|CA|CG|CI|CF' unless @options[:exclusion_prefixes]
     @options[:derived_data_project_pattern] = '*-*' unless @options[:derived_data_project_pattern]
 
+    @exclusion_prefixes = @options[:exclusion_prefixes] ? @options[:exclusion_prefixes] : 'NS|UI|CA|CG|CI|CF'
     @object_files_directory = @options[:search_directory]
   end
 
@@ -82,15 +82,15 @@ class ObjCDependencyTreeGenerator
     links = {}
     links_block = lambda { |source, dest|
       links[source] = {} unless links[source]
-      if source != dest and is_valid_dest?(dest, @options[:exclusion_prefixes])
+      if source != dest and is_valid_dest?(dest, @exclusion_prefixes)
         links[source][dest] = 'set up'
       end
     }
 
     if @options[:swift_dependencies]
-      SwiftDependenciesGenerator.generate_dependencies(@object_files_directory, &links_block)
+      SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directory, &links_block)
     else
-      ObjcDependenciesGenerator.generate_dependencies(@object_files_directory, @options[:use_dwarf], &links_block)
+      ObjcDependenciesGenerator.new.generate_dependencies(@object_files_directory, @options[:use_dwarf], &links_block)
     end
 
     links

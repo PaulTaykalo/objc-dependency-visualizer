@@ -17,8 +17,9 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_not_nil(dependencies['TwoClass'])
     assert_not_nil(dependencies['AppDelegate'])
     assert_not_nil(dependencies['MasterViewController']['DetailViewController'])
-    assert_not_nil(dependencies['TwoClass']['OneClass'])
     assert_not_nil(dependencies['AppDelegate']['TwoClass'])
+    assert_not_nil(dependencies['AppDelegate']['ThreeClass'])
+    assert_equal(dependencies['TwoClass'], dependencies['ThreeClass'])
 
   end
 

@@ -1,8 +1,10 @@
 ### Swift dependencies file v0 ###
 provides:
 - "TwoClass"
+- "ThreeClass"
 nominals:
 - "C6Swifty8TwoClass"
+- "C6Swifty10ThreeClass"
 class-members:
 top-level:
 - "OneClass"

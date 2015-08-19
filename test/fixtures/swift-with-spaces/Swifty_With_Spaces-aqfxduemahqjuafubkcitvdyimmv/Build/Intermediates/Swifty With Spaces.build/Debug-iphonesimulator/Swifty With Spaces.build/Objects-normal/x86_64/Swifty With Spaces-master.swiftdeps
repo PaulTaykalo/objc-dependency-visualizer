@@ -1,0 +1,6 @@
+version: "Apple Swift version 1.2 (swiftlang-602.0.53.1 clang-602.0.53)"
+options: "b570ac855510d22dbe45b601e19a0c16"
+inputs: 
+- "/Volumes/data/Projects/tmp/Swifty With Spaces/Swifty With Spaces/SimpleModel.swift"
+- "/Volumes/data/Projects/tmp/Swifty With Spaces/Swifty With Spaces/ViewController.swift"
+- "/Volumes/data/Projects/tmp/Swifty With Spaces/Swifty With Spaces/AppDelegate.swift"

@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require 'objc_dependency_tree_generator'
+options = ObjCDependencyTreeGenerator.parse_command_line_options
+generator = ObjCDependencyTreeGenerator.new options
+puts generator.dependencies_to_s

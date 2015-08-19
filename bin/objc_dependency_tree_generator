@@ -2,6 +2,11 @@
 # encoding: UTF-8
 
 require 'objc_dependency_tree_generator'
+
+# resolve options from command line
 options = ObjCDependencyTreeGenerator.parse_command_line_options
+
+# creating generator
 generator = ObjCDependencyTreeGenerator.new options
+
 puts generator.dependencies_to_s

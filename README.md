@@ -1,5 +1,6 @@
 Objective-C And Swift Dependencies Visualizer
 ==========================  
+[![Build Status](https://travis-ci.org/PaulTaykalo/objc-dependency-visualizer.svg)](https://travis-ci.org/PaulTaykalo/objc-dependency-visualizer)  
 
 This is the tool, that can use .o(object) files to generate dependency graph.  
 All visualisations was done by [d3js](http://d3js.org/) library, which is just awesome!  

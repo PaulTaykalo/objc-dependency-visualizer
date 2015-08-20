@@ -22,6 +22,8 @@ class ObjCDependencyTreeGenerator
 #Defaults
     options[:derived_data_paths] = ['~/Library/Developer/Xcode/DerivedData', '~/Library/Caches/appCode*/DerivedData']
     options[:project_name] = ''
+    options[:output_format] = 'json'
+
 
     parser = OptionParser.new do |o|
       o.separator 'General options:'

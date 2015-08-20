@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'optparse'
 require 'yaml'
+require 'json'
 require 'objc_dependency_tree_generator_helper'
 require 'swift_dependencies_generator'
 require 'objc_dependencies_generator'
@@ -48,7 +49,9 @@ class ObjCDependencyTreeGenerator
       o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') { |v|
         options[:swift_dependencies] = v
       }
-
+      o.on('-f FORMAT', 'Output format. json by default. Possible values are [json-pretty|json|json-var|yaml]') { |f|
+        options[:output_format] = f
+      }
 
       o.separator 'Common options:'
       o.on_tail('-h', 'Prints this help') { puts o; exit }
@@ -98,28 +101,31 @@ class ObjCDependencyTreeGenerator
 
   def dependencies_to_s
     links = find_dependencies
-    s = <<-THEEND
-   var dependencies = {
-   	links:
-   	  [
-    THEEND
+    s = ''
+    if @options[:output_format] == 'json-var'
+      s+= <<-THEEND
+   var dependencies =
+      THEEND
+    end
 
-    sources_count = links.length
+    json_result = {}
+    json_links = []
+
     links_count = 0
     links.each do |source, dest_hash|
       links_count = links_count + dest_hash.length
       dest_hash.each do |dest, _|
-        s += "            { \"source\" : \"#{source}\", \"dest\" : \"#{dest}\" },\n"
+        json_links += [{'source' => source, 'dest' => dest}]
       end
     end
+    json_result['links'] = json_links
+    json_result['source_files_count'] = links.length
+    json_result['links_count'] = links_count
 
-    s += <<-THEEND
-         ],
-     "source_files_count":#{sources_count},
-     "links_count":#{links_count},
-    }
-  ;
-    THEEND
+
+    s = s + JSON.pretty_generate(json_result) if @options[:output_format] == 'json-pretty'
+    s = s + json_result.to_json if @options[:output_format] == 'json' || @options[:output_format] == 'json-var'
+    s = s + json_result.to_yaml if @options[:output_format] == 'yaml'
     s
   end
 

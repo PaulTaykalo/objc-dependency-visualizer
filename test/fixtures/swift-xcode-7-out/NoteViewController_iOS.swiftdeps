@@ -1,0 +1,520 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "NoteViewController_iOS"
+provides-nominal:
+- "C12Purple_Notes22NoteViewController_iOS"
+provides-member:
+- ["C12Purple_Notes22NoteViewController_iOS", ""]
+provides-dynamic-lookup:
+- "showBackButton"
+- "restoreDatabase"
+- "textViewBottomConstraint"
+- "deleteAction"
+- "keyboardWillShow"
+- "spaceButton"
+- "clearAttributedString"
+- "textView"
+- "textView"
+- "imagePickerControllerDidCancel"
+- "notebook"
+- "addButton"
+- "organizeAction"
+- "attachmentAction"
+- "splitViewController"
+- "splitViewController"
+- "textViewTextWithRegularSize"
+- "updateUserActivityState"
+- "imagePickerController"
+- "attachmentButton"
+- "backToSearchAction"
+- "favouriteButton"
+- "masterPopoverController"
+- "saveAction"
+- "updateView"
+- "addAction"
+- "organizeButton"
+- "tapAction"
+- "saveButton"
+- "viewDidAppear"
+- "shareAction"
+- "textViewDidEndEditing"
+- "note"
+- "organizeViewControllerDidSelect"
+- "shareButton"
+- "noteTextWithIncreasedSize"
+- "favouriteAction"
+- "keyboardWillHide"
+- "deleteNote"
+- "deleteButton"
+- "textViewDidChange"
+- "viewDidLoad"
+depends-top-level:
+- "NSAttributedString"
+- "UISplitViewController"
+- "NoteViewController_iOS"
+- !private "Mixpanel"
+- !private "StringLiteralType"
+- !private "NSMakeRange"
+- !private "dispatch_async"
+- "UITapGestureRecognizer"
+- !private "UIView"
+- !private "NSOperationQueue"
+- !private "CGPoint"
+- !private "NSManagedObjectID"
+- !private "UnicodeScalarType"
+- !private "UIContentSizeCategoryDidChangeNotification"
+- "Bool"
+- !private "NSLog"
+- !private "UIButton"
+- "UIPopoverController"
+- !private "Array"
+- !private "NSDeletedObjectsKey"
+- !private "Dictionary"
+- !private "NSNotificationCenter"
+- "BooleanLiteralType"
+- !private "NSMutableAttributedString"
+- "UITextView"
+- !private "NSFontAttributeName"
+- !private "UIActivityViewController"
+- !private "UIFont"
+- !private "UIKeyboardAnimationDurationUserInfoKey"
+- !private "OrganizeViewController_iOS"
+- "NSRange"
+- !private "!="
+- "UIViewController"
+- !private "UIKeyboardWillShowNotification"
+- !private "UIAlertController"
+- "UIImage"
+- !private "ImageViewController_iOS"
+- "UIBarButtonItem"
+- !private "DatabaseControllerRestoreNotification"
+- "Note"
+- !private "NSLocalizedString"
+- !private "UIAlertAction"
+- !private "-="
+- "String"
+- "NSTextAttachment"
+- !private "/"
+- !private "NSAttributedStringEnumerationOptions"
+- !private "dispatch_get_main_queue"
+- !private "UISimpleTextPrintFormatter"
+- !private "Void"
+- !private "*"
+- "UINavigationControllerDelegate"
+- "UIImagePickerControllerDelegate"
+- !private "Configuration"
+- !private "DatabaseControllerSynchronizationNotification"
+- !private "UIKeyboardWillHideNotification"
+- !private "UINavigationController"
+- "NSLayoutConstraint"
+- "AnyObject"
+- "Notebook"
+- !private "-"
+- !private "=="
+- "UISplitViewControllerDelegate"
+- !private "NSForegroundColorAttributeName"
+- !private "UIColor"
+- !private "UIKeyboardFrameEndUserInfoKey"
+- "OrganizeViewControllerDelegate"
+- !private "Database"
+- "NSUserActivity"
+- "NSNotification"
+- "UITextViewDelegate"
+- !private "UIEdgeInsets"
+- "UIImagePickerController"
+- "UIGestureRecognizerDelegate"
+- !private "NSSet"
+depends-member:
+- !private ["PSs9AnyObject", "ActivityKeyVersion"]
+- !private ["PSs9AnyObject", "ActivityTypeNoteEdit"]
+- !private ["PSs9AnyObject", "ActivityVersion1"]
+- !private ["PSs9AnyObject", "CGPoint"]
+- !private ["PSs9AnyObject", "CGRectValue"]
+- !private ["PSs9AnyObject", "Configuration"]
+- !private ["PSs9AnyObject", "Database"]
+- !private ["PSs9AnyObject", "DatabaseControllerRestoreNotification"]
+- !private ["PSs9AnyObject", "DatabaseControllerSynchronizationNotification"]
+- !private ["PSs9AnyObject", "Element"]
+- !private ["PSs9AnyObject", "Generator"]
+- !private ["PSs9AnyObject", "Mixpanel"]
+- !private ["PSs9AnyObject", "NSAttributedString"]
+- !private ["PSs9AnyObject", "NSAttributedStringEnumerationOptions"]
+- !private ["PSs9AnyObject", "NSDeletedObjectsKey"]
+- !private ["PSs9AnyObject", "NSFontAttributeName"]
+- !private ["PSs9AnyObject", "NSForegroundColorAttributeName"]
+- !private ["PSs9AnyObject", "NSLocalizedString"]
+- !private ["PSs9AnyObject", "NSLog"]
+- !private ["PSs9AnyObject", "NSMakeRange"]
+- !private ["PSs9AnyObject", "NSMutableAttributedString"]
+- !private ["PSs9AnyObject", "NSNotificationCenter"]
+- !private ["PSs9AnyObject", "NSOperationQueue"]
+- !private ["PSs9AnyObject", "NSTextAttachment"]
+- !private ["PSs9AnyObject", "NSUserActivity"]
+- !private ["PSs9AnyObject", "UIActivityViewController"]
+- !private ["PSs9AnyObject", "UIAlertAction"]
+- !private ["PSs9AnyObject", "UIAlertController"]
+- !private ["PSs9AnyObject", "UIBarButtonItem"]
+- !private ["PSs9AnyObject", "UIButton"]
+- !private ["PSs9AnyObject", "UIColor"]
+- !private ["PSs9AnyObject", "UIContentSizeCategoryDidChangeNotification"]
+- !private ["PSs9AnyObject", "UIEdgeInsets"]
+- !private ["PSs9AnyObject", "UIFont"]
+- !private ["PSs9AnyObject", "UIImage"]
+- !private ["PSs9AnyObject", "UIImagePickerController"]
+- !private ["PSs9AnyObject", "UIKeyboardAnimationDurationUserInfoKey"]
+- !private ["PSs9AnyObject", "UIKeyboardFrameEndUserInfoKey"]
+- !private ["PSs9AnyObject", "UIKeyboardWillHideNotification"]
+- !private ["PSs9AnyObject", "UIKeyboardWillShowNotification"]
+- !private ["PSs9AnyObject", "UINavigationController"]
+- !private ["PSs9AnyObject", "UISimpleTextPrintFormatter"]
+- !private ["PSs9AnyObject", "UITapGestureRecognizer"]
+- !private ["PSs9AnyObject", "UIView"]
+- ["PSs9AnyObject", "addAction"]
+- !private ["PSs9AnyObject", "addAttribute"]
+- ["PSs9AnyObject", "addButton"]
+- !private ["PSs9AnyObject", "addGestureRecognizer"]
+- !private ["PSs9AnyObject", "addNote"]
+- !private ["PSs9AnyObject", "addObserver"]
+- !private ["PSs9AnyObject", "addObserverForName"]
+- !private ["PSs9AnyObject", "addTarget"]
+- !private ["PSs9AnyObject", "addUserInfoEntriesFromDictionary"]
+- !private ["PSs9AnyObject", "allowsEditing"]
+- !private ["PSs9AnyObject", "allowsEditingTextAttributes"]
+- !private ["PSs9AnyObject", "animateWithDuration"]
+- !private ["PSs9AnyObject", "appendAttributedString"]
+- !private ["PSs9AnyObject", "attachment"]
+- ["PSs9AnyObject", "attachmentAction"]
+- ["PSs9AnyObject", "attachmentButton"]
+- !private ["PSs9AnyObject", "attributedString"]
+- !private ["PSs9AnyObject", "attributedText"]
+- ["PSs9AnyObject", "backToSearchAction"]
+- !private ["PSs9AnyObject", "backgroundColor"]
+- !private ["PSs9AnyObject", "barButtonItem"]
+- !private ["PSs9AnyObject", "becomeFirstResponder"]
+- !private ["PSs9AnyObject", "blackColor"]
+- !private ["PSs9AnyObject", "category"]
+- !private ["PSs9AnyObject", "characters"]
+- ["PSs9AnyObject", "clearAttributedString"]
+- !private ["PSs9AnyObject", "closestPositionToPoint"]
+- !private ["PSs9AnyObject", "constant"]
+- !private ["PSs9AnyObject", "dataDetectorTypes"]
+- !private ["PSs9AnyObject", "defaultCenter"]
+- !private ["PSs9AnyObject", "delegate"]
+- ["PSs9AnyObject", "deleteAction"]
+- ["PSs9AnyObject", "deleteButton"]
+- ["PSs9AnyObject", "deleteNote"]
+- !private ["PSs9AnyObject", "dismissViewControllerAnimated"]
+- !private ["PSs9AnyObject", "dispatch_async"]
+- !private ["PSs9AnyObject", "dispatch_get_main_queue"]
+- !private ["PSs9AnyObject", "doubleValue"]
+- !private ["PSs9AnyObject", "editable"]
+- !private ["PSs9AnyObject", "enumerateAttribute"]
+- !private ["PSs9AnyObject", "favourite"]
+- ["PSs9AnyObject", "favouriteAction"]
+- ["PSs9AnyObject", "favouriteButton"]
+- !private ["PSs9AnyObject", "favouriteNote"]
+- !private ["PSs9AnyObject", "fontWithSize"]
+- ["PSs9AnyObject", "gestureRecognizer"]
+- ["PSs9AnyObject", "gestureRecognizerShouldBegin"]
+- !private ["PSs9AnyObject", "image"]
+- !private ["PSs9AnyObject", "imageEdgeInsets"]
+- ["PSs9AnyObject", "imagePickerController"]
+- ["PSs9AnyObject", "imagePickerControllerDidCancel"]
+- ["PSs9AnyObject", "init"]
+- !private ["PSs9AnyObject", "instantiateViewControllerWithIdentifier"]
+- !private ["PSs9AnyObject", "isEmpty"]
+- ["PSs9AnyObject", "keyboardWillHide"]
+- ["PSs9AnyObject", "keyboardWillShow"]
+- !private ["PSs9AnyObject", "layoutIfNeeded"]
+- !private ["PSs9AnyObject", "leftBarButtonItem"]
+- !private ["PSs9AnyObject", "length"]
+- !private ["PSs9AnyObject", "locationInView"]
+- !private ["PSs9AnyObject", "mainQueue"]
+- ["PSs9AnyObject", "masterPopoverController"]
+- !private ["PSs9AnyObject", "modalPresentationStyle"]
+- !private ["PSs9AnyObject", "mutableCopy"]
+- ["PSs9AnyObject", "navigationController"]
+- ["PSs9AnyObject", "navigationControllerPreferredInterfaceOrientationForPresentation"]
+- ["PSs9AnyObject", "navigationControllerSupportedInterfaceOrientations"]
+- !private ["PSs9AnyObject", "navigationItem"]
+- !private ["PSs9AnyObject", "needsSave"]
+- ["PSs9AnyObject", "note"]
+- !private ["PSs9AnyObject", "noteForNoteID"]
+- ["PSs9AnyObject", "noteTextWithIncreasedSize"]
+- ["PSs9AnyObject", "notebook"]
+- !private ["PSs9AnyObject", "notebookForObjectID"]
+- !private ["PSs9AnyObject", "numberOfTapsRequired"]
+- !private ["PSs9AnyObject", "objectID"]
+- ["PSs9AnyObject", "organizeAction"]
+- ["PSs9AnyObject", "organizeButton"]
+- ["PSs9AnyObject", "organizeViewControllerDidSelect"]
+- !private ["PSs9AnyObject", "performWithoutAnimation"]
+- !private ["PSs9AnyObject", "permittedArrowDirections"]
+- !private ["PSs9AnyObject", "pointSize"]
+- !private ["PSs9AnyObject", "popToRootViewControllerAnimated"]
+- !private ["PSs9AnyObject", "popViewControllerAnimated"]
+- !private ["PSs9AnyObject", "popoverPresentationController"]
+- !private ["PSs9AnyObject", "presentViewController"]
+- ["PSs9AnyObject", "primaryViewControllerForCollapsingSplitViewController"]
+- ["PSs9AnyObject", "primaryViewControllerForExpandingSplitViewController"]
+- !private ["PSs9AnyObject", "removeAttribute"]
+- !private ["PSs9AnyObject", "resignFirstResponder"]
+- ["PSs9AnyObject", "restoreDatabase"]
+- !private ["PSs9AnyObject", "rightBarButtonItem"]
+- !private ["PSs9AnyObject", "rightBarButtonItems"]
+- ["PSs9AnyObject", "saveAction"]
+- ["PSs9AnyObject", "saveButton"]
+- !private ["PSs9AnyObject", "saveContext"]
+- !private ["PSs9AnyObject", "scrollRangeToVisible"]
+- ["PSs9AnyObject", "scrollViewDidEndDecelerating"]
+- ["PSs9AnyObject", "scrollViewDidEndDragging"]
+- ["PSs9AnyObject", "scrollViewDidEndScrollingAnimation"]
+- ["PSs9AnyObject", "scrollViewDidEndZooming"]
+- ["PSs9AnyObject", "scrollViewDidScroll"]
+- ["PSs9AnyObject", "scrollViewDidScrollToTop"]
+- ["PSs9AnyObject", "scrollViewDidZoom"]
+- ["PSs9AnyObject", "scrollViewShouldScrollToTop"]
+- ["PSs9AnyObject", "scrollViewWillBeginDecelerating"]
+- ["PSs9AnyObject", "scrollViewWillBeginDragging"]
+- ["PSs9AnyObject", "scrollViewWillBeginZooming"]
+- ["PSs9AnyObject", "scrollViewWillEndDragging"]
+- !private ["PSs9AnyObject", "selectedRange"]
+- !private ["PSs9AnyObject", "selectedTextRange"]
+- !private ["PSs9AnyObject", "setContentOffset"]
+- !private ["PSs9AnyObject", "setImage"]
+- !private ["PSs9AnyObject", "setLeftBarButtonItem"]
+- !private ["PSs9AnyObject", "setTitle"]
+- !private ["PSs9AnyObject", "setTitleColor"]
+- ["PSs9AnyObject", "shareAction"]
+- ["PSs9AnyObject", "shareButton"]
+- !private ["PSs9AnyObject", "sharedInstance"]
+- ["PSs9AnyObject", "showBackButton"]
+- !private ["PSs9AnyObject", "sizeToFit"]
+- !private ["PSs9AnyObject", "sourceType"]
+- ["PSs9AnyObject", "spaceButton"]
+- ["PSs9AnyObject", "splitViewController"]
+- ["PSs9AnyObject", "splitViewControllerPreferredInterfaceOrientationForPresentation"]
+- ["PSs9AnyObject", "splitViewControllerSupportedInterfaceOrientations"]
+- !private ["PSs9AnyObject", "state"]
+- !private ["PSs9AnyObject", "storyboard"]
+- !private ["PSs9AnyObject", "string"]
+- ["PSs9AnyObject", "tapAction"]
+- ["PSs9AnyObject", "targetDisplayModeForActionInSplitViewController"]
+- !private ["PSs9AnyObject", "text"]
+- !private ["PSs9AnyObject", "textContainerInset"]
+- !private ["PSs9AnyObject", "textRangeFromPosition"]
+- !private ["PSs9AnyObject", "textStorage"]
+- ["PSs9AnyObject", "textView"]
+- ["PSs9AnyObject", "textViewBottomConstraint"]
+- ["PSs9AnyObject", "textViewDidBeginEditing"]
+- ["PSs9AnyObject", "textViewDidChange"]
+- ["PSs9AnyObject", "textViewDidChangeSelection"]
+- ["PSs9AnyObject", "textViewDidEndEditing"]
+- ["PSs9AnyObject", "textViewShouldBeginEditing"]
+- ["PSs9AnyObject", "textViewShouldEndEditing"]
+- ["PSs9AnyObject", "textViewTextWithRegularSize"]
+- !private ["PSs9AnyObject", "tintColor"]
+- !private ["PSs9AnyObject", "title"]
+- !private ["PSs9AnyObject", "titleEdgeInsets"]
+- !private ["PSs9AnyObject", "toolbarHidden"]
+- !private ["PSs9AnyObject", "toolbarItems"]
+- !private ["PSs9AnyObject", "track"]
+- !private ["PSs9AnyObject", "traitCollection"]
+- !private ["PSs9AnyObject", "unfavouriteNote"]
+- !private ["PSs9AnyObject", "updateNoteNotebook"]
+- !private ["PSs9AnyObject", "updateNoteText"]
+- ["PSs9AnyObject", "updateUserActivityState"]
+- ["PSs9AnyObject", "updateView"]
+- !private ["PSs9AnyObject", "userActivity"]
+- !private ["PSs9AnyObject", "userInfo"]
+- !private ["PSs9AnyObject", "userInterfaceIdiom"]
+- !private ["PSs9AnyObject", "view"]
+- ["PSs9AnyObject", "viewDidAppear"]
+- ["PSs9AnyObject", "viewDidLoad"]
+- ["PSs9AnyObject", "viewForZoomingInScrollView"]
+- !private ["PSs9AnyObject", "width"]
+- ["PSs9AnyObject", ""]
+- !private ["Sa", "Element"]
+- !private ["PSs23ArrayLiteralConvertible", "All"]
+- !private ["PSs23ArrayLiteralConvertible", "Any"]
+- !private ["PSs23ArrayLiteralConvertible", "Element"]
+- !private ["PSs23ArrayLiteralConvertible", "Generator"]
+- !private ["PSs23ArrayLiteralConvertible", "None"]
+- !private ["PSs23ArrayLiteralConvertible", "Normal"]
+- !private ["PSs23ArrayLiteralConvertible", "TouchUpInside"]
+- !private ["PSs23ArrayLiteralConvertible", "init"]
+- !private ["PSs22BidirectionalIndexType", "Distance"]
+- !private ["PSs22BidirectionalIndexType", "IntegerLiteralType"]
+- !private ["PSs21BitwiseOperationsType", "IntegerLiteralType"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["Sb", "deinit"]
+- !private ["PSs25BooleanLiteralConvertible", "_getBuiltinLogicValue"]
+- !private ["PSs11BooleanType", "_getBuiltinLogicValue"]
+- !private ["V12CoreGraphics7CGFloat", "deinit"]
+- !private ["VSC7CGPoint", "init"]
+- !private ["VSC7CGPoint", "x"]
+- !private ["VSC7CGPoint", "y"]
+- !private ["VSC6CGRect", "size"]
+- !private ["VSC6CGSize", "height"]
+- !private ["PSs11CVarArgType", "CGPoint"]
+- !private ["PSs11CVarArgType", "Configuration"]
+- !private ["PSs11CVarArgType", "Database"]
+- !private ["PSs11CVarArgType", "DatabaseControllerRestoreNotification"]
+- !private ["PSs11CVarArgType", "DatabaseControllerSynchronizationNotification"]
+- !private ["PSs11CVarArgType", "Generator"]
+- !private ["PSs11CVarArgType", "IntegerLiteralType"]
+- !private ["PSs11CVarArgType", "Mixpanel"]
+- !private ["PSs11CVarArgType", "NSAttributedString"]
+- !private ["PSs11CVarArgType", "NSAttributedStringEnumerationOptions"]
+- !private ["PSs11CVarArgType", "NSDeletedObjectsKey"]
+- !private ["PSs11CVarArgType", "NSFontAttributeName"]
+- !private ["PSs11CVarArgType", "NSForegroundColorAttributeName"]
+- !private ["PSs11CVarArgType", "NSLocalizedString"]
+- !private ["PSs11CVarArgType", "NSLog"]
+- !private ["PSs11CVarArgType", "NSMakeRange"]
+- !private ["PSs11CVarArgType", "NSMutableAttributedString"]
+- !private ["PSs11CVarArgType", "NSNotificationCenter"]
+- !private ["PSs11CVarArgType", "NSOperationQueue"]
+- !private ["PSs11CVarArgType", "NSTextAttachment"]
+- !private ["PSs11CVarArgType", "NSUserActivity"]
+- !private ["PSs11CVarArgType", "UIActivityViewController"]
+- !private ["PSs11CVarArgType", "UIAlertAction"]
+- !private ["PSs11CVarArgType", "UIAlertController"]
+- !private ["PSs11CVarArgType", "UIBarButtonItem"]
+- !private ["PSs11CVarArgType", "UIButton"]
+- !private ["PSs11CVarArgType", "UIColor"]
+- !private ["PSs11CVarArgType", "UIContentSizeCategoryDidChangeNotification"]
+- !private ["PSs11CVarArgType", "UIEdgeInsets"]
+- !private ["PSs11CVarArgType", "UIFont"]
+- !private ["PSs11CVarArgType", "UIImage"]
+- !private ["PSs11CVarArgType", "UIImagePickerController"]
+- !private ["PSs11CVarArgType", "UIKeyboardAnimationDurationUserInfoKey"]
+- !private ["PSs11CVarArgType", "UIKeyboardFrameEndUserInfoKey"]
+- !private ["PSs11CVarArgType", "UIKeyboardWillHideNotification"]
+- !private ["PSs11CVarArgType", "UIKeyboardWillShowNotification"]
+- !private ["PSs11CVarArgType", "UINavigationController"]
+- !private ["PSs11CVarArgType", "UISimpleTextPrintFormatter"]
+- !private ["PSs11CVarArgType", "UITapGestureRecognizer"]
+- !private ["PSs11CVarArgType", "UIView"]
+- ["PSs11CVarArgType", "addAction"]
+- !private ["PSs11CVarArgType", "addAttribute"]
+- ["PSs11CVarArgType", "addButton"]
+- !private ["PSs11CVarArgType", "addGestureRecognizer"]
+- !private ["PSs11CVarArgType", "addNote"]
+- !private ["PSs11CVarArgType", "addObserver"]
+- !private ["PSs11CVarArgType", "addObserverForName"]
+- !private ["PSs11CVarArgType", "addTarget"]
+- !private ["PSs11CVarArgType", "addUserInfoEntriesFromDictionary"]
+- !private ["PSs11CVarArgType", "allowsEditing"]
+- !private ["PSs11CVarArgType", "allowsEditingTextAttributes"]
+- !private ["PSs11CVarArgType", "animateWithDuration"]
+- !private ["PSs11CVarArgType", "appendAttributedString"]
+- !private ["PSs11CVarArgType", "attachment"]
+- ["PSs11CVarArgType", "attachmentAction"]
+- ["PSs11CVarArgType", "attachmentButton"]
+- !private ["PSs11CVarArgType", "attributedString"]
+- !private ["PSs11CVarArgType", "attributedText"]
+- ["PSs11CVarArgType", "backToSearchAction"]
+- !private ["PSs11CVarArgType", "backgroundColor"]
+- !private ["PSs11CVarArgType", "barButtonItem"]
+- !private ["PSs11CVarArgType", "becomeFirstResponder"]
+- !private ["PSs11CVarArgType", "blackColor"]
+- !private ["PSs11CVarArgType", "category"]
+- !private ["PSs11CVarArgType", "characters"]
+- ["PSs11CVarArgType", "clearAttributedString"]
+- !private ["PSs11CVarArgType", "closestPositionToPoint"]
+- !private ["PSs11CVarArgType", "constant"]
+- !private ["PSs11CVarArgType", "dataDetectorTypes"]
+- !private ["PSs11CVarArgType", "defaultCenter"]
+- !private ["PSs11CVarArgType", "delegate"]
+- ["PSs11CVarArgType", "deleteAction"]
+- ["PSs11CVarArgType", "deleteButton"]
+- ["PSs11CVarArgType", "deleteNote"]
+- !private ["PSs11CVarArgType", "dismissViewControllerAnimated"]
+- !private ["PSs11CVarArgType", "dispatch_async"]
+- !private ["PSs11CVarArgType", "dispatch_get_main_queue"]
+- !private ["PSs11CVarArgType", "editable"]
+- !private ["PSs11CVarArgType", "enumerateAttribute"]
+- !private ["PSs11CVarArgType", "favourite"]
+- ["PSs11CVarArgType", "favouriteAction"]
+- ["PSs11CVarArgType", "favouriteButton"]
+- !private ["PSs11CVarArgType", "favouriteNote"]
+- !private ["PSs11CVarArgType", "fontWithSize"]
+- ["PSs11CVarArgType", "gestureRecognizer"]
+- ["PSs11CVarArgType", "gestureRecognizerShouldBegin"]
+- !private ["PSs11CVarArgType", "image"]
+- !private ["PSs11CVarArgType", "imageEdgeInsets"]
+- ["PSs11CVarArgType", "imagePickerController"]
+- ["PSs11CVarArgType", "imagePickerControllerDidCancel"]
+- ["PSs11CVarArgType", "init"]
+- !private ["PSs11CVarArgType", "instantiateViewControllerWithIdentifier"]
+- !private ["PSs11CVarArgType", "isEmpty"]
+- ["PSs11CVarArgType", "keyboardWillHide"]
+- ["PSs11CVarArgType", "keyboardWillShow"]
+- !private ["PSs11CVarArgType", "layoutIfNeeded"]
+- !private ["PSs11CVarArgType", "leftBarButtonItem"]
+- !private ["PSs11CVarArgType", "length"]
+- !private ["PSs11CVarArgType", "locationInView"]
+- !private ["PSs11CVarArgType", "mainQueue"]
+- ["PSs11CVarArgType", "masterPopoverController"]
+- !private ["PSs11CVarArgType", "modalPresentationStyle"]
+- !private ["PSs11CVarArgType", "mutableCopy"]
+- ["PSs11CVarArgType", "navigationController"]
+- ["PSs11CVarArgType", "navigationControllerPreferredInterfaceOrientationForPresentation"]
+- ["PSs11CVarArgType", "navigationControllerSupportedInterfaceOrientations"]
+- !private ["PSs11CVarArgType", "navigationItem"]
+- !private ["PSs11CVarArgType", "needsSave"]
+- ["PSs11CVarArgType", "note"]
+- !private ["PSs11CVarArgType", "noteForNoteID"]
+- ["PSs11CVarArgType", "noteTextWithIncreasedSize"]
+- ["PSs11CVarArgType", "notebook"]
+- !private ["PSs11CVarArgType", "notebookForObjectID"]
+- !private ["PSs11CVarArgType", "numberOfTapsRequired"]
+- !private ["PSs11CVarArgType", "objectID"]
+- ["PSs11CVarArgType", "organizeAction"]
+- ["PSs11CVarArgType", "organizeButton"]
+- ["PSs11CVarArgType", "organizeViewControllerDidSelect"]
+- !private ["PSs11CVarArgType", "performWithoutAnimation"]
+- !private ["PSs11CVarArgType", "permittedArrowDirections"]
+- !private ["PSs11CVarArgType", "pointSize"]
+- !private ["PSs11CVarArgType", "popToRootViewControllerAnimated"]
+- !private ["PSs11CVarArgType", "popViewControllerAnimated"]
+- !private ["PSs11CVarArgType", "popoverPresentationController"]
+- !private ["PSs11CVarArgType", "presentViewController"]
+- ["PSs11CVarArgType", "primaryViewControllerForCollapsingSplitViewController"]
+- ["PSs11CVarArgType", "primaryViewControllerForExpandingSplitViewController"]
+- !private ["PSs11CVarArgType", "removeAttribute"]
+- !private ["PSs11CVarArgType", "resignFirstResponder"]
+- ["PSs11CVarArgType", "restoreDatabase"]
+- !private ["PSs11CVarArgType", "rightBarButtonItem"]
+- !private ["PSs11CVarArgType", "rightBarButtonItems"]
+- ["PSs11CVarArgType", "saveAction"]
+- ["PSs11CVarArgType", "saveButton"]
+- !private ["PSs11CVarArgType", "saveContext"]
+- !private ["PSs11CVarArgType", "scrollRangeToVisible"]
+- ["PSs11CVarArgType", "scrollViewDidEndDecelerating"]
+- ["PSs11CVarArgType", "scrollViewDidEndDragging"]
+- ["PSs11CVarArgType", "scrollViewDidEndScrollingAnimation"]
+- ["PSs11CVarArgType", "scrollViewDidEndZooming"]
+- ["PSs11CVarArgType", "scrollViewDidScroll"]
+- ["PSs11CVarArgType", "scrollViewDidScrollToTop"]
+- ["PSs11CVarArgType", "scrollViewDidZoom"]
+- ["PSs11CVarArgType", "scrollViewShouldScrollToTop"]
+- ["PSs11CVarArgType", "scrollViewWillBeginDecelerating"]
+- ["PSs11CVarArgType", "scrollViewWillBeginDragging"]
+- ["PSs11CVarArgType", "scrollViewWillBeginZooming"]
+- ["PSs11CVarArgType", "scrollViewWillEndDragging"]
+- !private ["PSs11CVarArgType", "selectedRange"]
+- !private ["PSs11CVarArgType", "selectedTextRange"]
+- !private ["PSs11CVarArgType", "setContentOffset"]
+- !private ["PSs11CVarArgType", "setImage"]
+- !private ["PSs11CVarArgType", "setLeftBarButtonItem"]
+- !private ["PSs11CVarArgType", "setTitle"]
+- !private ["PSs11CVarArgType", "setTitleColor"]
+- ["PSs11CVarArgType", "shareAction"]
+- ["PSs11CVarArgType", "shareButton"]
+- !private ["PSs11CVarArgType", "sharedInstance"]
+- ["PSs11CVarArgType", "showBackButton"]
+- !private ["PSs11CVarArgType", "sizeToFit"]
+- !private ["PSs11CVarArgType", "sourceType"]
+- ["PSs11CVarArgType", "spaceButton"]

@@ -23,6 +23,22 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   end
 
+
+  def test_swift_xcode7_out
+    generator = ObjCDependencyTreeGenerator.new({
+                                                    :search_directory => './test/fixtures/swift-xcode-7-out',
+                                                    :swift_dependencies => true
+                                                })
+    dependencies = generator.find_dependencies
+    assert_not_equal(dependencies, {})
+    assert_not_nil(dependencies['AppDelegate'])
+    assert_not_nil(dependencies['AppDelegate']['Database'])
+    assert_not_nil(dependencies['AppDelegate']['NoteViewController_iOS'])
+    assert_not_nil(dependencies['Note']['Notebook'])
+    assert_not_nil(dependencies['NotesViewController_iOS']['AppDelegate'])
+
+  end
+
   def test_swift_with_spaces_in_name
     generator = ObjCDependencyTreeGenerator.new({
                                                     :derived_data_paths => ['./test/fixtures/swift-with-spaces'],

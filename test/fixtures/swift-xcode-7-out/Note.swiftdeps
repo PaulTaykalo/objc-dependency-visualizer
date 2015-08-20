@@ -1,0 +1,38 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "Note"
+provides-nominal:
+- "C12Purple_Notes4Note"
+provides-member:
+- ["C12Purple_Notes4Note", ""]
+provides-dynamic-lookup:
+- "text"
+- "data"
+- "attributedString"
+- "date"
+- "favourite"
+- "notebook"
+- "subtitle"
+- "title"
+- "formattedDate"
+depends-top-level:
+- !private "NSRTFDTextDocumentType"
+- "NSAttributedString"
+- !private "Dictionary"
+- "Bool"
+- !private "NSDocumentTypeDocumentAttribute"
+- "Notebook"
+- "Note"
+- !private "!"
+- !private "NSDateFormatter"
+- !private "NSCalendar"
+- !private "NSDictionary"
+- !private "NSLocale"
+- !private "StringLiteralType"
+- "String"
+- !private "NSCharacterSet"
+- !private "=="
+- "NSDate"
+- !private "UnicodeScalarType"
+- "NSManagedObject"
+- "NSData"

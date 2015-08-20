@@ -1,0 +1,108 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "Notebook"
+provides-nominal:
+- "C12Purple_Notes8Notebook"
+provides-member:
+- ["C12Purple_Notes8Notebook", ""]
+provides-dynamic-lookup:
+- "order"
+- "notes"
+- "title"
+depends-top-level:
+- "NSNumber"
+- "String"
+- "NSManagedObject"
+- "NSSet"
+- "Notebook"
+depends-member:
+- ["PSs9AnyObject", "init"]
+- ["PSs9AnyObject", "notes"]
+- ["PSs9AnyObject", "order"]
+- ["PSs9AnyObject", "title"]
+- ["PSs9AnyObject", ""]
+- ["PSs11CVarArgType", "init"]
+- ["PSs11CVarArgType", "notes"]
+- ["PSs11CVarArgType", "order"]
+- ["PSs11CVarArgType", "title"]
+- ["PSs11CVarArgType", ""]
+- ["PSs23CustomStringConvertible", "init"]
+- ["PSs23CustomStringConvertible", "notes"]
+- ["PSs23CustomStringConvertible", "order"]
+- ["PSs23CustomStringConvertible", "title"]
+- ["PSs23CustomStringConvertible", ""]
+- ["PSs9Equatable", "init"]
+- ["PSs9Equatable", "notes"]
+- ["PSs9Equatable", "order"]
+- ["PSs9Equatable", "title"]
+- ["PSs9Equatable", ""]
+- ["PSs8Hashable", "init"]
+- ["PSs8Hashable", "notes"]
+- ["PSs8Hashable", "order"]
+- ["PSs8Hashable", "title"]
+- ["PSs8Hashable", ""]
+- ["CSo15NSManagedObject", "NSNumber"]
+- ["CSo15NSManagedObject", "NSSet"]
+- ["CSo15NSManagedObject", "String"]
+- ["CSo15NSManagedObject", "init"]
+- ["CSo15NSManagedObject", "notes"]
+- ["CSo15NSManagedObject", "order"]
+- ["CSo15NSManagedObject", "title"]
+- ["CSo15NSManagedObject", ""]
+- ["CSo8NSObject", "NSNumber"]
+- ["CSo8NSObject", "NSSet"]
+- ["CSo8NSObject", "String"]
+- ["CSo8NSObject", "init"]
+- ["CSo8NSObject", "notes"]
+- ["CSo8NSObject", "order"]
+- ["CSo8NSObject", "title"]
+- ["PSo16NSObjectProtocol", "init"]
+- ["PSo16NSObjectProtocol", "notes"]
+- ["PSo16NSObjectProtocol", "order"]
+- ["PSo16NSObjectProtocol", "title"]
+- ["PSo16NSObjectProtocol", ""]
+- ["C12Purple_Notes8Notebook", "NSNumber"]
+- ["C12Purple_Notes8Notebook", "NSSet"]
+- ["C12Purple_Notes8Notebook", "String"]
+- ["C12Purple_Notes8Notebook", "deinit"]
+- ["C12Purple_Notes8Notebook", "init"]
+- ["C12Purple_Notes8Notebook", "notes"]
+- ["C12Purple_Notes8Notebook", "order"]
+- ["C12Purple_Notes8Notebook", "title"]
+depends-nominal:
+- "PSs9AnyObject"
+- "PSs11CVarArgType"
+- "PSs23CustomStringConvertible"
+- "PSs9Equatable"
+- "PSs8Hashable"
+- "CSo15NSManagedObject"
+- "CSo8NSObject"
+- "PSo16NSObjectProtocol"
+- "C12Purple_Notes8Notebook"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/UnicodeShims.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/RuntimeStubs.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/RuntimeShims.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/RefCount.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/HeapObject.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/GlobalObjects.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/FoundationShims.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/SwiftStddef.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/DarwinShims.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/SwiftStdint.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/CoreFoundationShims.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/shims/module.map"
+- "/Users/Sergey/Library/Mobile Documents/com~apple~CloudDocs/Purple Notes/Source Codes/Purple Notes iOS/Purple Notes iOS-Bridging-Header.h"
+- "/Users/Sergey/Library/Mobile Documents/com~apple~CloudDocs/Purple Notes/Source Codes/Libraries/Mac/mixpanel-mac-2.8.1/Mixpanel.h"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/LocalAuthentication.swiftmodule"
+interface-hash: "3f330977831f7173d8947cd5a29c3c17"

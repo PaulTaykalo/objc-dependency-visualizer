@@ -46,6 +46,10 @@ def is_filtered_swift_type?(dest)
   /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil #or /^([a-z])/.match(dest) != nil
 end
 
+def is_filtered_objc_type?(dest)
+  /^(dispatch_)|(DISPATCH_)/.match(dest) != nil #or /^([a-z])/.match(dest) != nil
+end
+
 def is_valid_dest?(dest, exclusion_prefixes)
-  dest != nil and /^(#{exclusion_prefixes})/.match(dest) == nil and /^(<\s)?\w/.match(dest) != nil and !is_primitive_swift_type?(dest) and !is_filtered_swift_type?(dest)
+  dest != nil and /^(#{exclusion_prefixes})/.match(dest) == nil and /^(<\s)?\w/.match(dest) != nil and !is_primitive_swift_type?(dest) and !is_filtered_swift_type?(dest) and !is_filtered_objc_type?(dest)
 end

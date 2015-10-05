@@ -103,6 +103,9 @@
       idx++;
     }
 
+    // Sorting up nodes, since, in some cases they aren't returned in correct number
+    nodes = nodes.slice(0).sort(function(a,b) { return a.idx - b.idx;});
+
     return { nodes : nodes, links: links };
   }
 

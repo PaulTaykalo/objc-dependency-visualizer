@@ -10,7 +10,6 @@
   };
 
   objcdv._createGraph = function() {
-
     return {
       nodes:[],
       links:[],
@@ -78,19 +77,15 @@
 
       prefixIndexForName:function(name) {
         var sortedPrefixes = this._getSortedPrefixes()
-        for (var i = 0; i < sortedPrefixes.length; i++) {
-          if (name.indexOf(sortedPrefixes[i]) === 0) {
-            return i
-          }
-        };
-        return -1;
+        var prefix = name.substring(0, 2);
+        return _.indexOf(sortedPrefixes, name, true)
       },
 
       _getSortedPrefixes:function() {
         if (this._sortedPrefixes == null) {
           this._sortedPrefixes = _.map(this._prefixesDistr, (v,k) => ({"key":k, "value":v}))
-          .sort((a,b) => b.value - a.value)
-          .map(o => o.key)
+                                  .sort((a,b) => b.value - a.value)
+                                  .map(o => o.key)
         }
         return this._sortedPrefixes
       }
@@ -102,12 +97,7 @@
     var graph = this._createGraph()
     var prefixes = this._createPrefixes()
 
-    // Parse all dependencies
-    // In format 
-
-    var input_links = dependencies.links;
-
-    input_links.forEach((link) => {
+    dependencies.links.forEach((link) => {
       graph.addLink(link)
 
       prefixes.addName(link.source);

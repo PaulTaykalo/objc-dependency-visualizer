@@ -8,105 +8,110 @@
   var objcdv = {
     version: "0.0.1"
   };
+
+  objcdv._createGraph = function() {
+    return {
+      nodes:[],
+      links:[],
+      nodesSet:{},
+      node_index:0,
+
+      addLink:function(link) {
+
+        var source_node = this.getNode(link.source)
+        source_node.source++;
+
+        var dest_node = this.getNode(link.dest);
+        dest_node.dest++;
+
+        this.links.push({
+          // d3 js properties
+          source: source_node.idx,
+          target: dest_node.idx,
+
+          // Additional link information
+          sourceNode: source_node,
+          targetNode: dest_node
+        })
+      },
+
+      getNode:function(nodeName) {
+        var node = this.nodesSet[nodeName];
+        if (node == null) {
+          var idx = this.node_index
+          this.nodesSet[nodeName] = node = { idx :idx, name: nodeName, source: 1, dest: 0  };
+          this.node_index++;
+        }
+        return node
+      },
+
+      updateNodes:function(f) {
+        _.values(this.nodesSet).forEach(f)
+      },
+
+      d3jsGraph:function() {
+        // Sorting up nodes, since, in some cases they aren't returned in correct number
+        var nodes = _.values(this.nodesSet).slice(0).sort((a,b) => a.idx - b.idx);
+        return { nodes : nodes, links: this.links };
+      }
+    };
+
+  }
+  
+  objcdv._createPrefixes = function() {
+    return {
+      _prefixesDistr:{},
+
+      _sortedPrefixes:null,
+
+      addName:function(name) {
+        this._sortedPrefixes = null
+
+        var prefix = name.substring(0, 2);
+        if (!(prefix in this._prefixesDistr)) {
+          this._prefixesDistr[prefix] = 1;
+        } else {
+          this._prefixesDistr[prefix]++;
+        }
+      },
+
+      prefixIndexForName:function(name) {
+        var sortedPrefixes = this._getSortedPrefixes()
+        var prefix = name.substring(0, 2);
+        return _.indexOf(sortedPrefixes, prefix)
+      },
+
+      _getSortedPrefixes:function() {
+        if (this._sortedPrefixes == null) {
+          this._sortedPrefixes = _.map(this._prefixesDistr, (v,k) => ({"key":k, "value":v}))
+                                  .sort((a,b) => b.value - a.value)
+                                  .map(o => o.key)
+        }
+        return this._sortedPrefixes
+      }
+    };
+  }
+
   objcdv.parse_dependencies_graph = function (dependencies) {
 
-    var nodes = [];
-    var links = [];
+    var graph = this._createGraph()
+    var prefixes = this._createPrefixes()
 
-    var nodesSet = {};
-    var prefixes = {};
+    dependencies.links.forEach((link) => {
+      graph.addLink(link)
 
-    var node_index = 0;
+      prefixes.addName(link.source);
+      prefixes.addName(link.dest);
 
-    // Parse all dependencies
-    // In format 
+    })
 
-    var input_links = dependencies.links;
+    graph.updateNodes((node) => {
+      node.weight = node.source;
+      node.group = prefixes.prefixIndexForName(node.name) + 1
+    })
 
-    var updatePrefixesDistribution = function(name) {
-      var prefix = name.substring(0, 2);
-      if (!(prefix in prefixes)) {
-        prefixes[prefix] = 1;
-      } else {
-        prefixes[prefix]++;
-      }
-    }
+    return graph.d3jsGraph()
 
-    for (var i = 0; i < input_links.length; i++) {
-      var link = input_links[i];
-
-      var source_node = nodesSet[link.source];
-      if (source_node == null) {
-        nodesSet[link.source] = source_node = { idx :node_index++, name: link.source, source: 1, dest: 0  }
-      }
-      source_node.source++;
-
-      var dest_node = nodesSet[link.dest];
-      if (dest_node == null) {
-        nodesSet[link.dest] = dest_node = { idx :node_index++, name: link.dest, source: 0, dest: 1 }
-      }
-      dest_node.dest++;
-
-
-      // Grouping by prefixes
-      updatePrefixesDistribution(link.source);
-      updatePrefixesDistribution(link.dest);
-
-      // Remapping links objects
-      links.push({
-       
-        // d3 js properties
-        source: source_node.idx,
-        target: dest_node.idx,
-
-        // Additional link information
-        sourceNode: source_node,
-        targetNode: dest_node
-      });
-
-      console.log("Pushing link : source=" + source_node.idx + ", target=" + dest_node.idx);
-    }
-
-   
-    // Sorting prefixes, based on theirs frequency
-    var prefixes_arr = [];
-    for (var key in prefixes) {
-      prefixes_arr.push({key: key, value: prefixes[key] });
-    }
-    var sorted_prefixes = prefixes_arr.slice(0).sort(function (a, b) {
-      return b.value - a.value;
-    });
-
-    var group_regexp_identifiers = [];
-    for (var i = 0; i < sorted_prefixes.length; i++) {
-       group_regexp_identifiers.push("^" + sorted_prefixes[i].key+".*");
-    }
-
-    // Setting up nodes groups, based on the group_regexp_identifiers
-    var idx = 0;
-    for (var p in nodesSet) {
-
-      node = nodesSet[p];
-      node.group = 0;
-      node.weight = node.source;  // Calculating node weignt, based on the amount of item it depends on
-
-      for (var regexp_index = 0; regexp_index < group_regexp_identifiers.length; regexp_index++) {
-        var re = new RegExp(group_regexp_identifiers[regexp_index], "");
-        if (p.match(re)) {
-          node.group = regexp_index + 1;
-          break;
-        }
-      }
-
-      nodes.push(node);
-      console.log(" Pushing node : IDX=" + idx + ", name=" + p + ", groupId=" + node.group + ", source=" + node.source + ", dest=" + node.dest + ", weight=" + node.weight);
-      idx++;
-    }
-
-    // Sorting up nodes, since, in some cases they aren't returned in correct number
-    nodes = nodes.slice(0).sort(function(a,b) { return a.idx - b.idx;});
-
-    return { nodes : nodes, links: links };
   }
 
   if (typeof define === "function" && define.amd) {

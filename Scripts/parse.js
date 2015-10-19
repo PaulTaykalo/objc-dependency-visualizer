@@ -51,7 +51,7 @@
 
       d3jsGraph:function() {
         // Sorting up nodes, since, in some cases they aren't returned in correct number
-        var nodes = _.values(this.nodesSet).slice(0).sort(function(a,b) { return a.idx - b.idx;});
+        var nodes = _.values(this.nodesSet).slice(0).sort((a,b) => a.idx - b.idx);
         return { nodes : nodes, links: this.links };
       }
     };
@@ -78,7 +78,7 @@
       prefixIndexForName:function(name) {
         var sortedPrefixes = this._getSortedPrefixes()
         var prefix = name.substring(0, 2);
-        return _.indexOf(sortedPrefixes, name, true)
+        return _.indexOf(sortedPrefixes, prefix)
       },
 
       _getSortedPrefixes:function() {

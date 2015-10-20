@@ -5,12 +5,14 @@
 !function () {
     var graph_actions = {
 
-        create: function (svg) {
+        create: function (svg, dependecy_graph) {
+
             return {
                 selectedIdx: -1,
                 selectedType: "normal",
                 svg: svg,
                 selectedObject: {},
+                dependency_graph: dependecy_graph,
 
                 deselect_node: function (d) {
                     delete d.fixed;
@@ -33,12 +35,20 @@
                     this.deselect_selected_node(this.selectedObject)
                 },
 
+                _lockNode: function (node) {
+                    node.fixed = true;
+                },
+
+                _unlockNode: function (node) {
+                    delete node.fixed;
+                },
+
                 _selectAndLockNode: function (node, type) {
-                    delete this.selectedObject.fixed;
+                    this._unlockNode(this.selectedObject);
                     this.selectedIdx = node.idx;
                     this.selectedObject = node;
-                    this.selectedObject.fixed = true;
                     this.selectedType = type;
+                    this._lockNode(this.selectedObject);
                 },
 
                 _deselectNodeIfNeeded: function (node, type) {
@@ -79,9 +89,13 @@
                         .transition();
                 },
 
+                _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index == node.index),
+                _nodeIsSourceOfLink: (node, link) => (link.source.index === node.index),
+                _oppositeNodeOfLink: (node, link) => (link.source.index == node.index ? link.target.index : link.target.index == node.index ? link.source.index : null),
+
                 _highlightLinksFromNode: function (node) {
                     this.svg.selectAll('.link')
-                        .filter((link) => link.source.index === node.index || link.target.index == node.index)
+                        .filter((link) => this._nodeExistsInLink(node, link))
                         .classed('filtered', false)
                         .attr("marker-end", (l) => l.source.index === node.index ? "url(#dependency)" : "url(#dependants)")
                         .transition();
@@ -95,27 +109,25 @@
                         .transition();
                 },
 
-                select_node: function (d) {
+                select_node: function (node) {
                     if (d3.event.defaultPrevented) {
                         return
                     }
-                    if (this._deselectNodeIfNeeded(d, "normal")) {
+                    if (this._deselectNodeIfNeeded(node, "normal")) {
                         return
                     }
-                    this._selectAndLockNode(d, "normal");
-                    // Update selected object
+                    this._selectAndLockNode(node, "normal");
 
-                    // Figure out the neighboring node id's with brute strength because the graph is small
-                    var nodeNeighbors =
-                        dependecy_graph.links
-                            .filter((link) => link.source.index === d.index || link.target.index === d.index)
-                            .map((link) => link.source.index === d.index ? link.target.index : link.source.index);
+                    var neighborIndexes =
+                        this.dependecy_graph.links
+                            .filter((link) => this._nodeExistsInLink(node, link))
+                            .map((link) => this._oppositeNodeOfLink(node, link).index);
 
-                    nodeNeighbors.push(d.index);
+                    neighborIndexes.push(node.index);
 
                     this._fadeOutAllNodesAndLinks();
-                    this._highlightNodesWithIndexes(nodeNeighbors);
-                    this._highlightLinksFromNode(d);
+                    this._highlightNodesWithIndexes(neighborIndexes);
+                    this._highlightLinksFromNode(node);
                 },
 
                 select_recursively_node: function (node) {
@@ -134,18 +146,14 @@
 
                     // Figure out the neighboring node id's with brute strength because the graph is small
                     var neighbours = {};
-                    var nodeNeighbors =
-                        dependecy_graph.links
-                            .filter((link) => link.source.index === node.index)
-                            .map((link) => {
-                                var idx = link.source.index === node.index ? link.target.index : link.source.index;
-                                if (link.source.index === node.index) {
-                                    console.log("Step 0. Adding ", dependecy_graph.nodes[idx].name);
-                                    neighbours[idx] = 1;
-                                }
-                                return idx;
-                            }
-                        );
+                    this.dependency_graph.links
+                        .filter((link) => this._nodeIsSourceOfLink(node, link))
+                        .forEach((link) => {
+                            var idx = this._oppositeNodeOfLink(node, link).index;
+                            neighbours[idx] = 1;
+                            console.log("Step 0. Adding ", this.dependency_graph.nodes[idx].name);
+                        }
+                    );
 
                     // Next part - neighbours of neigbours
                     var currentsize = Object.keys(neighbours).length;
@@ -154,24 +162,20 @@
                     while (nextSize != currentsize) {
                         console.log("Current size " + currentsize + " Next size is " + nextSize);
                         currentsize = nextSize;
-                        dependecy_graph.links
-                            .filter(function (link) {
-                                return neighbours[link.source.index] != undefined
-                            })
-                            .map(function (link) {
+                        this.dependency_graph.links
+                            .filter((link) => link.source.index in neighbours)
+                            .map((link) => {
                                 var idx = link.target.index;
-                                console.log("Step " + step + ". Adding ", dependecy_graph.nodes[idx].name + " From " + dependecy_graph.nodes[link.source.index].name);
-
                                 neighbours[idx] = 1;
-                                return idx;
-                            }
-                        );
+                                console.log("Step " + step + ". Adding ", this.dependency_graph.nodes[idx].name + " From " + this.dependency_graph.nodes[link.source.index].name);
+                            }).bind(this);
+
                         nextSize = Object.keys(neighbours).length;
                         step = step + 1
                     }
 
                     neighbours[node.index] = 1;
-                    nodeNeighbors = Object.keys(neighbours).map(function (neibour) {
+                    var nodeNeighbors = Object.keys(neighbours).map(function (neibour) {
                         return parseInt(neibour);
                     });
                     nodeNeighbors.push(node.index);

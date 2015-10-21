@@ -112,8 +112,8 @@ force.start()
     });
 </script>
 
-<script src="Scripts/graph-actions-select.js"></script>
-<script src="Scripts/parse.js"></script>
+<script src="Scripts/graph-actions-select-compiled.js"></script>
+<script src="Scripts/parse-compiled.js"></script>
 <script>
 
     //  ===================================================
@@ -192,6 +192,7 @@ force.start()
             .start();
 
     var svg = container.append('g');
+    var actions = graph_actions.create(svg, dependecy_graph);
 
     //  ===================================================
     //  ===============  MARKERS SETUP   ==================
@@ -247,10 +248,21 @@ force.start()
             })
             .call(force.drag)
             .on("click", function (d) {
-                select_node(svg, d)
+                if (d3.event.defaultPrevented) {
+                    return
+                }
+                actions.select_node(d);
+                force.start();
             })
             .on("contextmenu", function (d) {
-                select_recursively_node(svg, d)
+                if (d3.event.defaultPrevented) {
+                    return
+                }
+                // Don't actually show context menu
+                d3.event.preventDefault();
+
+                actions.select_recursively_node(d);
+                force.start();
             });
 
     //  ===================================================

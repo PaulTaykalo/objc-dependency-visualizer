@@ -137,7 +137,8 @@ force.start()
 
     var charge_multiplier = 200;
 
-    var dependecy_graph = objcdv.parse_dependencies_graph(dependencies);
+    var dvgraph = objcdv.parse_dependencies_graph(dependencies);
+    var d3graph = dvgraph.d3jsGraph();
 
     var w = window,
             d = document,
@@ -184,15 +185,15 @@ force.start()
                 return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + default_link_distance
             })
             .size([x, y])
-            .nodes(d3.values(dependecy_graph.nodes))
-            .links(dependecy_graph.links)
+            .nodes(d3.values(d3graph.nodes))
+            .links(d3graph.links)
             .linkStrength(function (l) {
                 return l.source.filtered || l.target.filtered ? 0 : default_link_strength
             })
             .start();
 
     var svg = container.append('g');
-    var actions = graph_actions.create(svg, dependecy_graph);
+    var actions = graph_actions.create(svg, dvgraph);
 
     //  ===================================================
     //  ===============  MARKERS SETUP   ==================
@@ -220,7 +221,7 @@ force.start()
     //  ===================================================
 
     var link = svg.append("g").selectAll("path")
-            .data(dependecy_graph.links)
+            .data(d3graph.links)
             .enter().append("path")
             .attr("class", "link")
             .attr("marker-end", "url(#default)")
@@ -233,7 +234,7 @@ force.start()
     //  ===================================================
 
     var node = svg.append("g").selectAll("circle.node")
-            .data(dependecy_graph.nodes)
+            .data(d3graph.nodes)
             .enter().append("circle")
             .attr("r", radius)
             .style("fill", function (d) {
@@ -251,7 +252,7 @@ force.start()
                 if (d3.event.defaultPrevented) {
                     return
                 }
-                actions.select_node(d);
+                actions.selectNodesStartingFromNode(d, 1);
                 force.start();
             })
             .on("contextmenu", function (d) {
@@ -261,7 +262,7 @@ force.start()
                 // Don't actually show context menu
                 d3.event.preventDefault();
 
-                actions.select_recursively_node(d);
+                actions.selectNodesStartingFromNode(d);
                 force.start();
             });
 

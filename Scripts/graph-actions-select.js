@@ -3,14 +3,14 @@
 //  ===================================================
 
 let graph_actions = {
-    create: function (svg, dependecy_graph) {
+    create: function (svg, dvgraph) {
 
         return {
             selectedIdx: -1,
             selectedType: "normal",
             svg: svg,
             selectedObject: {},
-            dependency_graph: dependecy_graph,
+            dvgraph: dvgraph,
 
             deselect_node: function (d) {
                 delete d.fixed;
@@ -97,76 +97,33 @@ let graph_actions = {
                     .transition();
             },
 
+            _isDependencyLink: (node, link) =>  (link.source.index === node.index),
             _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index == node.index),
             _oppositeNodeOfLink: (node, link) => (link.source.index == node.index ? link.target : link.target.index == node.index ? link.source : null),
 
-            _highlightLinksFromNode: function (node) {
-                this.svg.selectAll('.link')
-                    .filter((link) => this._nodeExistsInLink(node, link))
-                    .classed('filtered', false)
-                    .classed('dependency', (l) => l.source.index === node.index)
-                    .classed('dependants', (l) => l.source.index !== node.index)
-                    .attr("marker-end", (l) => l.source.index === node.index ? "url(#dependency)" : "url(#dependants)")
-                    .transition();
-            },
-
-            _highlightLinksFromRootWithNodesIndexes: function (root, nodeNeighbors) {
+            _highlightLinksFromRootWithNodesIndexes: function (root, nodeNeighbors, maxLevel) {
                 this.svg.selectAll('.link')
                     .filter((link) => nodeNeighbors.indexOf(link.source.index) > -1)
                     .classed('filtered', false)
-                    .classed('dependency', (l) => l.source.index === root.index)
-                    .classed('dependants', (l) => l.source.index !== root.index)
-                    .attr("marker-end", (l) => l.source.index === root.index ? "url(#dependency)" : "url(#dependants)")
+                    .classed('dependency', (l) => this._nodeExistsInLink(root,l) && this._isDependencyLink(root, l))
+                    .classed('dependants', (l) => this._nodeExistsInLink(root,l) && !this._isDependencyLink(root, l))
+                    .attr("marker-end", (l) => this._nodeExistsInLink(root,l) ? (this._isDependencyLink(root, l) ? "url(#dependency)" : "url(#dependants)") : (maxLevel == 1 ? "" : "url(#default)"))
                     .transition();
             },
 
-            select_node: function (node) {
-                if (this._deselectNodeIfNeeded(node, "normal")) {
+            selectNodesStartingFromNode: function (node, maxLevel = 100) {
+                if (this._deselectNodeIfNeeded(node, "level" + maxLevel)) {
                     return
                 }
-                this._selectAndLockNode(node, "normal");
+                this._selectAndLockNode(node, "level" + maxLevel);
 
-                var neighborIndexes =
-                    this.dependency_graph.links
-                        .filter((link) => this._nodeExistsInLink(node, link))
-                        .map((link) => this._oppositeNodeOfLink(node, link).index);
-
-                neighborIndexes.push(node.index);
+                let neighborIndexes =
+                    this.dvgraph.nodesStartingFromNode(node, {max_level: maxLevel, use_backward_search: maxLevel == 1})
+                        .map((n) => n.index);
 
                 this._fadeOutAllNodesAndLinks();
                 this._highlightNodesWithIndexes(neighborIndexes);
-                this._highlightLinksFromNode(node);
-            },
-
-            select_recursively_node: function (node) {
-
-                if (this._deselectNodeIfNeeded(node, "recursive")) {
-                    return
-                }
-
-                this._selectAndLockNode(node, "recursive");
-
-                // Figure out the neighboring node id's with brute strength because the graph is small
-                var neighbours = {};
-                neighbours[node.index] = 1;
-
-                var nodesToCheck = [node.index];
-                while (Object.keys(nodesToCheck).length != 0) {
-                    nodesToCheck =
-                        this.dependency_graph.links
-                            .filter((link) => link.source.index in neighbours)
-                            .filter((link) => !(link.target.index in neighbours))
-                            .map((link) => {
-                                neighbours[link.target.index] = 1;
-                                return link.target.index;
-                            });
-                }
-
-                var neighbourNodesIndexes = Object.keys(neighbours).map((key)=>parseInt(key));
-
-                this._fadeOutAllNodesAndLinks();
-                this._highlightNodesWithIndexes(neighbourNodesIndexes);
-                this._highlightLinksFromRootWithNodesIndexes(node, neighbourNodesIndexes);
+                this._highlightLinksFromRootWithNodesIndexes(node, neighborIndexes, maxLevel);
             }
 
         };

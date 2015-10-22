@@ -50,7 +50,56 @@ let objcdv = {
                 // Sorting up nodes, since, in some cases they aren't returned in correct number
                 var nodes = _.values(this.nodesSet).slice(0).sort((a, b) => a.idx - b.idx);
                 return {nodes: nodes, links: this.links};
+            },
+
+            nodesStartingFromNode: function (node, {max_level = 100, use_backward_search = false, use_forward_search = true } = {} ) {
+                // Figure out the neighboring node id's with brute strength because the graph is small
+                var neighbours = {};
+                neighbours[node.index] = node;
+
+                var nodesToCheck = [node.index];
+                let current_level = 0;
+                while (Object.keys(nodesToCheck).length != 0) {
+                    var forwardNeighbours = [];
+                    var backwardNeighbours = [];
+
+                    let tmpNeighbours = {};
+                    if (use_forward_search) {
+                        forwardNeighbours = this.links
+                            .filter((link) => link.source.index in neighbours)
+                            .filter((link) => !(link.target.index in neighbours))
+                            .map((link) => {
+                                tmpNeighbours[link.target.index] = link.target;
+                                return link.target.index;
+                            });
+                    }
+                    if (use_backward_search) {
+                        backwardNeighbours = this.links
+                            .filter((link) => link.target.index in neighbours)
+                            .filter((link) => !(link.source.index in neighbours))
+                            .map((link) => {
+                                tmpNeighbours[link.source.index] = link.source;
+                                return link.source.index;
+                            });
+                    }
+
+                    _.extend(neighbours, tmpNeighbours);
+
+
+                    nodesToCheck = forwardNeighbours.concat(backwardNeighbours);
+                    console.log("Nodes to check" + nodesToCheck);
+
+                    // Skip if we reached max level
+                    current_level++;
+                    if (current_level == max_level) {
+                        console.log("Reached max at level" + current_level);
+                        break;
+                    }
+                }
+                return _.values(neighbours);
+
             }
+
         };
 
     },
@@ -107,10 +156,9 @@ let objcdv = {
             node.group = prefixes.prefixIndexForName(node.name) + 1
         });
 
-        return graph.d3jsGraph()
+        return graph
 
-    },
-
+    }
 
 };
 

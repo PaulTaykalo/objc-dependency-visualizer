@@ -54,7 +54,77 @@ var objcdv = {
                     return a.idx - b.idx;
                 });
                 return { nodes: nodes, links: this.links };
+            },
+
+            nodesStartingFromNode: function nodesStartingFromNode(node) {
+                var _this = this;
+
+                var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+                var _ref$max_level = _ref.max_level;
+                var max_level = _ref$max_level === undefined ? 100 : _ref$max_level;
+                var _ref$use_backward_search = _ref.use_backward_search;
+                var use_backward_search = _ref$use_backward_search === undefined ? false : _ref$use_backward_search;
+                var _ref$use_forward_search = _ref.use_forward_search;
+                var use_forward_search = _ref$use_forward_search === undefined ? true : _ref$use_forward_search;
+
+                // Figure out the neighboring node id's with brute strength because the graph is small
+                var neighbours = {};
+                neighbours[node.index] = node;
+
+                var nodesToCheck = [node.index];
+                var current_level = 0;
+
+                var _loop = function () {
+                    forwardNeighbours = [];
+                    backwardNeighbours = [];
+
+                    var tmpNeighbours = {};
+                    if (use_forward_search) {
+                        forwardNeighbours = _this.links.filter(function (link) {
+                            return link.source.index in neighbours;
+                        }).filter(function (link) {
+                            return !(link.target.index in neighbours);
+                        }).map(function (link) {
+                            tmpNeighbours[link.target.index] = link.target;
+                            return link.target.index;
+                        });
+                    }
+                    if (use_backward_search) {
+                        backwardNeighbours = _this.links.filter(function (link) {
+                            return link.target.index in neighbours;
+                        }).filter(function (link) {
+                            return !(link.source.index in neighbours);
+                        }).map(function (link) {
+                            tmpNeighbours[link.source.index] = link.source;
+                            return link.source.index;
+                        });
+                    }
+
+                    _.extend(neighbours, tmpNeighbours);
+
+                    nodesToCheck = forwardNeighbours.concat(backwardNeighbours);
+                    console.log("Nodes to check" + nodesToCheck);
+
+                    // Skip if we reached max level
+                    current_level++;
+                    if (current_level == max_level) {
+                        console.log("Reached max at level" + current_level);
+                        return "break";
+                    }
+                };
+
+                while (Object.keys(nodesToCheck).length != 0) {
+                    var forwardNeighbours;
+                    var backwardNeighbours;
+
+                    var _ret = _loop();
+
+                    if (_ret === "break") break;
+                }
+                return _.values(neighbours);
             }
+
         };
     },
     _createPrefixes: function _createPrefixes() {
@@ -112,7 +182,7 @@ var objcdv = {
             node.group = prefixes.prefixIndexForName(node.name) + 1;
         });
 
-        return graph.d3jsGraph();
+        return graph;
     }
 
 };

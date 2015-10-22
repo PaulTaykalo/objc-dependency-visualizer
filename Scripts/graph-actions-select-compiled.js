@@ -5,14 +5,14 @@
 'use strict';
 
 var graph_actions = {
-    create: function create(svg, dependecy_graph) {
+    create: function create(svg, dvgraph) {
 
         return {
             selectedIdx: -1,
             selectedType: "normal",
             svg: svg,
             selectedObject: {},
-            dependency_graph: dependecy_graph,
+            dvgraph: dvgraph,
 
             deselect_node: function deselect_node(d) {
                 delete d.fixed;
@@ -77,6 +77,9 @@ var graph_actions = {
                 }).transition();
             },
 
+            _isDependencyLink: function _isDependencyLink(node, link) {
+                return link.source.index === node.index;
+            },
             _nodeExistsInLink: function _nodeExistsInLink(node, link) {
                 return link.source.index === node.index || link.target.index == node.index;
             },
@@ -84,84 +87,35 @@ var graph_actions = {
                 return link.source.index == node.index ? link.target : link.target.index == node.index ? link.source : null;
             },
 
-            _highlightLinksFromNode: function _highlightLinksFromNode(node) {
+            _highlightLinksFromRootWithNodesIndexes: function _highlightLinksFromRootWithNodesIndexes(root, nodeNeighbors, maxLevel) {
                 var _this = this;
 
                 this.svg.selectAll('.link').filter(function (link) {
-                    return _this._nodeExistsInLink(node, link);
-                }).classed('filtered', false).classed('dependency', function (l) {
-                    return l.source.index === node.index;
-                }).classed('dependants', function (l) {
-                    return l.source.index !== node.index;
-                }).attr("marker-end", function (l) {
-                    return l.source.index === node.index ? "url(#dependency)" : "url(#dependants)";
-                }).transition();
-            },
-
-            _highlightLinksFromRootWithNodesIndexes: function _highlightLinksFromRootWithNodesIndexes(root, nodeNeighbors) {
-                this.svg.selectAll('.link').filter(function (link) {
                     return nodeNeighbors.indexOf(link.source.index) > -1;
                 }).classed('filtered', false).classed('dependency', function (l) {
-                    return l.source.index === root.index;
+                    return _this._nodeExistsInLink(root, l) && _this._isDependencyLink(root, l);
                 }).classed('dependants', function (l) {
-                    return l.source.index !== root.index;
+                    return _this._nodeExistsInLink(root, l) && !_this._isDependencyLink(root, l);
                 }).attr("marker-end", function (l) {
-                    return l.source.index === root.index ? "url(#dependency)" : "url(#dependants)";
+                    return _this._nodeExistsInLink(root, l) ? _this._isDependencyLink(root, l) ? "url(#dependency)" : "url(#dependants)" : maxLevel == 1 ? "" : "url(#default)";
                 }).transition();
             },
 
-            select_node: function select_node(node) {
-                var _this2 = this;
+            selectNodesStartingFromNode: function selectNodesStartingFromNode(node) {
+                var maxLevel = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
 
-                if (this._deselectNodeIfNeeded(node, "normal")) {
+                if (this._deselectNodeIfNeeded(node, "level" + maxLevel)) {
                     return;
                 }
-                this._selectAndLockNode(node, "normal");
+                this._selectAndLockNode(node, "level" + maxLevel);
 
-                var neighborIndexes = this.dependency_graph.links.filter(function (link) {
-                    return _this2._nodeExistsInLink(node, link);
-                }).map(function (link) {
-                    return _this2._oppositeNodeOfLink(node, link).index;
+                var neighborIndexes = this.dvgraph.nodesStartingFromNode(node, { max_level: maxLevel, use_backward_search: maxLevel == 1 }).map(function (n) {
+                    return n.index;
                 });
-
-                neighborIndexes.push(node.index);
 
                 this._fadeOutAllNodesAndLinks();
                 this._highlightNodesWithIndexes(neighborIndexes);
-                this._highlightLinksFromNode(node);
-            },
-
-            select_recursively_node: function select_recursively_node(node) {
-
-                if (this._deselectNodeIfNeeded(node, "recursive")) {
-                    return;
-                }
-
-                this._selectAndLockNode(node, "recursive");
-
-                // Figure out the neighboring node id's with brute strength because the graph is small
-                var neighbours = {};
-                neighbours[node.index] = 1;
-
-                var nodesToCheck = [node.index];
-                while (Object.keys(nodesToCheck).length != 0) {
-                    nodesToCheck = this.dependency_graph.links.filter(function (link) {
-                        return link.source.index in neighbours;
-                    }).filter(function (link) {
-                        return !(link.target.index in neighbours);
-                    }).map(function (link) {
-                        neighbours[link.target.index] = 1;
-                        return link.target.index;
-                    });
-                }
-
-                var neighbourNodesIndexes = Object.keys(neighbours).map(function (key) {
-                    return parseInt(key);
-                });
-
-                this._fadeOutAllNodesAndLinks();
-                this._highlightNodesWithIndexes(neighbourNodesIndexes);
-                this._highlightLinksFromRootWithNodesIndexes(node, neighbourNodesIndexes);
+                this._highlightLinksFromRootWithNodesIndexes(node, neighborIndexes, maxLevel);
             }
 
         };

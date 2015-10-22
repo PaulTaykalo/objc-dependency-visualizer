@@ -16,6 +16,19 @@ text.filtered {
   stroke-opacity:0.1;
 }
 
+.link.dependency {
+  stroke: #900;
+  fill:#900;
+  pointer-events: none;
+}
+
+.link.dependants {
+  stroke: #090;
+  fill:#090;
+  pointer-events: none;
+}
+
+
 .node.skipped {
   fill-opacity:0.0;
   stroke-opacity:0.0;

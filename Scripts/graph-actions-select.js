@@ -1,201 +1,132 @@
-
 //  ===================================================
 //  ===============  SELECTING_NODE       =============
 //  ===================================================
 
-var selectedIdx = -1
-var selectedType = "normal"
-var selectedobject = {}
+let graph_actions = {
+    create: function (svg, dvgraph) {
 
-function deselect_node(svg, d) { 
-  delete d.fixed
-  selectedIdx = -1
-  selectedobject = {};
-  svg.selectAll('circle, path, text')
-    .classed('filtered', false)
-    .each(function(node) {
-     node.filtered = false
-    })
-    .transition()
+        return {
+            selectedIdx: -1,
+            selectedType: "normal",
+            svg: svg,
+            selectedObject: {},
+            dvgraph: dvgraph,
 
-  svg.selectAll('.link')
-    .attr("marker-end", "url(#default)")      
-    .classed('filtered', false)
-    .transition()
+            deselect_node: function (d) {
+                delete d.fixed;
+                this.selectedIdx = -1;
+                this.selectedObject = {};
 
+                this.svg.selectAll('circle')
+                    .each(function (node) {
+                        node.filtered = false
+                    })
+                    .classed('filtered', false)
+                    .transition();
 
-  force.start();
-  return
-}
-
-function deselect_selected_node(svg) {
-	deselect_node(svg, selectedobject)
-}
-
-function select_node(svg, d) { 
-  if (d3.event.defaultPrevented) return
-
-  // Deselect if needed
-  if (d.idx == selectedIdx && selectedType == "normal") { deselect_node(svg, d); return }
-
-  // Update selected object
-  delete selectedobject.fixed
-  selectedIdx = d.idx
-  selectedobject = d
-  selectedobject.fixed = true
-  selectedType = "normal"
-
-  // Figure out the neighboring node id's with brute strength because the graph is small
-  var nodeNeighbors = 
-  dependecy_graph.links
-    .filter(function(link) {
-        return link.source.index === d.index || link.target.index === d.index;})
-    .map(function(link) {
-        return link.source.index === d.index ? link.target.index : link.source.index; 
-      }
-    );
-
-  // Fade out all circles
-  svg.selectAll('circle')
-  .classed('filtered', true)
-  .each(function(node){
-    node.filtered = true;
-    node.neighbours = false;
-  }).transition()
-
-  svg.selectAll('text')
-    .classed('filtered', true)
-    .transition()
+                this.svg.selectAll('path, text')
+                    .classed('filtered', false)
+                    .transition();
 
 
-  svg.selectAll('.link').
-    transition()
-    .attr("marker-end", "")
+                this.svg.selectAll('.link')
+                    .attr("marker-end", "url(#default)")
+                    .classed('filtered', false)
+                    .classed('dependency', false)
+                    .classed('dependants', false)
+                    .transition();
+            },
 
+            deselect_selected_node: function () {
+                this.deselect_selected_node(this.selectedObject)
+            },
 
-  // Higlight all circle and texts
-  svg.selectAll('circle, text')
-    .filter(function(node) {
-        return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
-    })
-    .classed('filtered', false)
-    .each(function(node) {
-       node.filtered = false;
-       node.neighbours = true;
-    })
-    .transition()
+            _lockNode: function (node) {
+                node.fixed = true;
+            },
 
-  // Higlight links
-  svg.selectAll('.link')
-    .filter(function(link) {
-      return link.source.index === d.index || link.target.index == d.index
-    })
-    .classed('filtered', false)
-    .attr("marker-end", function(l) { return l.source.index === d.index ? "url(#dependency)" : "url(#dependants)"})
-    .transition()
+            _unlockNode: function (node) {
+                delete node.fixed;
+            },
 
-  force.start();
-}
+            _selectAndLockNode: function (node, type) {
+                this._unlockNode(this.selectedObject);
+                this.selectedIdx = node.idx;
+                this.selectedObject = node;
+                this.selectedType = type;
+                this._lockNode(this.selectedObject);
+            },
 
-function select_recursively_node(svg, d) { 
-  if (d3.event.defaultPrevented) return
-  
-  // Don't show context menu :)
-  d3.event.preventDefault()  
+            _deselectNodeIfNeeded: function (node, type) {
+                if (node.idx == this.selectedIdx && this.selectedType == type) {
+                    this.deselect_node(node);
+                    return true;
+                }
+                return false;
+            },
 
-  // Deselect if needed
-  if (d.idx == selectedIdx && selectedType == "recursive") { deselect_node(svg, d); return }
+            _fadeOutAllNodesAndLinks: function () {
+                // Fade out all circles
+                this.svg.selectAll('circle')
+                    .classed('filtered', true)
+                    .each(function (node) {
+                        node.filtered = true;
+                        node.neighbours = false;
+                    }).transition();
 
-  // Update selected object
-  delete selectedobject.fixed
-  selectedIdx = d.idx
-  selectedobject = d
-  selectedobject.fixed = true
-  selectedType = "recursive"
+                this.svg.selectAll('text')
+                    .classed('filtered', true)
+                    .transition();
 
-  // Figure out the neighboring node id's with brute strength because the graph is small
-  var neighbours = {}
-  var nodeNeighbors = 
-  dependecy_graph.links
-    .filter(function(link) {
-        return link.source.index === d.index})
-    .map(function(link) {
-        var idx = link.source.index === d.index ? link.target.index : link.source.index;
-        if (link.source.index === d.index) {
-          console.log("Step 0. Adding ",dependecy_graph.nodes[idx].name)
-          neighbours[idx] = 1;
-        }
-        return idx; 
-      }
-    );
+                this.svg.selectAll('.link')
+                    .classed('dependency', false)
+                    .classed('dependants', false)
+                    .transition()
+                    .attr("marker-end", "");
 
-  // Next part - neighbours of neigbours
-  var currentsize = Object.keys(neighbours).length
-  var nextSize = 0;
-  var step = 1;
-  while (nextSize != currentsize) {
-    console.log("Current size " + currentsize + " Next size is " + nextSize)
-    currentsize = nextSize
-    dependecy_graph.links
-        .filter(function(link) {
-            return neighbours[link.source.index] != undefined})
-        .map(function(link) {
-            var idx = link.target.index;
-            console.log("Step "+step+". Adding ",dependecy_graph.nodes[idx].name + " From " + dependecy_graph.nodes[link.source.index].name )
+            },
 
-            neighbours[idx] = 1;
-            return idx;
-          }
-        );
-     nextSize = Object.keys(neighbours).length   
-     step = step + 1
-  }
+            _highlightNodesWithIndexes: function (indexesArray) {
+                this.svg.selectAll('circle, text')
+                    .filter((node) => indexesArray.indexOf(node.index) > -1)
+                    .classed('filtered', false)
+                    .each((node) => {
+                        node.filtered = false;
+                        node.neighbours = true;
+                    })
+                    .transition();
+            },
 
-  neighbours[d.index] = 1
-  nodeNeighbors = Object.keys(neighbours).map(function(neibour) {
-      return parseInt(neibour);
-  })
+            _isDependencyLink: (node, link) =>  (link.source.index === node.index),
+            _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index == node.index),
+            _oppositeNodeOfLink: (node, link) => (link.source.index == node.index ? link.target : link.target.index == node.index ? link.source : null),
 
+            _highlightLinksFromRootWithNodesIndexes: function (root, nodeNeighbors, maxLevel) {
+                this.svg.selectAll('.link')
+                    .filter((link) => nodeNeighbors.indexOf(link.source.index) > -1)
+                    .classed('filtered', false)
+                    .classed('dependency', (l) => this._nodeExistsInLink(root,l) && this._isDependencyLink(root, l))
+                    .classed('dependants', (l) => this._nodeExistsInLink(root,l) && !this._isDependencyLink(root, l))
+                    .attr("marker-end", (l) => this._nodeExistsInLink(root,l) ? (this._isDependencyLink(root, l) ? "url(#dependency)" : "url(#dependants)") : (maxLevel == 1 ? "" : "url(#default)"))
+                    .transition();
+            },
 
-  // Fade out all circles
-  svg.selectAll('circle')
-  .classed('filtered', true)
-  .each(function(node){
-    node.filtered = true;
-    node.neighbours = false;
-  }).transition()
-    
+            selectNodesStartingFromNode: function (node, maxLevel = 100) {
+                if (this._deselectNodeIfNeeded(node, "level" + maxLevel)) {
+                    return
+                }
+                this._selectAndLockNode(node, "level" + maxLevel);
 
-  svg.selectAll('text')
-    .classed('filtered', true)
-    .transition()
-  
+                let neighborIndexes =
+                    this.dvgraph.nodesStartingFromNode(node, {max_level: maxLevel, use_backward_search: maxLevel == 1})
+                        .map((n) => n.index);
 
-  svg.selectAll('.link').
-    transition()
-    .attr("marker-end", "")
+                this._fadeOutAllNodesAndLinks();
+                this._highlightNodesWithIndexes(neighborIndexes);
+                this._highlightLinksFromRootWithNodesIndexes(node, neighborIndexes, maxLevel);
+            }
 
+        };
+    }
+};
 
-  // Higlight all circle and texts
-  svg.selectAll('circle, text')
-    .filter(function(node) {
-        return nodeNeighbors.indexOf(node.index) > -1 || node.index == d.index;
-    })
-    .classed('filtered', false)
-    .each(function(node) {
-       node.filtered = false;
-       node.neighbours = true;
-    })
-    .transition()
-
-  // Higlight links
-  svg.selectAll('.link')
-    .filter(function(link) {
-      return nodeNeighbors.indexOf(link.source.index) > -1
-    })
-    .classed('filtered', false)
-    .attr("marker-end", function(l) { return l.source.index === d.index ? "url(#dependency)" : "url(#dependants)"})
-    .transition()
-
-  force.start();
-}

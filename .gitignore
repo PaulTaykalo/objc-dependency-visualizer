@@ -1,0 +1,3 @@
+*.js.deps
+*.js.map
+.idea/

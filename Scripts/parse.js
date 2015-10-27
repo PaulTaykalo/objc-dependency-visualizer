@@ -11,7 +11,12 @@ let objcdv = {
             nodes: [],
             links: [],
             nodesSet: {},
+            linksSet: {},
             node_index: 0,
+
+            _linkHashKey:function(sourceNodeName, destNodeName) {
+                return sourceNodeName + "->" + destNodeName;
+            },
 
             addLink: function (link) {
 
@@ -21,7 +26,7 @@ let objcdv = {
                 var dest_node = this.getNode(link.dest);
                 dest_node.dest++;
 
-                this.links.push({
+                const dvlink = {
                     // d3 js properties
                     source: source_node.idx,
                     target: dest_node.idx,
@@ -29,7 +34,12 @@ let objcdv = {
                     // Additional link information
                     sourceNode: source_node,
                     targetNode: dest_node
-                })
+                };
+                this.links.push(dvlink);
+
+                this.linksSet[this._linkHashKey(source_node.name, dest_node.name)] = dvlink;
+
+                return dvlink;
             },
 
             getNode: function (nodeName) {
@@ -42,8 +52,25 @@ let objcdv = {
                 return node
             },
 
+            hasNodeWithName:function(nodeName) {
+                var node = this.nodesSet[nodeName];
+                return node != null;
+            },
+
+            hasLinkWithNodesNames:function(sourceName, destName) {
+                return this.linksSet[this._linkHashKey(sourceName, destName)] != null;
+            },
+
+            hasLink:function(link) {
+                return this.hasLinkWithNodesNames(link.sourceNode.name, link.targetNode.name);
+            },
+
             updateNodes: function (f) {
                 _.values(this.nodesSet).forEach(f)
+            },
+
+            updateLinks: function (f) {
+                _.values(this.linksSet).forEach(f)
             },
 
             d3jsGraph: function () {
@@ -103,6 +130,8 @@ let objcdv = {
         };
 
     },
+
+
     _createPrefixes: function () {
         return {
             _prefixesDistr: {},
@@ -157,7 +186,73 @@ let objcdv = {
         });
 
         return graph
+    },
 
+    parse_difference_graph: function (dependencies_before, dependencies_after) {
+
+        var graphBefore = this.parse_dependencies_graph(dependencies_before);
+        var graphAfter = this.parse_dependencies_graph(dependencies_after);
+
+        // Nodes and links those were in before, but removed in after
+        // Nodes those were in both
+        // Nodes and links those weren't in before, but added in after
+
+        // Mark items
+
+        var graph = this._createGraph();
+        var prefixes = this._createPrefixes();
+
+        // Parsing yet again
+        dependencies_before.links.forEach((link) => {
+            let linkSource = link.source;
+            let linkDest = link.dest;
+
+            const addedLink = graph.addLink(link);
+
+            // Mark link as that one was removed in afer
+            if (!graphAfter.hasLink(addedLink)) {
+                addedLink.diff_removed = true;
+            }
+
+            if (!graphAfter.hasNodeWithName(linkSource)) {
+                graph.getNode(linkSource).diff_removed = true;
+            }
+
+            if (!graphAfter.hasNodeWithName(linkDest)) {
+                graph.getNode(linkDest).diff_removed = true;
+            }
+
+            prefixes.addName(linkSource);
+            prefixes.addName(linkDest);
+
+        });
+
+        dependencies_after.links.forEach((link) => {
+            let linkSource = link.source;
+            let linkDest = link.dest;
+
+            if (!graphBefore.hasLinkWithNodesNames(linkSource, linkDest)) {
+                const addedLink = graph.addLink(link);
+                addedLink.diff_added = true;
+            }
+
+            if (!graphBefore.hasNodeWithName(linkSource)) {
+                graph.getNode(linkSource).diff_added = true;
+                prefixes.addName(linkSource);
+            }
+
+            if (!graphBefore.hasNodeWithName(linkDest)) {
+                graph.getNode(linkDest).diff_added = true;
+                prefixes.addName(linkDest);
+            }
+        });
+
+        graph.updateNodes((node) => {
+            node.weight = node.source;
+            node.group = prefixes.prefixIndexForName(node.name) + 1
+        });
+
+        return graph
     }
 
 };

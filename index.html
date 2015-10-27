@@ -29,6 +29,14 @@
 <script type="text/javascript" src="Scripts/d3/d3.v3.js"></script>
 
 <script type="text/javascript" src="origin.js"></script>
+<script>
+    var origin_dependencies = dependencies;
+</script>
+<script type="text/javascript" src="diff.js"></script>
+<script>
+    var diff_dependencies = dependencies;
+</script>
+
 
 <!-- ================================================= -->
 <!-- ===========ACTUAL HTML           ================ -->
@@ -137,7 +145,7 @@ force.start()
 
     var charge_multiplier = 200;
 
-    var dvgraph = objcdv.parse_dependencies_graph(dependencies);
+    var dvgraph = objcdv.parse_difference_graph(origin_dependencies, diff_dependencies);
     var d3graph = dvgraph.d3jsGraph();
 
     var w = window,
@@ -226,7 +234,7 @@ force.start()
             .attr("class", "link")
             .attr("marker-end", "url(#default)")
             .style("stroke-width", function (d) {
-                return 1;
+                return 1.5;
             });
 
     //  ===================================================
@@ -290,6 +298,34 @@ force.start()
             text.attr("transform", transform);
         }
     });
+
+    //  ===================================================
+    //  ===============  APPLY_DIFF_STYLES        =============
+    //  ===================================================
+
+    svg.selectAll('circle')
+            .classed("diff_removed", function (node) {
+                return node.diff_removed;
+            })
+            .classed("diff_added",function(node) {
+                return node.diff_added;
+            })
+            .transition();
+
+    svg.selectAll('.link')
+            .classed("diff_removed", function (link) {
+                return link.diff_removed;
+            })
+            .classed("diff_added",function(link) {
+                return link.diff_added;
+            })
+            .attr("marker-end", function(link) {
+                return link.diff_removed ? "url(#dependency)"
+                        : link.diff_added ? "url(#dependant)"
+                        : "url(#default)"
+            })
+            .transition();
+
 
     //  ===================================================
     //  ===============  HELPER FUNCTIONS     =============
@@ -404,7 +440,7 @@ force.start()
     d3.select("#search_input").on("input", function () {
         // Filter all items
         console.log("Input changed to" + this.value);
-        deselect_selected_node(svg);
+        graph_actions.deselect_selected_node();
 
         if (this.value && this.value.length) {
             live_filter_graph(this.value, "filtered");

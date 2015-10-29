@@ -404,7 +404,7 @@ force.start()
     d3.select("#search_input").on("input", function () {
         // Filter all items
         console.log("Input changed to" + this.value);
-        deselect_selected_node(svg);
+        actions.deselect_selected_node();
 
         if (this.value && this.value.length) {
             live_filter_graph(this.value, "filtered");

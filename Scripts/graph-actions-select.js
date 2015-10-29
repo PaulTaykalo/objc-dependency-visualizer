@@ -38,7 +38,7 @@ let graph_actions = {
             },
 
             deselect_selected_node: function () {
-                this.deselect_selected_node(this.selectedObject)
+                this.deselect_node(this.selectedObject)
             },
 
             _lockNode: function (node) {

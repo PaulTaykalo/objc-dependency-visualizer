@@ -29,7 +29,7 @@ var graph_actions = {
             },
 
             deselect_selected_node: function deselect_selected_node() {
-                this.deselect_selected_node(this.selectedObject);
+                this.deselect_node(this.selectedObject);
             },
 
             _lockNode: function _lockNode(node) {

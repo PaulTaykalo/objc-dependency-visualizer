@@ -1,31 +1,42 @@
 
 .node.diff_added {
     stroke: #090;
-    stroke-width: 10;
+    stroke-width: 20;
     fill-opacity: 1;
 }
 
 .node.diff_removed {
     stroke: #900;
-    stroke-width: 10;
+    stroke-width: 20;
     fill-opacity: 1;
+}
+
+.node.diff_related {
+    stroke: #990;
+    fill: #990;
+    stroke-width: 2;
+    fill-opacity: 0.2;
+    stroke-opacity: 0.2;
+
 }
 
 .link.diff_added {
     stroke: #090;
     stroke-width: 10;
     fill-opacity: 1;
+    stroke-opacity: 1;
 }
 
 .link.diff_removed {
     stroke: #900;
     stroke-width: 10;
     fill-opacity: 1;
+    stroke-opacity: 1;
 }
 
 .node.filtered {
-    fill-opacity: 0.3;
-    stroke-opacity: 0.3;
+    fill-opacity: 0.00;
+    stroke-opacity: 0.00;
 }
 
 text.filtered {
@@ -35,8 +46,8 @@ text.filtered {
 
 .link.filtered {
     stroke: #ddd;
-    fill-opacity: 0.1;
-    stroke-opacity: 0.1;
+    fill-opacity: 0.00;
+    stroke-opacity: 0.00;
 }
 
 .link.dependency {
@@ -68,15 +79,15 @@ text.skipped {
 }
 
 .node {
-    fill-opacity: 0.3;
+    fill-opacity: 0.00;
     stroke: #000;
     stroke-width: 0.5px;
 }
 
 .link {
-    fill-opacity: 0.3;
+    fill-opacity: 0.00;
     stroke: #999;
-    stroke-opacity: .6;
+    stroke-opacity: .01;
     fill: none;
     stroke-width: 1;
     pointer-events: none;

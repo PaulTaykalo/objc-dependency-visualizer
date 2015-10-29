@@ -234,17 +234,19 @@ var objcdv = {
 
             var addedLink = graph.addLink(link);
 
-            // Mark link as that one was removed in afer
-            if (!graphAfter.hasLink(addedLink)) {
-                addedLink.diff_removed = true;
-            }
-
             if (!graphAfter.hasNodeWithName(linkSource)) {
                 graph.getNode(linkSource).diff_removed = true;
             }
 
             if (!graphAfter.hasNodeWithName(linkDest)) {
                 graph.getNode(linkDest).diff_removed = true;
+            }
+
+            // Mark link as that one was removed in afer
+            if (!graphAfter.hasLink(addedLink)) {
+                addedLink.diff_removed = true;
+                graph.getNode(linkSource).diff_related = true;
+                graph.getNode(linkDest).diff_related = true;
             }
 
             prefixes.addName(linkSource);
@@ -258,6 +260,8 @@ var objcdv = {
             if (!graphBefore.hasLinkWithNodesNames(linkSource, linkDest)) {
                 var addedLink = graph.addLink(link);
                 addedLink.diff_added = true;
+                graph.getNode(linkSource).diff_related = true;
+                graph.getNode(linkDest).diff_related = true;
             }
 
             if (!graphBefore.hasNodeWithName(linkSource)) {

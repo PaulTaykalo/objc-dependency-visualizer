@@ -51,7 +51,7 @@ class ObjCDependencyTreeGenerator
       o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') { |v|
         options[:swift_dependencies] = v
       }
-      o.on('-f FORMAT', 'Output format. json by default. Possible values are [json-pretty|json|json-var|yaml]') { |f|
+      o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') { |f|
         options[:output_format] = f
       }
 
@@ -124,10 +124,18 @@ class ObjCDependencyTreeGenerator
     json_result['source_files_count'] = links.length
     json_result['links_count'] = links_count
 
-
-    s = s + JSON.pretty_generate(json_result) if @options[:output_format] == 'json-pretty'
-    s = s + json_result.to_json if @options[:output_format] == 'json' || @options[:output_format] == 'json-var'
-    s = s + json_result.to_yaml if @options[:output_format] == 'yaml'
+    if @options[:output_format] == 'dot'
+      indent = "\t"
+      s = "digraph dependencies {\n#{indent}node [fontname=monospace, fontsize=9, shape=box, style=rounded]\n"
+      json_links.each do |link|
+        s += "#{indent}#{link['source']} -> #{link['dest']}\n"
+      end
+      s += "}\n"
+    else
+      s = s + JSON.pretty_generate(json_result) if @options[:output_format] == 'json-pretty'
+      s = s + json_result.to_json if @options[:output_format] == 'json' || @options[:output_format] == 'json-var'
+      s = s + json_result.to_yaml if @options[:output_format] == 'yaml'
+    end
     s
   end
 

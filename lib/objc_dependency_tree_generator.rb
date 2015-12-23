@@ -128,7 +128,7 @@ class ObjCDependencyTreeGenerator
       indent = "\t"
       s = "digraph dependencies {\n#{indent}node [fontname=monospace, fontsize=9, shape=box, style=rounded]\n"
       json_links.each do |link|
-        s += "#{indent}#{link['source']} -> #{link['dest']}\n"
+        s += "#{indent}\"#{link['source']}\" -> \"#{link['dest']}\"\n"
       end
       s += "}\n"
     else

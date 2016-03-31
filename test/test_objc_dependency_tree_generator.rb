@@ -39,6 +39,25 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   end
 
+  def test_multiple_dirs
+    generator = ObjCDependencyTreeGenerator.new({
+                                                    :search_directory => ['./test/fixtures/swift-xcode-7-out', './test/fixtures/swift-simple-inheritance/x86_64'],
+                                                    :swift_dependencies => true
+                                                })
+    dependencies = generator.find_dependencies
+    assert_not_equal(dependencies, {})
+    assert_not_nil(dependencies['AppDelegate'])
+    assert_not_nil(dependencies['AppDelegate']['Database'])
+    assert_not_nil(dependencies['AppDelegate']['NoteViewController_iOS'])
+    assert_not_nil(dependencies['Note']['Notebook'])
+    assert_not_nil(dependencies['NotesViewController_iOS']['AppDelegate'])
+    assert_not_nil(dependencies['MasterViewController']['DetailViewController'])
+    assert_not_nil(dependencies['AppDelegate']['TwoClass'])
+    assert_not_nil(dependencies['AppDelegate']['ThreeClass'])
+
+  end
+
+
   def test_swift_with_spaces_in_name
     generator = ObjCDependencyTreeGenerator.new({
                                                     :derived_data_paths => ['./test/fixtures/swift-with-spaces'],

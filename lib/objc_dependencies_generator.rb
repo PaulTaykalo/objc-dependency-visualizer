@@ -39,16 +39,22 @@ class ObjcDependenciesGenerator
     end
   end
 
-  def symbol_names_in_files_in_dir(object_files_dir)
-    IO.popen("find \"#{object_files_dir}\" -name \"*.o\" -exec /usr/bin/nm -o {} \\;") { |f|
-      f.each { |line| yield line }
-    }
+  def symbol_names_in_files_in_dir(object_files_dirs)
+    dirs = Array(object_files_dirs)
+    dirs.each do |dir|
+      IO.popen("find \"#{dir}\" -name \"*.o\" -exec /usr/bin/nm -o {} \\;") { |f|
+        f.each { |line| yield line }
+      }
+    end  
   end
 
-  def object_files_in_dir(object_files_dir)
-    IO.popen("find \"#{object_files_dir}\" -name \"*.o\"") { |f|
-      f.each { |line| yield line }
-    }
+  def object_files_in_dir(object_files_dirs)
+    dirs = Array(object_files_dirs)
+    dirs.each do |dir|
+      IO.popen("find \"#{dir}\" -name \"*.o\"") { |f|
+        f.each { |line| yield line }
+      }
+    end  
   end
 
   def dwarfdump_tag_pointers_in_file(filename)

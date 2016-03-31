@@ -48,8 +48,11 @@ class SwiftDependenciesGenerator
     end
   end
 
-  def swift_deps_files_in_dir(object_files_dir)
-    Dir.glob("#{object_files_dir}/*.swiftdeps") { |file| yield file }
+  def swift_deps_files_in_dir(object_files_dirs)
+    dirs = Array(object_files_dirs)
+    dirs.each do |dir|
+      Dir.glob("#{dir}/*.swiftdeps") { |file| yield file }
+    end  
   end
 
 

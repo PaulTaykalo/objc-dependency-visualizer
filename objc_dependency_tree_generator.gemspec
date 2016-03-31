@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'objc-dependency-tree-generator'
-  s.version     = '0.0.4'
-  s.date        = '2015-08-20'
+  s.version     = '0.0.7'
+  s.date        = '2016-04-01'
   s.summary     = 'Objective-C and Swift dependency tree generator'
   s.description = <<-THEEND
 Tool that allows to generate Objective-C and Swift dependency tree from object files

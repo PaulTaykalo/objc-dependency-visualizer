@@ -27,9 +27,8 @@ class ObjCDependencyTreeGenerator
 
     parser = OptionParser.new do |o|
       o.separator 'General options:'
-
-      o.on('-p PATH', 'Path to directory where are your .o files were placed by the compiler') { |directory|
-        options[:search_directory] = directory
+      o.on('-p PATH', '--path' ,'Path to directory where are your .o files were placed by the compiler', Array) { |directory|
+        options[:search_directory] = Array(options[:search_directory]) | Array(directory)
       }
       o.on('-D DERIVED_DATA', 'Path to directory where DerivedData is') { |derived_data|
         options[:derived_data_paths] = [derived_data]
@@ -58,6 +57,7 @@ class ObjCDependencyTreeGenerator
       o.separator 'Common options:'
       o.on_tail('-h', 'Prints this help') { puts o; exit }
       o.parse!
+
     end
 
     options

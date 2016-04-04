@@ -9,7 +9,7 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   def test_swift_simple_inheritance
     generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directory => './test/fixtures/swift-simple-inheritance/x86_64',
+                                                    :search_directories => './test/fixtures/swift-simple-inheritance/x86_64',
                                                     :swift_dependencies => true
                                                 })
     dependencies = generator.find_dependencies
@@ -26,7 +26,7 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   def test_swift_xcode7_out
     generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directory => './test/fixtures/swift-xcode-7-out',
+                                                    :search_directories => './test/fixtures/swift-xcode-7-out',
                                                     :swift_dependencies => true
                                                 })
     dependencies = generator.find_dependencies
@@ -41,7 +41,7 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   def test_multiple_dirs
     generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directory => ['./test/fixtures/swift-xcode-7-out', './test/fixtures/swift-simple-inheritance/x86_64'],
+                                                    :search_directories => ['./test/fixtures/swift-xcode-7-out', './test/fixtures/swift-simple-inheritance/x86_64'],
                                                     :swift_dependencies => true
                                                 })
     dependencies = generator.find_dependencies
@@ -54,8 +54,22 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_not_nil(dependencies['MasterViewController']['DetailViewController'])
     assert_not_nil(dependencies['AppDelegate']['TwoClass'])
     assert_not_nil(dependencies['AppDelegate']['ThreeClass'])
+  end
+
+  def test_multiple_targets
+    generator = ObjCDependencyTreeGenerator.new({
+                                                    :derived_data_paths => ['./test/fixtures/multiple-targets'],
+                                                    :target_names => ['iAsyncWeather', 'JFFAsyncOperations'],
+                                                    :use_dwarf => true
+                                                })
+    dependencies = generator.find_dependencies
+    assert_not_equal(dependencies, {})
+    assert_not_nil(dependencies['AWOperationsFactory'])
+    assert_not_nil(dependencies['AWOperationsFactory']['JFFCancelAsyncOperation'])
+    assert_not_nil(dependencies['JFFAsyncOperationHelpers']['JFFCancelAsyncOperation'])
 
   end
+
 
 
   def test_swift_with_spaces_in_name

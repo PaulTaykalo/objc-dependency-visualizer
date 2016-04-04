@@ -1,4 +1,4 @@
-def find_project_output_directory(derived_data_paths, project_prefix, project_suffix_pattern, target_name)
+def find_project_output_directory(derived_data_paths, project_prefix, project_suffix_pattern, target_names)
 
   return nil unless derived_data_paths
 
@@ -21,13 +21,25 @@ def find_project_output_directory(derived_data_paths, project_prefix, project_su
 
   filtered_by_target_paths = paths
 
-  if target_name
-    filtered_by_target_paths = paths.find_all { |path| /#{target_name}[^\.]*\.build\/Objects-normal/.match path }
+  if target_names != nil && target_names.length > 0
+    filtered_by_target_paths = paths.find_all { |path| 
+       target_names.any? { |target| /#{target}[^\.]*\.build\/Objects-normal/.match path }
+    }
     $stderr.puts "After target filtration there is #{filtered_by_target_paths.length} directories left"
     if paths.empty?
-      $stderr.puts "Cannot find projects that starts with '#{project_prefix}'' and has target name that starts with '#{target_name}'"
+      $stderr.puts "Cannot find projects that starts with '#{project_prefix}'' and has target name that starts with '#{target_names}'"
       exit 1
     end
+
+    paths_sorted_by_time = filtered_by_target_paths.sort_by { |f| File.ctime(f.chomp) }
+    last_modified_dirs = target_names.map { |target|
+      filtered_by_target = filtered_by_target_paths.find_all { |path| /#{target}[^\.]*\.build\/Objects-normal/.match path }
+      last_modified_dir = filtered_by_target.last.chomp
+      $stderr.puts "Last modifications for #{target} were in\n#{last_modified_dir}\ndirectory at\n#{File.ctime(last_modified_dir)}"
+      last_modified_dir
+    }
+    return last_modified_dirs
+
   end
 
   paths_sorted_by_time = filtered_by_target_paths.sort_by { |f| File.ctime(f.chomp) }
@@ -35,7 +47,7 @@ def find_project_output_directory(derived_data_paths, project_prefix, project_su
   last_modified_dir = paths_sorted_by_time.last.chomp
   $stderr.puts "Last modifications were in\n#{last_modified_dir}\ndirectory at\n#{File.ctime(last_modified_dir)}"
 
-  last_modified_dir
+  [last_modified_dir]
 end
 
 def is_primitive_swift_type?(dest)

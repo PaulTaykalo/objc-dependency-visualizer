@@ -13,7 +13,7 @@ class ObjCDependencyTreeGenerator
     @options[:derived_data_project_pattern] = '*-*' unless @options[:derived_data_project_pattern]
 
     @exclusion_prefixes = @options[:exclusion_prefixes] ? @options[:exclusion_prefixes] : 'NS|UI|CA|CG|CI|CF'
-    @object_files_directory = @options[:search_directory]
+    @object_files_directories = @options[:search_directories]
   end
 
   def self.parse_command_line_options
@@ -28,7 +28,7 @@ class ObjCDependencyTreeGenerator
     parser = OptionParser.new do |o|
       o.separator 'General options:'
       o.on('-p PATH', '--path' ,'Path to directory where are your .o files were placed by the compiler', Array) { |directory|
-        options[:search_directory] = Array(options[:search_directory]) | Array(directory)
+        options[:search_directories] = Array(options[:search_directories]) | Array(directory)
       }
       o.on('-D DERIVED_DATA', 'Path to directory where DerivedData is') { |derived_data|
         options[:derived_data_paths] = [derived_data]
@@ -37,8 +37,8 @@ class ObjCDependencyTreeGenerator
       o.on('-s PROJECT_NAME', 'Search project .o files by specified project name') { |project_name|
         options[:project_name] = project_name
       }
-      o.on('-t TARGET_NAME', 'Target of project') { |target_name|
-        options[:target_name] = target_name
+      o.on('-t TARGET_NAME', '--target' 'Target of project', Array) { |target_name|
+        options[:target_names] = Array(options[:target_names]) | Array(target_name)
       }
       o.on('-e PREFIXES', "Prefixes of classes those will be exсluded from visualization. \n\t\t\t\t\tNS|UI\n\t\t\t\t\tUI|CA|MF") { |exclusion_prefixes|
         options[:exclusion_prefixes] = exclusion_prefixes
@@ -69,16 +69,16 @@ class ObjCDependencyTreeGenerator
       return {}
     end
 
-    unless @object_files_directory
-      @object_files_directory =
+    unless @object_files_directories
+      @object_files_directories =
           find_project_output_directory(@options[:derived_data_paths],
                                         @options[:project_name],
                                         @options[:derived_data_project_pattern],
-                                        @options[:target_name])
-      return {} unless @object_files_directory
+                                        @options[:target_names])
+      return {} unless @object_files_directories
     end
 
-    unless @object_files_directory
+    unless @object_files_directories
       puts parser.help
       exit 1
     end
@@ -93,9 +93,9 @@ class ObjCDependencyTreeGenerator
     }
 
     if @options[:swift_dependencies]
-      SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directory, &links_block)
+      SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directories, &links_block)
     else
-      ObjcDependenciesGenerator.new.generate_dependencies(@object_files_directory, @options[:use_dwarf], &links_block)
+      ObjcDependenciesGenerator.new.generate_dependencies(@object_files_directories, @options[:use_dwarf], &links_block)
     end
 
     links

@@ -25,6 +25,9 @@ cd objc-dependency-visualizer ;
 open index.html
 ```
 
+### More specific examples
+Examples are [here](https://github.com/PaulTaykalo/objc-dependency-visualizer/wiki/Usage-examples)
+
 ### Tell the world about the awesomeness of your project structure
 Share image to the Twitter with [#objcdependencyvisualizer](https://twitter.com/search/realtime?q=%23objcdependencyvisualizer) hashtag
 

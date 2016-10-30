@@ -1,0 +1,16 @@
+body {
+    overflow: hidden;
+}
+
+#editor {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    width: 700px;
+    left: 0;
+    height: 100%;
+}
+
+#sidr {
+    width: 700px;
+}

@@ -13,7 +13,6 @@ var objcdv = {
             nodes: [],
             links: [],
             nodesSet: {},
-            node_index: 0,
 
             addLink: function addLink(link) {
 
@@ -37,9 +36,8 @@ var objcdv = {
             getNode: function getNode(nodeName) {
                 var node = this.nodesSet[nodeName];
                 if (node == null) {
-                    var idx = this.node_index;
+                    var idx = Object.keys(this.nodesSet).length;
                     this.nodesSet[nodeName] = node = { idx: idx, name: nodeName, source: 1, dest: 0 };
-                    this.node_index++;
                 }
                 return node;
             },
@@ -187,4 +185,4 @@ var objcdv = {
 
 };
 
-//# sourceMappingURL=parse-compiled.js.map
+//# sourceMappingURL=depvis-parse-compiled.js.map

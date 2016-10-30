@@ -122,4 +122,4 @@ var graph_actions = {
     }
 };
 
-//# sourceMappingURL=graph-actions-select-compiled.js.map
+//# sourceMappingURL=depvis-graph-actions-select-compiled.js.map

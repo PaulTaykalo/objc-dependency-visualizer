@@ -1,34 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-    <link rel="stylesheet" type="text/css" href="dependency.css">
-    <link rel="stylesheet" href="Scripts/sidr/stylesheets/jquery.sidr.dark.css">
-    <style type="text/css" media="screen">
-        body {
-            overflow: hidden;
-        }
-
-        #editor {
-            margin: 0;
-            position: absolute;
-            top: 0;
-            width: 700px;
-            left: 0;
-            height: 100%;
-        }
-
-        #sidr {
-            width: 700px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/dependency.css">
+    <link rel="stylesheet" type="text/css" href="components/sidr/stylesheets/jquery.sidr.dark.css">
+    <link rel="stylesheet" type="text/css" href="components/editor/editor.css">
 </head>
 <body>
-<script type="text/javascript" src="Scripts/jquery/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="Scripts/sidr/jquery.sidr.js"></script>
-<script type="text/javascript" src="Scripts/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="Scripts/d3/d3.v3.js"></script>
 
-<script type="text/javascript" src="origin.js"></script>
+<!-- A lot of Javascript here :) -->
+<script type="text/javascript" src="components/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="components/d3/d3.v3.js"></script>
 
 <!-- ================================================= -->
 <!-- ===========ACTUAL HTML           ================ -->
@@ -40,80 +22,21 @@
     <label><input type="range" name="link_strength" min="0.1" max="100" value="7"/> Link strength</label><br>
     <label><input type="checkbox" name="show_texts_near_circles"/> Show names</label><br>
     <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%;"><br>
-
 </form>
 
+<!-- Add editor logic with button and everything else -->
+<script type="text/javascript" src="components/sidr/jquery.sidr.js"></script>
+<script type="text/javascript" src="components/ace/ace.js"></script>
+<script type="text/javascript" src="components/editor/editor-compiled.js"></script>
 <a id="simple-menu" class="editor-button" href="#sidr">Live editor</a>
 
 <div id="chart">
     <!-- Here the SVG will be placed-->
 </div>
 
-<div id="sidr">
-  <pre id="editor">
-// This one is used by default
-// Groups are set based on the Prefixes
-function default_coloring(d) {
-  return color(d.group); 
-}
-
-// This function will group nodes based on the
-// Rgular expressions you've provided
-function regex_based_coloring(d) {
-  var className = d.name
-  
-  var rules = ["Magical", "Mapp", "^NS", "^UI",  "^NI", "AF", ""];
-//   var rules = ["ViewController", "View"]
-  
-  for (var i = 0; i &lt; rules.length; i++) {
-    var re = new RegExp(rules[i], "");
-    if (className.match(re)) {
-      return color(i + 1)
-    }
-  }
-  return "black";
-}
-
-// Filling out with default coloring
-node.style("fill", default_coloring)
-// node.style("fill", regex_based_coloring)
-  
-force.start()
-    </pre>
-</div>
-
-<script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/twilight");
-    editor.getSession().setMode("ace/mode/javascript");
-
-    editor.getSession().on('change', function (e) {
-        try {
-            eval(editor.getSession().getValue())
-        } catch (err) {
-            console.log(err)
-        }
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('#simple-menu').sidr(
-                {
-                    displace: false,
-                    onOpen: function () {
-                        editor.resize()
-                    }
-                }
-        );
-        $("#chart").css("overflow", "hidden");
-
-    });
-</script>
-
-<script src="Scripts/graph-actions-select-compiled.js"></script>
-<script src="Scripts/parse-compiled.js"></script>
+<script type="text/javascript" src="origin.js"></script>
+<script src="components/depvis/depvis-graph-actions-select-compiled.js"></script>
+<script src="components/depvis/depvis-parse-compiled.js"></script>
 <script>
 
     //  ===================================================

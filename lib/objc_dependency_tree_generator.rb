@@ -53,6 +53,9 @@ class ObjCDependencyTreeGenerator
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') { |f|
         options[:output_format] = f
       }
+      o.on('-o OUTPUT_FILE', '--output', 'target of output') { |f|
+        options[:target_file_name] = f
+      }
 
       o.separator 'Common options:'
       o.on_tail('-h', 'Prints this help') { puts o; exit }
@@ -136,7 +139,12 @@ class ObjCDependencyTreeGenerator
       s = s + json_result.to_json if @options[:output_format] == 'json' || @options[:output_format] == 'json-var'
       s = s + json_result.to_yaml if @options[:output_format] == 'yaml'
     end
-    s
+    if @options[:target_file_name]
+        target = File.open(@options[:target_file_name], 'w')
+        target.write("#{s}")
+    else
+        s
+    end
   end
 
 

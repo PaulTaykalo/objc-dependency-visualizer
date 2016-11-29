@@ -142,8 +142,9 @@ class ObjCDependencyTreeGenerator
     if @options[:target_file_name]
         target = File.open(@options[:target_file_name], 'w')
         target.write("#{s}")
+    else
+        s
     end
-    s
   end
 
 

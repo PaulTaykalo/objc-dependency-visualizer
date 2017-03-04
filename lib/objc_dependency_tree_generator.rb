@@ -50,6 +50,9 @@ class ObjCDependencyTreeGenerator
       o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') { |v|
         options[:swift_dependencies] = v
       }
+      o.on('-k FILENAME', 'Generate dependencies from source kitten output (json)') { |v|
+        options[:sourcekitten_dependencies_file] = v
+      }
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') { |f|
         options[:output_format] = f
       }
@@ -72,6 +75,20 @@ class ObjCDependencyTreeGenerator
       return {}
     end
 
+    links = {}
+    links_block = lambda { |source, dest|
+      links[source] = {} unless links[source]
+      if source != dest and is_valid_dest?(dest, @exclusion_prefixes)
+        links[source][dest] = 'set up'
+      end
+    }
+
+   if @options[:sourcekitten_dependencies_file] 
+      SourceKittenDependenciesGenerator.new.generate_dependencies(@options[:sourcekitten_dependencies_file], &links_block)
+      return links
+   end   
+
+
     unless @object_files_directories
       @object_files_directories =
           find_project_output_directory(@options[:derived_data_paths],
@@ -86,14 +103,6 @@ class ObjCDependencyTreeGenerator
       exit 1
     end
 
-
-    links = {}
-    links_block = lambda { |source, dest|
-      links[source] = {} unless links[source]
-      if source != dest and is_valid_dest?(dest, @exclusion_prefixes)
-        links[source][dest] = 'set up'
-      end
-    }
 
     if @options[:swift_dependencies]
       SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directories, &links_block)

@@ -1,0 +1,453 @@
+[{
+  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.parsed_declaration" : "class MainClass",
+        "key.annotated_decl" : "<Declaration>class MainClass<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>MainClass<\/decl.name><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 20,
+        "key.runtime_name" : "_TtC8__main__9MainClass",
+        "key.parsed_scope.start" : 12,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 170,
+        "key.nameoffset" : 176,
+        "key.typename" : "MainClass.Type",
+        "key.name" : "MainClass",
+        "key.usr" : "s:C19SourcekittenExample9MainClass",
+        "key.bodyoffset" : 187,
+        "key.namelength" : 9,
+        "key.parsed_scope.end" : 14,
+        "key.bodylength" : 2
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.parsed_declaration" : "class Subclass : MainClass",
+        "key.annotated_decl" : "<Declaration>class Subclass : <Type usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Subclass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/ref.class><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 31,
+        "key.runtime_name" : "_TtC8__main__8Subclass",
+        "key.parsed_scope.start" : 18,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 194,
+        "key.nameoffset" : 200,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 211,
+            "key.length" : 9
+          }
+        ],
+        "key.typename" : "Subclass.Type",
+        "key.name" : "Subclass",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "MainClass"
+          }
+        ],
+        "key.usr" : "s:C19SourcekittenExample8Subclass",
+        "key.bodyoffset" : 222,
+        "key.namelength" : 8,
+        "key.parsed_scope.end" : 20,
+        "key.bodylength" : 2
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.parsed_declaration" : "class SubclassOfSubclass: Subclass",
+        "key.annotated_decl" : "<Declaration>class SubclassOfSubclass : <Type usr=\"s:C19SourcekittenExample8Subclass\">Subclass<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>SubclassOfSubclass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample8Subclass\">Subclass<\/ref.class><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 39,
+        "key.runtime_name" : "_TtC8__main__18SubclassOfSubclass",
+        "key.parsed_scope.start" : 23,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 228,
+        "key.nameoffset" : 234,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 254,
+            "key.length" : 8
+          }
+        ],
+        "key.typename" : "SubclassOfSubclass.Type",
+        "key.name" : "SubclassOfSubclass",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "Subclass"
+          }
+        ],
+        "key.usr" : "s:C19SourcekittenExample18SubclassOfSubclass",
+        "key.bodyoffset" : 264,
+        "key.namelength" : 18,
+        "key.parsed_scope.end" : 25,
+        "key.bodylength" : 2
+      }
+    ],
+    "key.offset" : 0,
+    "key.length" : 268
+  }
+}, {
+  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
+        "key.parsed_declaration" : "class ViewController: UIViewController",
+        "key.annotated_decl" : "<Declaration>class ViewController : <Type usr=\"c:objc(cs)UIViewController\">UIViewController<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>ViewController<\/decl.name> : <ref.class usr=\"c:objc(cs)UIViewController\">UIViewController<\/ref.class><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
+            "key.parsed_declaration" : "override func viewDidLoad()",
+            "key.annotated_decl" : "<Declaration>override func viewDidLoad()<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>override<\/syntaxtype.keyword> <syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>viewDidLoad<\/decl.name>()<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 135,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(cs)UIViewController(im)viewDidLoad"
+              }
+            ],
+            "key.parsed_scope.start" : 13,
+            "key.typeusr" : "_TtFT_T_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.attributes" : [
+              {
+                "key.attribute" : "source.decl.attribute.override"
+              }
+            ],
+            "key.offset" : 224,
+            "key.nameoffset" : 229,
+            "key.typename" : "(ViewController) -> () -> ()",
+            "key.name" : "viewDidLoad()",
+            "key.usr" : "s:FC19SourcekittenExample14ViewController11viewDidLoadFT_T_",
+            "key.bodyoffset" : 244,
+            "key.namelength" : 13,
+            "key.parsed_scope.end" : 16,
+            "key.bodylength" : 114
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
+            "key.parsed_declaration" : "override func didReceiveMemoryWarning()",
+            "key.annotated_decl" : "<Declaration>override func didReceiveMemoryWarning()<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>override<\/syntaxtype.keyword> <syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>didReceiveMemoryWarning<\/decl.name>()<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 137,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(cs)UIViewController(im)didReceiveMemoryWarning"
+              }
+            ],
+            "key.parsed_scope.start" : 18,
+            "key.typeusr" : "_TtFT_T_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.attributes" : [
+              {
+                "key.attribute" : "source.decl.attribute.override"
+              }
+            ],
+            "key.offset" : 374,
+            "key.nameoffset" : 379,
+            "key.typename" : "(ViewController) -> () -> ()",
+            "key.name" : "didReceiveMemoryWarning()",
+            "key.usr" : "s:FC19SourcekittenExample14ViewController23didReceiveMemoryWarningFT_T_",
+            "key.bodyoffset" : 406,
+            "key.namelength" : 25,
+            "key.parsed_scope.end" : 21,
+            "key.bodylength" : 104
+          }
+        ],
+        "key.length" : 346,
+        "key.runtime_name" : "_TtC8__main__14ViewController",
+        "key.parsed_scope.start" : 11,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 169,
+        "key.nameoffset" : 175,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 191,
+            "key.length" : 16
+          }
+        ],
+        "key.typename" : "ViewController.Type",
+        "key.name" : "ViewController",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "UIViewController"
+          }
+        ],
+        "key.usr" : "s:C19SourcekittenExample14ViewController",
+        "key.bodyoffset" : 209,
+        "key.namelength" : 14,
+        "key.parsed_scope.end" : 24,
+        "key.bodylength" : 305
+      }
+    ],
+    "key.offset" : 0,
+    "key.length" : 517
+  }
+}, {
+  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+        "key.parsed_declaration" : "class AppDelegate: UIResponder, UIApplicationDelegate",
+        "key.annotated_decl" : "<Declaration>@UIApplicationMain class AppDelegate : <Type usr=\"c:objc(cs)UIResponder\">UIResponder<\/Type>, <Type usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@UIApplicationMain<\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>AppDelegate<\/decl.name> : <ref.class usr=\"c:objc(cs)UIResponder\">UIResponder<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/ref.protocol><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.annotated_decl" : "<Declaration>var window: <Type usr=\"c:objc(cs)UIWindow\">UIWindow<\/Type>?<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>window<\/decl.name>: <decl.var.type><ref.class usr=\"c:objc(cs)UIWindow\">UIWindow<\/ref.class>?<\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 21,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(py)window"
+              }
+            ],
+            "key.parsed_scope.start" : 14,
+            "key.typeusr" : "_TtGSqCSo8UIWindow_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 246,
+            "key.nameoffset" : 250,
+            "key.typename" : "UIWindow?",
+            "key.name" : "window",
+            "key.usr" : "s:vC19SourcekittenExample11AppDelegate6windowGSqCSo8UIWindow_",
+            "key.parsed_declaration" : "var window: UIWindow?",
+            "key.namelength" : 6,
+            "key.parsed_scope.end" : 14,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool",
+            "key.annotated_decl" : "<Declaration>func application(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>, didFinishLaunchingWithOptions launchOptions: [<Type usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/Type> : Any]?) -&gt; <Type usr=\"s:Sb\">Bool<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>application<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>, <decl.var.parameter><decl.var.parameter.argument_label>didFinishLaunchingWithOptions<\/decl.var.parameter.argument_label> <decl.var.parameter.name>launchOptions<\/decl.var.parameter.name>: <decl.var.parameter.type>[<ref.struct usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/ref.struct> : Any]?<\/decl.var.parameter.type><\/decl.var.parameter>) -&gt; <decl.function.returntype><ref.struct usr=\"s:Sb\">Bool<\/ref.struct><\/decl.function.returntype><\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 236,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)application:didFinishLaunchingWithOptions:"
+              }
+            ],
+            "key.parsed_scope.start" : 17,
+            "key.typeusr" : "_TtFTCSo13UIApplication29didFinishLaunchingWithOptionsGSqGVs10DictionaryVSC29UIApplicationLaunchOptionsKeyP____Sb",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 274,
+            "key.nameoffset" : 279,
+            "key.typename" : "(AppDelegate) -> (UIApplication, [UIApplicationLaunchOptionsKey : Any]?) -> Bool",
+            "key.name" : "application(_:didFinishLaunchingWithOptions:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate11applicationFTCSo13UIApplication29didFinishLaunchingWithOptionsGSqGVs10DictionaryVSC29UIApplicationLaunchOptionsKeyP____Sb",
+            "key.bodyoffset" : 414,
+            "key.namelength" : 125,
+            "key.parsed_scope.end" : 20,
+            "key.bodylength" : 95
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func applicationWillResignActive(_ application: UIApplication)",
+            "key.annotated_decl" : "<Declaration>func applicationWillResignActive(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillResignActive<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 516,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillResignActive:"
+              }
+            ],
+            "key.parsed_scope.start" : 22,
+            "key.typeusr" : "_TtFCSo13UIApplicationT_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 516,
+            "key.nameoffset" : 521,
+            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
+            "key.name" : "applicationWillResignActive(_:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate27applicationWillResignActiveFCSo13UIApplicationT_",
+            "key.bodyoffset" : 580,
+            "key.namelength" : 57,
+            "key.parsed_scope.end" : 25,
+            "key.bodylength" : 451
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func applicationDidEnterBackground(_ application: UIApplication)",
+            "key.annotated_decl" : "<Declaration>func applicationDidEnterBackground(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationDidEnterBackground<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 433,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationDidEnterBackground:"
+              }
+            ],
+            "key.parsed_scope.start" : 27,
+            "key.typeusr" : "_TtFCSo13UIApplicationT_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 1038,
+            "key.nameoffset" : 1043,
+            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
+            "key.name" : "applicationDidEnterBackground(_:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate29applicationDidEnterBackgroundFCSo13UIApplicationT_",
+            "key.bodyoffset" : 1104,
+            "key.namelength" : 59,
+            "key.parsed_scope.end" : 30,
+            "key.bodylength" : 366
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func applicationWillEnterForeground(_ application: UIApplication)",
+            "key.annotated_decl" : "<Declaration>func applicationWillEnterForeground(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillEnterForeground<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 229,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillEnterForeground:"
+              }
+            ],
+            "key.parsed_scope.start" : 32,
+            "key.typeusr" : "_TtFCSo13UIApplicationT_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 1477,
+            "key.nameoffset" : 1482,
+            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
+            "key.name" : "applicationWillEnterForeground(_:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate30applicationWillEnterForegroundFCSo13UIApplicationT_",
+            "key.bodyoffset" : 1544,
+            "key.namelength" : 60,
+            "key.parsed_scope.end" : 34,
+            "key.bodylength" : 161
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func applicationDidBecomeActive(_ application: UIApplication)",
+            "key.annotated_decl" : "<Declaration>func applicationDidBecomeActive(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationDidBecomeActive<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 264,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationDidBecomeActive:"
+              }
+            ],
+            "key.parsed_scope.start" : 36,
+            "key.typeusr" : "_TtFCSo13UIApplicationT_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 1712,
+            "key.nameoffset" : 1717,
+            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
+            "key.name" : "applicationDidBecomeActive(_:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate26applicationDidBecomeActiveFCSo13UIApplicationT_",
+            "key.bodyoffset" : 1775,
+            "key.namelength" : 56,
+            "key.parsed_scope.end" : 38,
+            "key.bodylength" : 200
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func applicationWillTerminate(_ application: UIApplication)",
+            "key.annotated_decl" : "<Declaration>func applicationWillTerminate(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillTerminate<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 196,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillTerminate:"
+              }
+            ],
+            "key.parsed_scope.start" : 40,
+            "key.typeusr" : "_TtFCSo13UIApplicationT_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 1982,
+            "key.nameoffset" : 1987,
+            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
+            "key.name" : "applicationWillTerminate(_:)",
+            "key.usr" : "s:FC19SourcekittenExample11AppDelegate24applicationWillTerminateFCSo13UIApplicationT_",
+            "key.bodyoffset" : 2043,
+            "key.namelength" : 54,
+            "key.parsed_scope.end" : 42,
+            "key.bodylength" : 134
+          }
+        ],
+        "key.length" : 1997,
+        "key.runtime_name" : "_TtC8__main__11AppDelegate",
+        "key.parsed_scope.start" : 12,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 185,
+        "key.attributes" : [
+          {
+            "key.attribute" : "source.decl.attribute.UIApplicationMain"
+          }
+        ],
+        "key.nameoffset" : 191,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 204,
+            "key.length" : 11
+          },
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 217,
+            "key.length" : 21
+          }
+        ],
+        "key.typename" : "AppDelegate.Type",
+        "key.name" : "AppDelegate",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "UIResponder"
+          },
+          {
+            "key.name" : "UIApplicationDelegate"
+          }
+        ],
+        "key.usr" : "s:C19SourcekittenExample11AppDelegate",
+        "key.bodyoffset" : 240,
+        "key.namelength" : 11,
+        "key.parsed_scope.end" : 45,
+        "key.bodylength" : 1941
+      }
+    ],
+    "key.offset" : 0,
+    "key.length" : 2184
+  }
+}]

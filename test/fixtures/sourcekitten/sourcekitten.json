@@ -3,6 +3,14 @@
     "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
     "key.substructure" : [
       {
+        "key.name" : "MARK: Protocols",
+        "key.nameoffset" : 0,
+        "key.kind" : "source.lang.swift.syntaxtype.comment.mark",
+        "key.namelength" : 0,
+        "key.offset" : 171,
+        "key.length" : 15
+      },
+      {
         "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "protocol ProtocolToExtend",
         "key.annotated_decl" : "<Declaration>protocol ProtocolToExtend<\/Declaration>",
@@ -10,17 +18,17 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 29,
         "key.runtime_name" : "_TtP8__main__16ProtocolToExtend_",
-        "key.parsed_scope.start" : 11,
+        "key.parsed_scope.start" : 13,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.protocol",
-        "key.offset" : 169,
-        "key.nameoffset" : 178,
+        "key.offset" : 188,
+        "key.nameoffset" : 197,
         "key.typename" : "ProtocolToExtend.Protocol",
         "key.name" : "ProtocolToExtend",
         "key.usr" : "s:P19SourcekittenExample16ProtocolToExtend",
-        "key.bodyoffset" : 196,
+        "key.bodyoffset" : 215,
         "key.namelength" : 16,
-        "key.parsed_scope.end" : 11,
+        "key.parsed_scope.end" : 13,
         "key.bodylength" : 1
       },
       {
@@ -31,17 +39,17 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 28,
         "key.runtime_name" : "_TtP8__main__15AwesomeProtocol_",
-        "key.parsed_scope.start" : 13,
+        "key.parsed_scope.start" : 15,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.protocol",
-        "key.offset" : 200,
-        "key.nameoffset" : 209,
+        "key.offset" : 219,
+        "key.nameoffset" : 228,
         "key.typename" : "AwesomeProtocol.Protocol",
         "key.name" : "AwesomeProtocol",
         "key.usr" : "s:P19SourcekittenExample15AwesomeProtocol",
-        "key.bodyoffset" : 226,
+        "key.bodyoffset" : 245,
         "key.namelength" : 15,
-        "key.parsed_scope.end" : 13,
+        "key.parsed_scope.end" : 15,
         "key.bodylength" : 1
       },
       {
@@ -52,15 +60,15 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 40,
         "key.runtime_name" : "_TtP8__main__11SubProtocol_",
-        "key.parsed_scope.start" : 15,
+        "key.parsed_scope.start" : 17,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.protocol",
-        "key.offset" : 230,
-        "key.nameoffset" : 239,
+        "key.offset" : 249,
+        "key.nameoffset" : 258,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 252,
+            "key.offset" : 271,
             "key.length" : 15
           }
         ],
@@ -72,10 +80,18 @@
           }
         ],
         "key.usr" : "s:P19SourcekittenExample11SubProtocol",
-        "key.bodyoffset" : 269,
+        "key.bodyoffset" : 288,
         "key.namelength" : 11,
-        "key.parsed_scope.end" : 15,
+        "key.parsed_scope.end" : 17,
         "key.bodylength" : 0
+      },
+      {
+        "key.name" : "MARK: Classes",
+        "key.nameoffset" : 0,
+        "key.kind" : "source.lang.swift.syntaxtype.comment.mark",
+        "key.namelength" : 0,
+        "key.offset" : 295,
+        "key.length" : 13
       },
       {
         "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
@@ -85,17 +101,17 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 18,
         "key.runtime_name" : "_TtC8__main__9MainClass",
-        "key.parsed_scope.start" : 17,
+        "key.parsed_scope.start" : 21,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 272,
-        "key.nameoffset" : 278,
+        "key.offset" : 309,
+        "key.nameoffset" : 315,
         "key.typename" : "MainClass.Type",
         "key.name" : "MainClass",
         "key.usr" : "s:C19SourcekittenExample9MainClass",
-        "key.bodyoffset" : 289,
+        "key.bodyoffset" : 326,
         "key.namelength" : 9,
-        "key.parsed_scope.end" : 17,
+        "key.parsed_scope.end" : 21,
         "key.bodylength" : 0
       },
       {
@@ -106,15 +122,15 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 29,
         "key.runtime_name" : "_TtC8__main__8Subclass",
-        "key.parsed_scope.start" : 19,
+        "key.parsed_scope.start" : 23,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 292,
-        "key.nameoffset" : 298,
+        "key.offset" : 329,
+        "key.nameoffset" : 335,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 309,
+            "key.offset" : 346,
             "key.length" : 9
           }
         ],
@@ -126,9 +142,9 @@
           }
         ],
         "key.usr" : "s:C19SourcekittenExample8Subclass",
-        "key.bodyoffset" : 320,
+        "key.bodyoffset" : 357,
         "key.namelength" : 8,
-        "key.parsed_scope.end" : 19,
+        "key.parsed_scope.end" : 23,
         "key.bodylength" : 0
       },
       {
@@ -139,20 +155,20 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 54,
         "key.runtime_name" : "_TtC8__main__18SubclassOfSubclass",
-        "key.parsed_scope.start" : 21,
+        "key.parsed_scope.start" : 25,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 323,
-        "key.nameoffset" : 329,
+        "key.offset" : 360,
+        "key.nameoffset" : 366,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 349,
+            "key.offset" : 386,
             "key.length" : 8
           },
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 359,
+            "key.offset" : 396,
             "key.length" : 15
           }
         ],
@@ -167,9 +183,9 @@
           }
         ],
         "key.usr" : "s:C19SourcekittenExample18SubclassOfSubclass",
-        "key.bodyoffset" : 376,
+        "key.bodyoffset" : 413,
         "key.namelength" : 18,
-        "key.parsed_scope.end" : 21,
+        "key.parsed_scope.end" : 25,
         "key.bodylength" : 0
       },
       {
@@ -180,20 +196,20 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 52,
         "key.runtime_name" : "_TtC8__main__19SubclassOfMainClass",
-        "key.parsed_scope.start" : 23,
+        "key.parsed_scope.start" : 27,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 379,
-        "key.nameoffset" : 385,
+        "key.offset" : 416,
+        "key.nameoffset" : 422,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 406,
+            "key.offset" : 443,
             "key.length" : 9
           },
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 417,
+            "key.offset" : 454,
             "key.length" : 11
           }
         ],
@@ -208,10 +224,18 @@
           }
         ],
         "key.usr" : "s:C19SourcekittenExample19SubclassOfMainClass",
-        "key.bodyoffset" : 430,
+        "key.bodyoffset" : 467,
         "key.namelength" : 19,
-        "key.parsed_scope.end" : 23,
+        "key.parsed_scope.end" : 27,
         "key.bodylength" : 0
+      },
+      {
+        "key.name" : "MARK: Extensions",
+        "key.nameoffset" : 0,
+        "key.kind" : "source.lang.swift.syntaxtype.comment.mark",
+        "key.namelength" : 0,
+        "key.offset" : 474,
+        "key.length" : 16
       },
       {
         "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
@@ -220,12 +244,12 @@
         "key.length" : 41,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.extension",
-        "key.offset" : 434,
-        "key.nameoffset" : 444,
+        "key.offset" : 491,
+        "key.nameoffset" : 501,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 455,
+            "key.offset" : 512,
             "key.length" : 16
           }
         ],
@@ -237,13 +261,81 @@
           }
         ],
         "key.usr" : "s:C19SourcekittenExample9MainClass",
-        "key.bodyoffset" : 473,
+        "key.bodyoffset" : 530,
         "key.namelength" : 9,
+        "key.bodylength" : 1
+      },
+      {
+        "key.name" : "MARK: Structs",
+        "key.nameoffset" : 0,
+        "key.kind" : "source.lang.swift.syntaxtype.comment.mark",
+        "key.namelength" : 0,
+        "key.offset" : 537,
+        "key.length" : 13
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.parsed_declaration" : "struct SimpleStruct",
+        "key.annotated_decl" : "<Declaration>struct SimpleStruct<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.struct><syntaxtype.keyword>struct<\/syntaxtype.keyword> <decl.name>SimpleStruct<\/decl.name><\/decl.struct>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 23,
+        "key.parsed_scope.start" : 34,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.struct",
+        "key.offset" : 551,
+        "key.nameoffset" : 558,
+        "key.typename" : "SimpleStruct.Type",
+        "key.name" : "SimpleStruct",
+        "key.usr" : "s:V19SourcekittenExample12SimpleStruct",
+        "key.bodyoffset" : 572,
+        "key.namelength" : 12,
+        "key.parsed_scope.end" : 34,
+        "key.bodylength" : 1
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.parsed_declaration" : "struct StructWithProtocols: ProtocolToExtend, AwesomeProtocol",
+        "key.annotated_decl" : "<Declaration>struct StructWithProtocols : <Type usr=\"s:P19SourcekittenExample16ProtocolToExtend\">ProtocolToExtend<\/Type>, <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.struct><syntaxtype.keyword>struct<\/syntaxtype.keyword> <decl.name>StructWithProtocols<\/decl.name> : <ref.protocol usr=\"s:P19SourcekittenExample16ProtocolToExtend\">ProtocolToExtend<\/ref.protocol>, <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol><\/decl.struct>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 65,
+        "key.parsed_scope.start" : 36,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.struct",
+        "key.offset" : 576,
+        "key.nameoffset" : 583,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 604,
+            "key.length" : 16
+          },
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 622,
+            "key.length" : 15
+          }
+        ],
+        "key.typename" : "StructWithProtocols.Type",
+        "key.name" : "StructWithProtocols",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "ProtocolToExtend"
+          },
+          {
+            "key.name" : "AwesomeProtocol"
+          }
+        ],
+        "key.usr" : "s:V19SourcekittenExample19StructWithProtocols",
+        "key.bodyoffset" : 639,
+        "key.namelength" : 19,
+        "key.parsed_scope.end" : 36,
         "key.bodylength" : 1
       }
     ],
     "key.offset" : 0,
-    "key.length" : 481
+    "key.length" : 648
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift" : {

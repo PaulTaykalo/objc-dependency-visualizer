@@ -93,6 +93,17 @@ class SourceKittenDependenciesGenerator
     		end	
     	}
 
+    	context.structs.each { |clz|
+    		structname = clz[SK_KEY::Name]
+    		yield structname, structname
+
+    		inheritedTypes = clz[SK_KEY::InheritedTypes]
+    		if inheritedTypes 
+    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
+    				yield structname, type
+    			}
+    		end	
+    	}
 
     end
 

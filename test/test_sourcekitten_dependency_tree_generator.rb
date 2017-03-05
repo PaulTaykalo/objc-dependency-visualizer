@@ -38,5 +38,16 @@ class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   end
 
+  def test_swift_extensions
+    generator = ObjCDependencyTreeGenerator.new({
+                                                    :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
+                                                })
+    dependencies = generator.find_dependencies
+    assert_not_equal(dependencies, {})
+    assert_not_nil(dependencies['ProtocolToExtend'])
+    assert_not_nil(dependencies['MainClass']["ProtocolToExtend"])
+
+  end
+
 
 end

@@ -81,6 +81,19 @@ class SourceKittenDependenciesGenerator
     			}
     		end	
     	}
+
+    	context.extensions.each { |clz|
+    		extensionname = clz[SK_KEY::Name]
+
+    		inheritedTypes = clz[SK_KEY::InheritedTypes]
+    		if inheritedTypes 
+    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
+    				yield extensionname, type
+    			}
+    		end	
+    	}
+
+
     end
 
     def parse_substructure(structure, context)

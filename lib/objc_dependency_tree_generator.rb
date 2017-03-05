@@ -5,6 +5,7 @@ require 'json'
 require 'objc_dependency_tree_generator_helper'
 require 'swift_dependencies_generator'
 require 'objc_dependencies_generator'
+require 'sourcekitten_dependencies_generator'
 
 class ObjCDependencyTreeGenerator
 

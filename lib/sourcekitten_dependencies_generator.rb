@@ -42,7 +42,7 @@ class SourceKittenDependenciesGenerator
 
     def generate_dependencies(source_kitten_json)
 
-    	$stderr.puts "!!!!!!!! #{source_kitten_json}"
+    	# $stderr.puts "!!!!!!!! #{source_kitten_json}"
 
     	file = File.read(source_kitten_json)
     	parsed_files = JSON.parse(file)
@@ -56,7 +56,7 @@ class SourceKittenDependenciesGenerator
     		}
     	}
 
-    	puts context.classes.map { |clz| "#{clz[SK_KEY::Name]}  #{clz[SK_KEY::InheritedTypes]}" }
+    	# puts context.classes.map { |clz| "#{clz[SK_KEY::Name]}  #{clz[SK_KEY::InheritedTypes]}" }
 
     	context.classes.each { |clz|
     		classname = clz[SK_KEY::Name]
@@ -64,8 +64,20 @@ class SourceKittenDependenciesGenerator
 
     		inheritedTypes = clz[SK_KEY::InheritedTypes]
     		if inheritedTypes 
-    			inheritedTypes.map { |o| o[SK:SK_KEY::Name] }.each { |type| 
+    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
     				yield classname, type
+    			}
+    		end	
+    	}
+
+    	context.protocols.each { |clz|
+    		protocolname = clz[SK_KEY::Name]
+    		yield protocolname, protocolname
+
+    		inheritedTypes = clz[SK_KEY::InheritedTypes]
+    		if inheritedTypes 
+    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
+    				yield protocolname, type
     			}
     		end	
     	}

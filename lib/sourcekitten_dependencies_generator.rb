@@ -30,19 +30,7 @@ end
 
 class SourceKittenDependenciesGenerator
 
-
-    # SwiftExtension: 'source.lang.swift.decl.extension'
-    # SwiftProtocol: 'source.lang.swift.decl.protocol'
-    # SwiftStruct: 'source.lang.swift.decl.struct'
-    # SwiftClass: 'source.lang.swift.decl.class'
-    # ObjCProtocol: 'sourcekitten.source.lang.objc.decl.protocol'
-    # ObjCStruct: 'sourcekitten.source.lang.objc.decl.struct'
-    # ObjCClass: 'sourcekitten.source.lang.objc.decl.class'
-
-
     def generate_dependencies(source_kitten_json)
-
-    	# $stderr.puts "!!!!!!!! #{source_kitten_json}"
 
     	file = File.read(source_kitten_json)
     	parsed_files = JSON.parse(file)
@@ -55,8 +43,6 @@ class SourceKittenDependenciesGenerator
 				substructures.each { | substruct| parse_substructure(substruct, context) }
     		}
     	}
-
-    	# puts context.classes.map { |clz| "#{clz[SK_KEY::Name]}  #{clz[SK_KEY::InheritedTypes]}" }
 
     	context.classes.each { |clz|
     		classname = clz[SK_KEY::Name]
@@ -114,7 +100,6 @@ class SourceKittenDependenciesGenerator
     		subsubstructures.each { |it| parse_substructure(it, context) }    		
     	end
 
-    	## get kind
     	kind = structure[SK_KEY::Kind]
 
     	case kind
@@ -128,46 +113,5 @@ class SourceKittenDependenciesGenerator
      		context.classes << structure
     	end
     end	
-
-#     	case a
-# when 1..5
-#   "It's between 1 and 5"
-# when 6
-#   "It's 6"
-# when String
-#   "You passed a string"
-# else
-#   "You gave me #{a} -- I have no idea what to do with that."
-# end
-
-
-    # 	structure.each { |  |
-
-    # 		if k == SK_KEY::Substructure 
-    # 			# parse even more!
-    # 			parse_substructure(v, context)
-    # 		end
-
-    #         if k == SK_KEY::Kind 
-    #         	# Grab and have context be filled
-
-    #         	if v == SK_DECLARATION_TYPE::SwiftExtension
-    #         		context[:extensions] = (context[:extensions] || [])
-    #         		puts "Exteiosn added " + 
-    #         	end	
-
-    #         end
-
-
-    # 		# puts "key #{k} = value = #{v}"
-
-
-    # 		# if v.key?[SK_KEY::Kind]
-	   #  	# 	kind = v[SK_KEY::Kind]
-    # 		# end	
-    # 		# # puts "#{v[SK_KEY::Kind]}"
-    # 		# # puts v.key
-    # 	}
-    # end	
 
 end

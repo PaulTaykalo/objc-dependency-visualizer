@@ -338,113 +338,82 @@
     "key.length" : 648
   }
 }, {
-  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift" : {
+  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift" : {
     "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
     "key.substructure" : [
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
-        "key.parsed_declaration" : "class ViewController: UIViewController",
-        "key.annotated_decl" : "<Declaration>class ViewController : <Type usr=\"c:objc(cs)UIViewController\">UIViewController<\/Type><\/Declaration>",
-        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>ViewController<\/decl.name> : <ref.class usr=\"c:objc(cs)UIViewController\">UIViewController<\/ref.class><\/decl.class>",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift",
+        "key.parsed_declaration" : "protocol SecondClassProtocol",
+        "key.annotated_decl" : "<Declaration>protocol SecondClassProtocol<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>SecondClassProtocol<\/decl.name><\/decl.protocol>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
-        "key.substructure" : [
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
-            "key.parsed_declaration" : "override func viewDidLoad()",
-            "key.annotated_decl" : "<Declaration>override func viewDidLoad()<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>override<\/syntaxtype.keyword> <syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>viewDidLoad<\/decl.name>()<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 135,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(cs)UIViewController(im)viewDidLoad"
-              }
-            ],
-            "key.parsed_scope.start" : 13,
-            "key.typeusr" : "_TtFT_T_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.attributes" : [
-              {
-                "key.attribute" : "source.decl.attribute.override"
-              }
-            ],
-            "key.offset" : 224,
-            "key.nameoffset" : 229,
-            "key.typename" : "(ViewController) -> () -> ()",
-            "key.name" : "viewDidLoad()",
-            "key.usr" : "s:FC19SourcekittenExample14ViewController11viewDidLoadFT_T_",
-            "key.bodyoffset" : 244,
-            "key.namelength" : 13,
-            "key.parsed_scope.end" : 16,
-            "key.bodylength" : 114
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/ViewController.swift",
-            "key.parsed_declaration" : "override func didReceiveMemoryWarning()",
-            "key.annotated_decl" : "<Declaration>override func didReceiveMemoryWarning()<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>override<\/syntaxtype.keyword> <syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>didReceiveMemoryWarning<\/decl.name>()<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 137,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(cs)UIViewController(im)didReceiveMemoryWarning"
-              }
-            ],
-            "key.parsed_scope.start" : 18,
-            "key.typeusr" : "_TtFT_T_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.attributes" : [
-              {
-                "key.attribute" : "source.decl.attribute.override"
-              }
-            ],
-            "key.offset" : 374,
-            "key.nameoffset" : 379,
-            "key.typename" : "(ViewController) -> () -> ()",
-            "key.name" : "didReceiveMemoryWarning()",
-            "key.usr" : "s:FC19SourcekittenExample14ViewController23didReceiveMemoryWarningFT_T_",
-            "key.bodyoffset" : 406,
-            "key.namelength" : 25,
-            "key.parsed_scope.end" : 21,
-            "key.bodylength" : 104
-          }
-        ],
-        "key.length" : 346,
-        "key.runtime_name" : "_TtC8__main__14ViewController",
+        "key.length" : 31,
+        "key.runtime_name" : "_TtP8__main__19SecondClassProtocol_",
         "key.parsed_scope.start" : 11,
         "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.protocol",
+        "key.offset" : 171,
+        "key.nameoffset" : 180,
+        "key.typename" : "SecondClassProtocol.Protocol",
+        "key.name" : "SecondClassProtocol",
+        "key.usr" : "s:P19SourcekittenExample19SecondClassProtocol",
+        "key.bodyoffset" : 201,
+        "key.namelength" : 19,
+        "key.parsed_scope.end" : 11,
+        "key.bodylength" : 0
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift",
+        "key.parsed_declaration" : "class SecondClass: MainClass, AwesomeProtocol,SecondClassProtocol",
+        "key.annotated_decl" : "<Declaration>class SecondClass : <Type usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/Type>, <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type>, <Type usr=\"s:P19SourcekittenExample19SecondClassProtocol\">SecondClassProtocol<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>SecondClass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/ref.class>, <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol>, <ref.protocol usr=\"s:P19SourcekittenExample19SecondClassProtocol\">SecondClassProtocol<\/ref.protocol><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 68,
+        "key.runtime_name" : "_TtC8__main__11SecondClass",
+        "key.parsed_scope.start" : 13,
+        "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 169,
-        "key.nameoffset" : 175,
+        "key.offset" : 204,
+        "key.nameoffset" : 210,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 191,
-            "key.length" : 16
+            "key.offset" : 223,
+            "key.length" : 9
+          },
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 234,
+            "key.length" : 15
+          },
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 250,
+            "key.length" : 19
           }
         ],
-        "key.typename" : "ViewController.Type",
-        "key.name" : "ViewController",
+        "key.typename" : "SecondClass.Type",
+        "key.name" : "SecondClass",
         "key.inheritedtypes" : [
           {
-            "key.name" : "UIViewController"
+            "key.name" : "MainClass"
+          },
+          {
+            "key.name" : "AwesomeProtocol"
+          },
+          {
+            "key.name" : "SecondClassProtocol"
           }
         ],
-        "key.usr" : "s:C19SourcekittenExample14ViewController",
-        "key.bodyoffset" : 209,
-        "key.namelength" : 14,
-        "key.parsed_scope.end" : 24,
-        "key.bodylength" : 305
+        "key.usr" : "s:C19SourcekittenExample11SecondClass",
+        "key.bodyoffset" : 271,
+        "key.namelength" : 11,
+        "key.parsed_scope.end" : 13,
+        "key.bodylength" : 0
       }
     ],
     "key.offset" : 0,
-    "key.length" : 517
+    "key.length" : 273
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift" : {

@@ -1,5 +1,5 @@
 [{
-  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift" : {
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift" : {
     "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
     "key.substructure" : [
       {
@@ -11,7 +11,7 @@
         "key.length" : 15
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "protocol ProtocolToExtend",
         "key.annotated_decl" : "<Declaration>protocol ProtocolToExtend<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>ProtocolToExtend<\/decl.name><\/decl.protocol>",
@@ -32,7 +32,7 @@
         "key.bodylength" : 1
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "protocol AwesomeProtocol",
         "key.annotated_decl" : "<Declaration>protocol AwesomeProtocol<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>AwesomeProtocol<\/decl.name><\/decl.protocol>",
@@ -53,7 +53,7 @@
         "key.bodylength" : 1
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "protocol SubProtocol: AwesomeProtocol",
         "key.annotated_decl" : "<Declaration>protocol SubProtocol : <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>SubProtocol<\/decl.name> : <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol><\/decl.protocol>",
@@ -94,7 +94,7 @@
         "key.length" : 13
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "class MainClass",
         "key.annotated_decl" : "<Declaration>class MainClass<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>MainClass<\/decl.name><\/decl.class>",
@@ -115,7 +115,7 @@
         "key.bodylength" : 0
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "class Subclass : MainClass",
         "key.annotated_decl" : "<Declaration>class Subclass : <Type usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Subclass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/ref.class><\/decl.class>",
@@ -148,7 +148,7 @@
         "key.bodylength" : 0
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "class SubclassOfSubclass: Subclass, AwesomeProtocol",
         "key.annotated_decl" : "<Declaration>class SubclassOfSubclass : <Type usr=\"s:C19SourcekittenExample8Subclass\">Subclass<\/Type>, <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>SubclassOfSubclass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample8Subclass\">Subclass<\/ref.class>, <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol><\/decl.class>",
@@ -189,7 +189,7 @@
         "key.bodylength" : 0
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "class SubclassOfMainClass: MainClass, SubProtocol",
         "key.annotated_decl" : "<Declaration>class SubclassOfMainClass : <Type usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/Type>, <Type usr=\"s:P19SourcekittenExample11SubProtocol\">SubProtocol<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>SubclassOfMainClass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/ref.class>, <ref.protocol usr=\"s:P19SourcekittenExample11SubProtocol\">SubProtocol<\/ref.protocol><\/decl.class>",
@@ -238,7 +238,7 @@
         "key.length" : 16
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.annotated_decl" : "<Declaration>class MainClass<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>MainClass<\/decl.name><\/decl.class>",
         "key.length" : 41,
@@ -274,7 +274,7 @@
         "key.length" : 13
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "struct SimpleStruct",
         "key.annotated_decl" : "<Declaration>struct SimpleStruct<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.struct><syntaxtype.keyword>struct<\/syntaxtype.keyword> <decl.name>SimpleStruct<\/decl.name><\/decl.struct>",
@@ -294,7 +294,7 @@
         "key.bodylength" : 1
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/MainClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/MainClass.swift",
         "key.parsed_declaration" : "struct StructWithProtocols: ProtocolToExtend, AwesomeProtocol",
         "key.annotated_decl" : "<Declaration>struct StructWithProtocols : <Type usr=\"s:P19SourcekittenExample16ProtocolToExtend\">ProtocolToExtend<\/Type>, <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.struct><syntaxtype.keyword>struct<\/syntaxtype.keyword> <decl.name>StructWithProtocols<\/decl.name> : <ref.protocol usr=\"s:P19SourcekittenExample16ProtocolToExtend\">ProtocolToExtend<\/ref.protocol>, <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol><\/decl.struct>",
@@ -338,11 +338,11 @@
     "key.length" : 648
   }
 }, {
-  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift" : {
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/SecondClass.swift" : {
     "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
     "key.substructure" : [
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/SecondClass.swift",
         "key.parsed_declaration" : "protocol SecondClassProtocol",
         "key.annotated_decl" : "<Declaration>protocol SecondClassProtocol<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>SecondClassProtocol<\/decl.name><\/decl.protocol>",
@@ -363,32 +363,78 @@
         "key.bodylength" : 0
       },
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/SecondClass.swift",
-        "key.parsed_declaration" : "class SecondClass: MainClass, AwesomeProtocol,SecondClassProtocol",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/SecondClass.swift",
+        "key.parsed_declaration" : "class ThirdClass",
+        "key.annotated_decl" : "<Declaration>class ThirdClass<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>ThirdClass<\/decl.name><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 19,
+        "key.runtime_name" : "_TtC8__main__10ThirdClass",
+        "key.parsed_scope.start" : 14,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 205,
+        "key.nameoffset" : 211,
+        "key.typename" : "ThirdClass.Type",
+        "key.name" : "ThirdClass",
+        "key.usr" : "s:C19SourcekittenExample10ThirdClass",
+        "key.bodyoffset" : 223,
+        "key.namelength" : 10,
+        "key.parsed_scope.end" : 14,
+        "key.bodylength" : 0
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/SecondClass.swift",
+        "key.parsed_declaration" : "class SecondClass: MainClass, AwesomeProtocol, SecondClassProtocol",
         "key.annotated_decl" : "<Declaration>class SecondClass : <Type usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/Type>, <Type usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/Type>, <Type usr=\"s:P19SourcekittenExample19SecondClassProtocol\">SecondClassProtocol<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>SecondClass<\/decl.name> : <ref.class usr=\"s:C19SourcekittenExample9MainClass\">MainClass<\/ref.class>, <ref.protocol usr=\"s:P19SourcekittenExample15AwesomeProtocol\">AwesomeProtocol<\/ref.protocol>, <ref.protocol usr=\"s:P19SourcekittenExample19SecondClassProtocol\">SecondClassProtocol<\/ref.protocol><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
-        "key.length" : 68,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/SecondClass.swift",
+            "key.parsed_declaration" : "func createMainClass()",
+            "key.annotated_decl" : "<Declaration>func createMainClass()<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>createMainClass<\/decl.name>()<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.substructure" : [
+
+            ],
+            "key.length" : 175,
+            "key.parsed_scope.start" : 18,
+            "key.typeusr" : "_TtFT_T_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 300,
+            "key.nameoffset" : 305,
+            "key.typename" : "(SecondClass) -> () -> ()",
+            "key.name" : "createMainClass()",
+            "key.usr" : "s:FC19SourcekittenExample11SecondClass15createMainClassFT_T_",
+            "key.bodyoffset" : 324,
+            "key.namelength" : 17,
+            "key.parsed_scope.end" : 22,
+            "key.bodylength" : 150
+          }
+        ],
+        "key.length" : 252,
         "key.runtime_name" : "_TtC8__main__11SecondClass",
-        "key.parsed_scope.start" : 13,
+        "key.parsed_scope.start" : 16,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 204,
-        "key.nameoffset" : 210,
+        "key.offset" : 226,
+        "key.nameoffset" : 232,
         "key.elements" : [
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 223,
+            "key.offset" : 245,
             "key.length" : 9
           },
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 234,
+            "key.offset" : 256,
             "key.length" : 15
           },
           {
             "key.kind" : "source.lang.swift.structure.elem.typeref",
-            "key.offset" : 250,
+            "key.offset" : 273,
             "key.length" : 19
           }
         ],
@@ -406,28 +452,28 @@
           }
         ],
         "key.usr" : "s:C19SourcekittenExample11SecondClass",
-        "key.bodyoffset" : 271,
+        "key.bodyoffset" : 294,
         "key.namelength" : 11,
-        "key.parsed_scope.end" : 13,
-        "key.bodylength" : 0
+        "key.parsed_scope.end" : 24,
+        "key.bodylength" : 183
       }
     ],
     "key.offset" : 0,
-    "key.length" : 273
+    "key.length" : 479
   }
 }, {
-  "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift" : {
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/AppDelegate.swift" : {
     "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
     "key.substructure" : [
       {
-        "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/AppDelegate.swift",
         "key.parsed_declaration" : "class AppDelegate: UIResponder, UIApplicationDelegate",
         "key.annotated_decl" : "<Declaration>@UIApplicationMain class AppDelegate : <Type usr=\"c:objc(cs)UIResponder\">UIResponder<\/Type>, <Type usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/Type><\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@UIApplicationMain<\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>AppDelegate<\/decl.name> : <ref.class usr=\"c:objc(cs)UIResponder\">UIResponder<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/ref.protocol><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.substructure" : [
           {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/AppDelegate.swift",
             "key.annotated_decl" : "<Declaration>var window: <Type usr=\"c:objc(cs)UIWindow\">UIWindow<\/Type>?<\/Declaration>",
             "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>window<\/decl.name>: <decl.var.type><ref.class usr=\"c:objc(cs)UIWindow\">UIWindow<\/ref.class>?<\/decl.var.type><\/decl.var.instance>",
             "key.accessibility" : "source.lang.swift.accessibility.internal",
@@ -451,7 +497,7 @@
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
           },
           {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten\/SourcekittenExample\/AppDelegate.swift",
             "key.parsed_declaration" : "func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool",
             "key.annotated_decl" : "<Declaration>func application(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>, didFinishLaunchingWithOptions launchOptions: [<Type usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/Type> : Any]?) -&gt; <Type usr=\"s:Sb\">Bool<\/Type><\/Declaration>",
             "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>application<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>, <decl.var.parameter><decl.var.parameter.argument_label>didFinishLaunchingWithOptions<\/decl.var.parameter.argument_label> <decl.var.parameter.name>launchOptions<\/decl.var.parameter.name>: <decl.var.parameter.type>[<ref.struct usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/ref.struct> : Any]?<\/decl.var.parameter.type><\/decl.var.parameter>) -&gt; <decl.function.returntype><ref.struct usr=\"s:Sb\">Bool<\/ref.struct><\/decl.function.returntype><\/decl.function.method.instance>",
@@ -477,149 +523,9 @@
             "key.namelength" : 125,
             "key.parsed_scope.end" : 20,
             "key.bodylength" : 95
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
-            "key.parsed_declaration" : "func applicationWillResignActive(_ application: UIApplication)",
-            "key.annotated_decl" : "<Declaration>func applicationWillResignActive(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillResignActive<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 516,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillResignActive:"
-              }
-            ],
-            "key.parsed_scope.start" : 22,
-            "key.typeusr" : "_TtFCSo13UIApplicationT_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.offset" : 516,
-            "key.nameoffset" : 521,
-            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
-            "key.name" : "applicationWillResignActive(_:)",
-            "key.usr" : "s:FC19SourcekittenExample11AppDelegate27applicationWillResignActiveFCSo13UIApplicationT_",
-            "key.bodyoffset" : 580,
-            "key.namelength" : 57,
-            "key.parsed_scope.end" : 25,
-            "key.bodylength" : 451
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
-            "key.parsed_declaration" : "func applicationDidEnterBackground(_ application: UIApplication)",
-            "key.annotated_decl" : "<Declaration>func applicationDidEnterBackground(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationDidEnterBackground<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 433,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationDidEnterBackground:"
-              }
-            ],
-            "key.parsed_scope.start" : 27,
-            "key.typeusr" : "_TtFCSo13UIApplicationT_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.offset" : 1038,
-            "key.nameoffset" : 1043,
-            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
-            "key.name" : "applicationDidEnterBackground(_:)",
-            "key.usr" : "s:FC19SourcekittenExample11AppDelegate29applicationDidEnterBackgroundFCSo13UIApplicationT_",
-            "key.bodyoffset" : 1104,
-            "key.namelength" : 59,
-            "key.parsed_scope.end" : 30,
-            "key.bodylength" : 366
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
-            "key.parsed_declaration" : "func applicationWillEnterForeground(_ application: UIApplication)",
-            "key.annotated_decl" : "<Declaration>func applicationWillEnterForeground(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillEnterForeground<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 229,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillEnterForeground:"
-              }
-            ],
-            "key.parsed_scope.start" : 32,
-            "key.typeusr" : "_TtFCSo13UIApplicationT_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.offset" : 1477,
-            "key.nameoffset" : 1482,
-            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
-            "key.name" : "applicationWillEnterForeground(_:)",
-            "key.usr" : "s:FC19SourcekittenExample11AppDelegate30applicationWillEnterForegroundFCSo13UIApplicationT_",
-            "key.bodyoffset" : 1544,
-            "key.namelength" : 60,
-            "key.parsed_scope.end" : 34,
-            "key.bodylength" : 161
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
-            "key.parsed_declaration" : "func applicationDidBecomeActive(_ application: UIApplication)",
-            "key.annotated_decl" : "<Declaration>func applicationDidBecomeActive(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationDidBecomeActive<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 264,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationDidBecomeActive:"
-              }
-            ],
-            "key.parsed_scope.start" : 36,
-            "key.typeusr" : "_TtFCSo13UIApplicationT_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.offset" : 1712,
-            "key.nameoffset" : 1717,
-            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
-            "key.name" : "applicationDidBecomeActive(_:)",
-            "key.usr" : "s:FC19SourcekittenExample11AppDelegate26applicationDidBecomeActiveFCSo13UIApplicationT_",
-            "key.bodyoffset" : 1775,
-            "key.namelength" : 56,
-            "key.parsed_scope.end" : 38,
-            "key.bodylength" : 200
-          },
-          {
-            "key.filepath" : "\/Users\/paultaykalo\/Projects\/one-imter\/Example2\/SourcekittenExample\/SourcekittenExample\/AppDelegate.swift",
-            "key.parsed_declaration" : "func applicationWillTerminate(_ application: UIApplication)",
-            "key.annotated_decl" : "<Declaration>func applicationWillTerminate(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>)<\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>applicationWillTerminate<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
-            "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.substructure" : [
-
-            ],
-            "key.length" : 196,
-            "key.overrides" : [
-              {
-                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)applicationWillTerminate:"
-              }
-            ],
-            "key.parsed_scope.start" : 40,
-            "key.typeusr" : "_TtFCSo13UIApplicationT_",
-            "key.kind" : "source.lang.swift.decl.function.method.instance",
-            "key.offset" : 1982,
-            "key.nameoffset" : 1987,
-            "key.typename" : "(AppDelegate) -> (UIApplication) -> ()",
-            "key.name" : "applicationWillTerminate(_:)",
-            "key.usr" : "s:FC19SourcekittenExample11AppDelegate24applicationWillTerminateFCSo13UIApplicationT_",
-            "key.bodyoffset" : 2043,
-            "key.namelength" : 54,
-            "key.parsed_scope.end" : 42,
-            "key.bodylength" : 134
           }
         ],
-        "key.length" : 1997,
+        "key.length" : 327,
         "key.runtime_name" : "_TtC8__main__11AppDelegate",
         "key.parsed_scope.start" : 12,
         "key.typeusr" : "_Tt",
@@ -656,11 +562,11 @@
         "key.usr" : "s:C19SourcekittenExample11AppDelegate",
         "key.bodyoffset" : 240,
         "key.namelength" : 11,
-        "key.parsed_scope.end" : 45,
-        "key.bodylength" : 1941
+        "key.parsed_scope.end" : 21,
+        "key.bodylength" : 271
       }
     ],
     "key.offset" : 0,
-    "key.length" : 2184
+    "key.length" : 514
   }
 }]

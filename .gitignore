@@ -1,3 +1,6 @@
 *.js.deps
 *.js.map
 .idea/
+test/fixtures/sourcekitten/build
+test/fixtures/sourcekitten/SourcekittenExample.xcodeproj/project.xcworkspace/xcuserdata
+test/fixtures/sourcekitten/SourcekittenExample.xcodeproj/xcuserdata

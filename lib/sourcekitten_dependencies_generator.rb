@@ -37,10 +37,10 @@ class SourceKittenDependenciesGenerator
 
         context = ParsingContext.new 
 
-    	parsed_files.each { |file|  
+    	parsed_files.each { |file|
     		file.each { |path, contents|
 				substructures = contents[SK_KEY::Substructure]
-				substructures.each { | substruct| parse_substructure(substruct, context) }
+				substructures.each { | substruct| parse_substructure(substruct, context) } if substructures
     		}
     	}
 

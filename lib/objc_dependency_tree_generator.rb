@@ -6,8 +6,10 @@ require 'objc_dependency_tree_generator_helper'
 require 'swift_dependencies_generator'
 require 'objc_dependencies_generator'
 require 'sourcekitten_dependencies_generator'
+require 'dependency_tree'
+require 'tree_serializer'
 
-class ObjCDependencyTreeGenerator
+class DependencyTreeGenerator
 
   def initialize(options)
     @options = options
@@ -20,15 +22,15 @@ class ObjCDependencyTreeGenerator
   def self.parse_command_line_options
     options = {}
 
-#Defaults
+    # Defaults
     options[:derived_data_paths] = ['~/Library/Developer/Xcode/DerivedData', '~/Library/Caches/appCode*/DerivedData']
     options[:project_name] = ''
     options[:output_format] = 'json'
 
 
-    parser = OptionParser.new do |o|
+    OptionParser.new do |o|
       o.separator 'General options:'
-      o.on('-p PATH', '--path' ,'Path to directory where are your .o files were placed by the compiler', Array) { |directory|
+      o.on('-p PATH', '--path', 'Path to directory where are your .o files were placed by the compiler', Array) { |directory|
         options[:search_directories] = Array(options[:search_directories]) | Array(directory)
       }
       o.on('-D DERIVED_DATA', 'Path to directory where DerivedData is') { |derived_data|
@@ -72,9 +74,7 @@ class ObjCDependencyTreeGenerator
   end
 
   def find_dependencies
-    if !@options or @options.empty?
-      return {}
-    end
+    return {} if !@options || @options.empty?
 
     links = {}
     links_block = lambda { |source, dest|
@@ -84,18 +84,19 @@ class ObjCDependencyTreeGenerator
       end
     }
 
-   if @options[:sourcekitten_dependencies_file] 
+    if @options[:sourcekitten_dependencies_file]
       SourceKittenDependenciesGenerator.new.generate_dependencies(@options[:sourcekitten_dependencies_file], &links_block)
       return links
-   end   
+    end
 
 
     unless @object_files_directories
-      @object_files_directories =
-          find_project_output_directory(@options[:derived_data_paths],
-                                        @options[:project_name],
-                                        @options[:derived_data_project_pattern],
-                                        @options[:target_names])
+      @object_files_directories = find_project_output_directory(
+          @options[:derived_data_paths],
+          @options[:project_name],
+          @options[:derived_data_project_pattern],
+          @options[:target_names]
+      )
       return {} unless @object_files_directories
     end
 
@@ -114,46 +115,28 @@ class ObjCDependencyTreeGenerator
     links
   end
 
-  def dependencies_to_s
+  def dependency_tree
+    tree = DependencyTree.new
     links = find_dependencies
-    s = ''
-    if @options[:output_format] == 'json-var'
-      s+= <<-THEEND
-   var dependencies =
-      THEEND
-    end
 
-    json_result = {}
-    json_links = []
-
-    links_count = 0
     links.each do |source, dest_hash|
-      links_count = links_count + dest_hash.length
       dest_hash.each do |dest, _|
-        json_links += [{'source' => source, 'dest' => dest}]
+        tree.add(source, dest)
       end
     end
-    json_result['links'] = json_links
-    json_result['source_files_count'] = links.length
-    json_result['links_count'] = links_count
 
-    if @options[:output_format] == 'dot'
-      indent = "\t"
-      s = "digraph dependencies {\n#{indent}node [fontname=monospace, fontsize=9, shape=box, style=rounded]\n"
-      json_links.each do |link|
-        s += "#{indent}\"#{link['source']}\" -> \"#{link['dest']}\"\n"
-      end
-      s += "}\n"
-    else
-      s = s + JSON.pretty_generate(json_result) if @options[:output_format] == 'json-pretty'
-      s = s + json_result.to_json if @options[:output_format] == 'json' || @options[:output_format] == 'json-var'
-      s = s + json_result.to_yaml if @options[:output_format] == 'yaml'
-    end
+    tree
+  end
+
+  def dependencies_to_s
+    tree = dependency_tree
+    serializer = TreeSerializer.new(tree)
+    s = serializer.serialize(@options[:output_format])
     if @options[:target_file_name]
-        target = File.open(@options[:target_file_name], 'w')
-        target.write("#{s}")
+      target = File.open(@options[:target_file_name], 'w')
+      target.write("#{s}")
     else
-        s
+      s
     end
   end
 

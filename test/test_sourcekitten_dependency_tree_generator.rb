@@ -3,12 +3,12 @@ require 'sourcekitten_dependencies_generator'
 
 class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
   def test_links_generation
-    generator = ObjCDependencyTreeGenerator.new({})
+    generator = DependencyTreeGenerator.new({})
     assert_equal generator.find_dependencies, {}
   end
 
   def test_simple_objects
-    generator = ObjCDependencyTreeGenerator.new({
+    generator = DependencyTreeGenerator.new({
                                                     :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
                                                 })
     dependencies = generator.find_dependencies
@@ -22,7 +22,7 @@ class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
 
 
   def test_simple_inheritance
-    generator = ObjCDependencyTreeGenerator.new({
+    generator = DependencyTreeGenerator.new({
                                                     :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
                                                 })
     dependencies = generator.find_dependencies
@@ -38,7 +38,7 @@ class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_extensions
-    generator = ObjCDependencyTreeGenerator.new({
+    generator = DependencyTreeGenerator.new({
                                                     :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
                                                 })
     dependencies = generator.find_dependencies
@@ -49,7 +49,7 @@ class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_structs
-    generator = ObjCDependencyTreeGenerator.new({
+    generator = DependencyTreeGenerator.new({
                                                     :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
                                                 })
     dependencies = generator.find_dependencies
@@ -60,7 +60,7 @@ class SwiftDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_interfile_dependencies
-    generator = ObjCDependencyTreeGenerator.new({
+    generator = DependencyTreeGenerator.new({
                                                     :sourcekitten_dependencies_file => './test/fixtures/sourcekitten/sourcekitten.json',
                                                 })
     dependencies = generator.find_dependencies

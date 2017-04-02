@@ -3,15 +3,15 @@ require 'objc_dependency_tree_generator'
 
 class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   def test_links_generation
-    generator = ObjCDependencyTreeGenerator.new({})
+    generator = DependencyTreeGenerator.new({})
     assert_equal generator.find_dependencies, {}
   end
 
   def test_swift_simple_inheritance
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directories => './test/fixtures/swift-simple-inheritance/x86_64',
-                                                    :swift_dependencies => true
-                                                })
+    generator = DependencyTreeGenerator.new(
+      search_directories: './test/fixtures/swift-simple-inheritance/x86_64',
+      swift_dependencies: true
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['TwoClass'])
@@ -25,10 +25,10 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
 
 
   def test_swift_xcode7_out
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directories => './test/fixtures/swift-xcode-7-out',
-                                                    :swift_dependencies => true
-                                                })
+    generator = DependencyTreeGenerator.new(
+      search_directories: './test/fixtures/swift-xcode-7-out',
+      swift_dependencies: true
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['AppDelegate'])
@@ -40,10 +40,10 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_multiple_dirs
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :search_directories => ['./test/fixtures/swift-xcode-7-out', './test/fixtures/swift-simple-inheritance/x86_64'],
-                                                    :swift_dependencies => true
-                                                })
+    generator = DependencyTreeGenerator.new(
+      search_directories: ['./test/fixtures/swift-xcode-7-out', './test/fixtures/swift-simple-inheritance/x86_64'],
+      swift_dependencies: true
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['AppDelegate'])
@@ -57,11 +57,11 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_multiple_targets
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :derived_data_paths => ['./test/fixtures/multiple-targets'],
-                                                    :target_names => ['iAsyncWeather', 'JFFAsyncOperations'],
-                                                    :use_dwarf => true
-                                                })
+    generator = DependencyTreeGenerator.new(
+      derived_data_paths: ['./test/fixtures/multiple-targets'],
+      target_names: ['iAsyncWeather', 'JFFAsyncOperations'],
+      use_dwarf: true
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['AWOperationsFactory'])
@@ -71,14 +71,13 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
 
-
   def test_swift_with_spaces_in_name
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :derived_data_paths => ['./test/fixtures/swift-with-spaces'],
-                                                    :derived_data_project_pattern => '*',
-                                                    :swift_dependencies => true,
-                                                    :project_name => ""
-                                                })
+    generator = DependencyTreeGenerator.new(
+      derived_data_paths: ['./test/fixtures/swift-with-spaces'],
+      derived_data_project_pattern: '*',
+      swift_dependencies: true,
+      project_name: ""
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['AppDelegate'])
@@ -88,12 +87,12 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
   def test_objc_with_spaces_in_name
-    generator = ObjCDependencyTreeGenerator.new({
-                                                    :derived_data_paths => ['./test/fixtures/objc-with-spaces'],
-                                                    :derived_data_project_pattern => '*',
-                                                    :project_name => "",
-                                                    :use_dwarf => true
-                                                })
+    generator = DependencyTreeGenerator.new(
+      derived_data_paths: ['./test/fixtures/objc-with-spaces'],
+      derived_data_project_pattern: '*',
+      project_name: "",
+      use_dwarf: true
+    )
     dependencies = generator.find_dependencies
     assert_not_equal(dependencies, {})
     assert_not_nil(dependencies['AppDelegate'])

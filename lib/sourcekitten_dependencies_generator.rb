@@ -1,117 +1,104 @@
 require 'json'
 
-module SK_DECLARATION_TYPE
-	SwiftExtension = 'source.lang.swift.decl.extension'
-	SwiftProtocol = 'source.lang.swift.decl.protocol'
-	SwiftStruct = 'source.lang.swift.decl.struct'
-	SwiftClass = 'source.lang.swift.decl.class'
-	ObjCProtocol = 'sourcekitten.source.lang.objc.decl.protocol'
-	ObjCStruct = 'sourcekitten.source.lang.objc.decl.struct'
-	ObjCClass = 'sourcekitten.source.lang.objc.decl.class'
-end	
+module SKDeclarationType
+  SWIFT_EXTENSION = 'source.lang.swift.decl.extension'.freeze
+  SWIFT_PROTOCOL = 'source.lang.swift.decl.protocol'.freeze
+  SWIFT_STRUCT = 'source.lang.swift.decl.struct'.freeze
+  SWIFT_CLASS = 'source.lang.swift.decl.class'.freeze
+  OBJC_PROTOCOL = 'sourcekitten.source.lang.objc.decl.protocol'.freeze
+  OBJC_STRUCT = 'sourcekitten.source.lang.objc.decl.struct'.freeze
+  OBJC_CLASS = 'sourcekitten.source.lang.objc.decl.class'.freeze
+end
 
 module SK_KEY
-    Substructure = 'key.substructure'
-    Kind = "key.kind"
-    InheritedTypes = 'key.inheritedtypes'
-    Name = 'key.name'
-end	
+  SUBSTRUCTURE = 'key.substructure'.freeze
+  KIND = 'key.kind'.freeze
+  INHERITED_TYPES = 'key.inheritedtypes'.freeze
+  NAME = 'key.name'.freeze
+end
 
 class ParsingContext
-    attr_accessor :structs, :protocols, :classes, :extensions
+  attr_accessor :structs, :protocols, :classes, :extensions
 
-    def initialize()
-    	@structs = []
-    	@protocols = []
-    	@classes = []
-    	@extensions = []
-    end
-end	
+  def initialize()
+    @structs = []
+    @protocols = []
+    @classes = []
+    @extensions = []
+  end
+end
 
 class SourceKittenDependenciesGenerator
 
-    def generate_dependencies(source_kitten_json)
+  def generate_dependencies(source_kitten_json)
 
-    	file = File.read(source_kitten_json)
-    	parsed_files = JSON.parse(file)
+    file = File.read(source_kitten_json)
+    parsed_files = JSON.parse(file)
 
-        context = ParsingContext.new 
+    context = ParsingContext.new
 
-    	parsed_files.each { |file|
-    		file.each { |path, contents|
-				substructures = contents[SK_KEY::Substructure]
-				substructures.each { | substruct| parse_substructure(substruct, context) } if substructures
-    		}
-    	}
-
-    	context.classes.each { |clz|
-    		classname = clz[SK_KEY::Name]
-    		yield classname, classname
-
-    		inheritedTypes = clz[SK_KEY::InheritedTypes]
-    		if inheritedTypes 
-    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
-    				yield classname, type
-    			}
-    		end	
-    	}
-
-    	context.protocols.each { |clz|
-    		protocolname = clz[SK_KEY::Name]
-    		yield protocolname, protocolname
-
-    		inheritedTypes = clz[SK_KEY::InheritedTypes]
-    		if inheritedTypes 
-    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
-    				yield protocolname, type
-    			}
-    		end	
-    	}
-
-    	context.extensions.each { |clz|
-    		extensionname = clz[SK_KEY::Name]
-
-    		inheritedTypes = clz[SK_KEY::InheritedTypes]
-    		if inheritedTypes 
-    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
-    				yield extensionname, type
-    			}
-    		end	
-    	}
-
-    	context.structs.each { |clz|
-    		structname = clz[SK_KEY::Name]
-    		yield structname, structname
-
-    		inheritedTypes = clz[SK_KEY::InheritedTypes]
-    		if inheritedTypes 
-    			inheritedTypes.map { |o| o[SK_KEY::Name] }.each { |type| 
-    				yield structname, type
-    			}
-    		end	
-    	}
-
+    parsed_files.each do |parsed_file|
+      parsed_file.each do |_path, contents|
+        substructures = contents[SK_KEY::SUBSTRUCTURE]
+        next unless substructures
+        substructures.each { |substructure| parse_substructure(substructure, context) }
+      end
     end
 
-    def parse_substructure(structure, context)
-    	# any other subsctucst?
-    	subsubstructures = structure[SK_KEY::Substructure]
-    	if subsubstructures 
-    		subsubstructures.each { |it| parse_substructure(it, context) }    		
-    	end
+    context.classes.each do |clz|
+      class_name = clz[SK_KEY::NAME]
+      yield class_name, class_name
 
-    	kind = structure[SK_KEY::Kind]
+      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      next unless inherited_types
+      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield class_name, type }
+    end
 
-    	case kind
-     	when  SK_DECLARATION_TYPE::SwiftExtension
-     		context.extensions << structure
-		when  SK_DECLARATION_TYPE::SwiftProtocol,  SK_DECLARATION_TYPE::ObjCProtocol
-     		context.protocols << structure
-		when  SK_DECLARATION_TYPE::SwiftStruct, SK_DECLARATION_TYPE::ObjCStruct
-     		context.structs << structure
-		when  SK_DECLARATION_TYPE::SwiftClass, SK_DECLARATION_TYPE::ObjCClass
-     		context.classes << structure
-    	end
-    end	
+    context.protocols.each do |clz|
+      protocol_name = clz[SK_KEY::NAME]
+      yield protocol_name, protocol_name
+
+      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      next unless inherited_types
+      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield protocol_name, type }
+    end
+
+    context.extensions.each do |clz|
+      extension_name = clz[SK_KEY::NAME]
+
+      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      next unless inherited_types
+      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield extension_name, type }
+    end
+
+    context.structs.each do |clz|
+      struct_name = clz[SK_KEY::NAME]
+      yield struct_name, struct_name
+
+      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      next unless inherited_types
+      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield struct_name, type }
+    end
+
+  end
+
+  def parse_substructure(structure, context)
+    # any other subsctucst?
+    subsubstructures = structure[SK_KEY::SUBSTRUCTURE]
+    subsubstructures.each { |it| parse_substructure(it, context) } if subsubstructures
+
+    kind = structure[SK_KEY::KIND]
+
+    case kind
+    when SKDeclarationType::SWIFT_EXTENSION
+      context.extensions << structure
+    when SKDeclarationType::SWIFT_PROTOCOL, SKDeclarationType::OBJC_PROTOCOL
+      context.protocols << structure
+    when SKDeclarationType::SWIFT_STRUCT, SKDeclarationType::OBJC_STRUCT
+      context.structs << structure
+    when SKDeclarationType::SWIFT_CLASS, SKDeclarationType::OBJC_CLASS
+      context.classes << structure
+    end
+  end
 
 end

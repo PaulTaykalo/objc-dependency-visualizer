@@ -30,41 +30,44 @@ class DependencyTreeGenerator
 
     OptionParser.new do |o|
       o.separator 'General options:'
-      o.on('-p PATH', '--path', 'Path to directory where are your .o files were placed by the compiler', Array) { |directory|
+      o.on('-p PATH', '--path', 'Path to directory where are your .o files were placed by the compiler', Array) do |directory|
         options[:search_directories] = Array(options[:search_directories]) | Array(directory)
-      }
-      o.on('-D DERIVED_DATA', 'Path to directory where DerivedData is') { |derived_data|
+      end
+      o.on('-D DERIVED_DATA', 'Path to directory where DerivedData is') do |derived_data|
         options[:derived_data_paths] = [derived_data]
         options[:derived_data_project_pattern] = '*'
-      }
-      o.on('-s PROJECT_NAME', 'Search project .o files by specified project name') { |project_name|
+      end
+      o.on('-s PROJECT_NAME', 'Search project .o files by specified project name') do |project_name|
         options[:project_name] = project_name
-      }
-      o.on('-t TARGET_NAME', '--target' 'Target of project', Array) { |target_name|
+      end
+      o.on('-t TARGET_NAME', '--target', 'Target of project', Array) do |target_name|
         options[:target_names] = Array(options[:target_names]) | Array(target_name)
-      }
-      o.on('-e PREFIXES', "Prefixes of classes those will be exсluded from visualization. \n\t\t\t\t\tNS|UI\n\t\t\t\t\tUI|CA|MF") { |exclusion_prefixes|
+      end
+      o.on('-e PREFIXES', "Prefixes of classes those will be exсluded from visualization. \n\t\t\t\t\tNS|UI\n\t\t\t\t\tUI|CA|MF") do |exclusion_prefixes|
         options[:exclusion_prefixes] = exclusion_prefixes
-      }
+      end
 
       o.on('-d', '--use-dwarf-info', 'Use DWARF Information also') { |v|
         options[:use_dwarf] = v
       }
-      o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') { |v|
+      o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') do |v|
         options[:swift_dependencies] = v
-      }
-      o.on('-k FILENAME', 'Generate dependencies from source kitten output (json)') { |v|
+      end
+      o.on('-k FILENAME', 'Generate dependencies from source kitten output (json)') do |v|
         options[:sourcekitten_dependencies_file] = v
-      }
-      o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') { |f|
+      end
+      o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') do |f|
         options[:output_format] = f
-      }
-      o.on('-o OUTPUT_FILE', '--output', 'target of output') { |f|
+      end
+      o.on('-o OUTPUT_FILE', '--output', 'target of output') do |f|
         options[:target_file_name] = f
-      }
+      end
 
       o.separator 'Common options:'
-      o.on_tail('-h', 'Prints this help') { puts o; exit }
+      o.on_tail('-h', 'Prints this help') do
+        puts o
+        exit
+      end
       o.parse!
 
     end
@@ -85,17 +88,20 @@ class DependencyTreeGenerator
     }
 
     if @options[:sourcekitten_dependencies_file]
-      SourceKittenDependenciesGenerator.new.generate_dependencies(@options[:sourcekitten_dependencies_file], &links_block)
+      SourceKittenDependenciesGenerator.new.generate_dependencies(
+        @options[:sourcekitten_dependencies_file],
+        &links_block
+      )
       return links
     end
 
 
     unless @object_files_directories
       @object_files_directories = find_project_output_directory(
-          @options[:derived_data_paths],
-          @options[:project_name],
-          @options[:derived_data_project_pattern],
-          @options[:target_names]
+        @options[:derived_data_paths],
+        @options[:project_name],
+        @options[:derived_data_project_pattern],
+        @options[:target_names]
       )
       return {} unless @object_files_directories
     end
@@ -107,9 +113,16 @@ class DependencyTreeGenerator
 
 
     if @options[:swift_dependencies]
-      SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directories, &links_block)
+      SwiftDependenciesGenerator.new.generate_dependencies(
+        @object_files_directories,
+        &links_block
+      )
     else
-      ObjcDependenciesGenerator.new.generate_dependencies(@object_files_directories, @options[:use_dwarf], &links_block)
+      ObjcDependenciesGenerator.new.generate_dependencies(
+        @object_files_directories,
+        @options[:use_dwarf],
+        &links_block
+      )
     end
 
     links
@@ -134,7 +147,7 @@ class DependencyTreeGenerator
     s = serializer.serialize(@options[:output_format])
     if @options[:target_file_name]
       target = File.open(@options[:target_file_name], 'w')
-      target.write("#{s}")
+      target.write(s.to_s)
     else
       s
     end

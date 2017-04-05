@@ -37,7 +37,7 @@ class DependencyTreeGenerator
         options[:derived_data_paths] = [derived_data]
         options[:derived_data_project_pattern] = '*'
       end
-      o.on('-s PROJECT_NAME', 'Search project .o files by specified project name') do |project_name|
+      o.on('-output PROJECT_NAME', 'Search project .o files by specified project name') do |project_name|
         options[:project_name] = project_name
       end
       o.on('-t TARGET_NAME', '--target', 'Target of project', Array) do |target_name|
@@ -76,6 +76,7 @@ class DependencyTreeGenerator
 
   end
 
+  # @return [DependencyTree]
   def find_dependencies
     return {} if !@options || @options.empty?
 
@@ -128,11 +129,12 @@ class DependencyTreeGenerator
     links
   end
 
-  def dependency_tree
+  def build_dependency_tree
     tree = DependencyTree.new
     links = find_dependencies
 
     links.each do |source, dest_hash|
+      tree.register(source)
       dest_hash.each do |dest, _|
         tree.add(source, dest)
       end
@@ -142,14 +144,16 @@ class DependencyTreeGenerator
   end
 
   def dependencies_to_s
-    tree = dependency_tree
+    tree = build_dependency_tree
     serializer = TreeSerializer.new(tree)
-    s = serializer.serialize(@options[:output_format])
+    output = serializer.serialize(@options[:output_format])
+
     if @options[:target_file_name]
       target = File.open(@options[:target_file_name], 'w')
-      target.write(s.to_s)
+      target.write(output.to_s)
     else
-      s
+
+      output
     end
   end
 

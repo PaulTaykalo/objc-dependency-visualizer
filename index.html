@@ -43,27 +43,27 @@
     //  =============== CONFIGURABLE PARAMS  ==============
     //  ===================================================
 
-    const default_link_distance = 10;
+    var default_link_distance = 10;
 
     // How far can we change default_link_distance?
     // 0   - I don't care
     // 0.5 - Change it as you want, but it's preferrable to have default_link_distance
     // 1   - One does not change default_link_distance
-    const default_link_strength = 0.7;
+    var default_link_strength = 0.7;
 
     // Should I comment this?
-    const default_circle_radius = 15;
+    var default_circle_radius = 15;
 
     // you can set it to true, but this will not help to understanf what's going on
-    const show_texts_near_circles = false;
-    const default_max_texts_length = 100;
+    var show_texts_near_circles = false;
+    var default_max_texts_length = 100;
 
-    const charge_multiplier = 200;
+    var charge_multiplier = 200;
 
     const dvgraph = objcdv.parse_dependencies_graph(dependencies);
     const d3graph = dvgraph.d3jsGraph();
 
-    const w = window,
+    var w = window,
         d = document,
         e = d.documentElement,
         g = d.getElementsByTagName('body')[0],
@@ -75,7 +75,7 @@
     //  ===================================================
 
     // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
-    const color = d3.scale.category10();
+    var color = d3.scale.category10();
 
     const container = d3.select("#chart").append("svg")
         .attr("width", x)
@@ -87,13 +87,13 @@
     //  ===================================================
 
     container.append("rect")
-            .attr("width", x)
-            .attr("height", y)
-            .style("fill", "none")
-            .style("pointer-events", "all")
-            .call(d3.behavior.zoom().on("zoom", function () {
-                svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-            }));
+        .attr("width", x)
+        .attr("height", y)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .call(d3.behavior.zoom().on("zoom", () => {
+            svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+        }));
 
 
     //  ===================================================
@@ -101,18 +101,12 @@
     //  ===================================================
 
     const force = d3.layout.force()
-        .charge(function (d) {
-            return d.filtered ? 0 : -d.weight * charge_multiplier
-        })
-        .linkDistance(function (l) {
-            return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + default_link_distance
-        })
+        .charge(d => d.filtered ? 0 : -d.weight * charge_multiplier)
+        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + default_link_distance)
         .size([x, y])
         .nodes(d3.values(d3graph.nodes))
         .links(d3graph.links)
-        .linkStrength(function (l) {
-            return l.source.filtered || l.target.filtered ? 0 : default_link_strength
-        })
+        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : default_link_strength)
         .start();
 
     const svg = container.append('g');
@@ -123,20 +117,18 @@
     //  ===================================================
 
     svg.append("defs").selectAll("marker")
-            .data(["default", "dependency", "dependants"])
-            .enter().append("marker")
-            .attr("id", function (d) {
-                return d;
-            })
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 10)
-            .attr("refY", 0)
-            .attr("markerWidth", 10)
-            .attr("markerHeight", 10)
-            .attr("orient", "auto")
-            .attr("class", "marker")
-            .append("path")
-            .attr("d", "M0,-5L10,0L0,5");
+        .data(["default", "dependency", "dependants"])
+        .enter().append("marker")
+        .attr("id", (d) => d)
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 10)
+        .attr("refY", 0)
+        .attr("markerWidth", 10)
+        .attr("markerHeight", 10)
+        .attr("orient", "auto")
+        .attr("class", "marker")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5");
 
 
     //  ===================================================
@@ -148,9 +140,7 @@
         .enter().append("path")
         .attr("class", "link")
         .attr("marker-end", "url(#default)")
-        .style("stroke-width", function (d) {
-            return 1;
-        });
+        .style("stroke-width", (d) => d);
 
     //  ===================================================
     //  ===============  NODES SETUP     ==================
@@ -161,25 +151,19 @@
         .enter()
         .append("circle")
         .attr("r", radius)
-        .style("fill", function (d) {
-            return color(d.group)
-        })
+        .style("fill", d => color(d.group))
         .attr("class", "node")
-        .attr("source", function (d) {
-            return d.source
-        })
-        .attr("dest", function (d) {
-            return d.dest
-        })
+        .attr("source", d => d.source)
+        .attr("dest", d => d.dest)
         .call(force.drag)
-        .on("click", function (d) {
+        .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
             }
             actions.selectNodesStartingFromNode(d, 1);
             force.start();
         })
-        .on("contextmenu", function (d) {
+        .on("contextmenu", d => {
             if (d3.event.defaultPrevented) {
                 return
             }
@@ -199,15 +183,13 @@
         .enter()
         .append("text")
         .attr("visibility", "hidden")
-        .text(function (d) {
-            return d.name.substring(0, default_max_texts_length)
-        });
+        .text(d => d.name.substring(0, default_max_texts_length));
 
     //  ===================================================
     //  ===============  FORCE UPDATE        =============
     //  ===================================================
 
-    force.on("tick", function (e) {
+    force.on("tick", e => {
         svg.selectAll(".node").attr("r", radius);
         link.attr("d", link_line);
         node.attr("transform", transform);
@@ -245,7 +227,7 @@
     /*
      Window resize update
      */
-    w.onresize = function () {
+    w.onresize = () => {
         x = w.innerWidth || e.clientWidth || g.clientWidth;
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
@@ -262,26 +244,24 @@
     //  ===================================================
     d3.selectAll("input").on("change", function change() {
 
-        if (this.name == "circle_size") {
+        if (this.name === "circle_size") {
             default_circle_radius = parseInt(this.value);
-            force.linkDistance(function (l) {
-                return radius(l.source) + radius(l.target) + default_link_distance;
-            });
+            force.linkDistance(l => radius(l.source) + radius(l.target) + default_link_distance);
             force.start();
         }
 
-        if (this.name == "charge_multiplier") {
+        if (this.name === "charge_multiplier") {
             charge_multiplier = parseInt(this.value);
             force.start();
         }
 
-        if (this.name == "link_strength") {
+        if (this.name === "link_strength") {
             default_link_strength = parseInt(this.value) / 10;
             force.linkStrength(default_link_strength);
             force.start();
         }
 
-        if (this.name == "show_texts_near_circles") {
+        if (this.name === "show_texts_near_circles") {
             text.attr("visibility", this.checked ? "visible" : "hidden");
             show_texts_near_circles = this.checked;
             force.start();
@@ -302,27 +282,27 @@
 
         const re = new RegExp(regexp, "i");
         svg.selectAll('circle, text')
-                .classed(classname, function (node) {
-                    let filtered = !node.name.match(re);
-                    filtered = invert ? !filtered : filtered;
-                    node.filtered = filtered;
-                    node.neighbours = !filtered;
-                    return filtered;
-                })
-                .transition();
+            .classed(classname, node => {
+                let filtered = !node.name.match(re);
+                filtered = invert ? !filtered : filtered;
+                node.filtered = filtered;
+                node.neighbours = !filtered;
+                return filtered;
+            })
+            .transition();
 
         svg.selectAll('.link')
-                .classed(classname, function (l) {
-                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
-                    filtered = invert ? !filtered : filtered;
-                    return filtered;
-                })
-                .attr("marker-end", function (l) {
-                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
-                    filtered = invert ? !filtered : filtered;
-                    return filtered ? "" : "url(#default)"
-                })
-                .transition()
+            .classed(classname, l => {
+                let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                filtered = invert ? !filtered : filtered;
+                return filtered;
+            })
+            .attr("marker-end", l => {
+                let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                filtered = invert ? !filtered : filtered;
+                return filtered ? "" : "url(#default)"
+            })
+            .transition()
     }
 
 

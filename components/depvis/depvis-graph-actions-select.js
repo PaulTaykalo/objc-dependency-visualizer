@@ -58,7 +58,7 @@ let graph_actions = {
             },
 
             _deselectNodeIfNeeded: function (node, type) {
-                if (node.idx == this.selectedIdx && this.selectedType == type) {
+                if (node.idx === this.selectedIdx && this.selectedType === type) {
                     this.deselect_node(node);
                     return true;
                 }
@@ -98,8 +98,8 @@ let graph_actions = {
             },
 
             _isDependencyLink: (node, link) =>  (link.source.index === node.index),
-            _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index == node.index),
-            _oppositeNodeOfLink: (node, link) => (link.source.index == node.index ? link.target : link.target.index == node.index ? link.source : null),
+            _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index === node.index),
+            _oppositeNodeOfLink: (node, link) => (link.source.index === node.index ? link.target : link.target.index === node.index ? link.source : null),
 
             _highlightLinksFromRootWithNodesIndexes: function (root, nodeNeighbors, maxLevel) {
                 this.svg.selectAll('.link')

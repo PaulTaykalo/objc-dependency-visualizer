@@ -13,6 +13,7 @@ var objcdv = {
             nodes: [],
             links: [],
             nodesSet: {},
+            objects: {},
 
             addLink: function addLink(link) {
 
@@ -180,9 +181,10 @@ var objcdv = {
             node.group = prefixes.prefixIndexForName(node.name) + 1;
         });
 
+        graph.objects = dependencies.objects;
+
         return graph;
     }
 
 };
-
-//# sourceMappingURL=depvis-parse-compiled.js.map
+//# sourceMappingURL=depvis-parse.js.map

@@ -11,6 +11,7 @@ let objcdv = {
             nodes: [],
             links: [],
             nodesSet: {},
+            objects: {},
 
             addLink: function (link) {
 
@@ -153,6 +154,8 @@ let objcdv = {
             node.weight = node.source;
             node.group = prefixes.prefixIndexForName(node.name) + 1
         });
+
+        graph.objects = dependencies.objects;
 
         return graph
 

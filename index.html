@@ -35,8 +35,8 @@
 </div>
 
 <script type="text/javascript" src="origin.js"></script>
-<script src="components/depvis/depvis-graph-actions-select-compiled.js"></script>
-<script src="components/depvis/depvis-parse-compiled.js"></script>
+<script src="dist/components/depvis/depvis-graph-actions-select.js"></script>
+<script src="dist/components/depvis/depvis-parse.js"></script>
 <script>
 
     //  ===================================================
@@ -158,7 +158,8 @@
 
     var node = svg.append("g").selectAll("circle.node")
             .data(d3graph.nodes)
-            .enter().append("circle")
+            .enter()
+            .append("circle")
             .attr("r", radius)
             .style("fill", function (d) {
                 return color(d.group)
@@ -195,7 +196,8 @@
 
     var text = svg.append("g").selectAll("text")
             .data(force.nodes())
-            .enter().append("text")
+            .enter()
+            .append("text")
             .attr("visibility", "hidden")
             .text(function (d) {
                 return d.name.substring(0, default_max_texts_length)

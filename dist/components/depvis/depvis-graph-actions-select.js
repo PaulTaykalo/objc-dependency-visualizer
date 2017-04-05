@@ -121,5 +121,4 @@ var graph_actions = {
         };
     }
 };
-
-//# sourceMappingURL=depvis-graph-actions-select-compiled.js.map
+//# sourceMappingURL=depvis-graph-actions-select.js.map

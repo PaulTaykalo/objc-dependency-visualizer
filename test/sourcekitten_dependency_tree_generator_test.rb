@@ -20,6 +20,11 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_true(tree.isRegistered?('SubclassOfSubclass'))
     assert_true(tree.isRegistered?('Subclass'))
 
+    # types check
+    assert_equal(tree.type('AppDelegate'), DependencyItemType::CLASS)
+    assert_equal(tree.type('MainClass'), DependencyItemType::CLASS)
+    assert_equal(tree.type('SubclassOfSubclass'), DependencyItemType::CLASS)
+    assert_equal(tree.type('Subclass'), DependencyItemType::CLASS)
   end
 
 
@@ -37,6 +42,13 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_true(tree.connected?('SubclassOfMainClass', 'MainClass'))
     assert_true(tree.connected?('SubclassOfMainClass', 'SubProtocol'))
 
+    assert_true(tree.isRegistered?('AwesomeProtocol'))
+    assert_true(tree.isRegistered?('SubProtocol'))
+
+    # types check
+    assert_equal(tree.type('AwesomeProtocol'), DependencyItemType::PROTOCOL)
+    assert_equal(tree.type('SubProtocol'), DependencyItemType::PROTOCOL)
+
   end
 
   def test_extensions
@@ -47,6 +59,10 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_false(tree.isEmpty?)
     assert_true(tree.isRegistered?('ProtocolToExtend'))
     assert_true(tree.connected?('MainClass', 'ProtocolToExtend'))
+
+    # types check
+    assert_equal(tree.type('ProtocolToExtend'), DependencyItemType::PROTOCOL)
+    assert_equal(tree.type('MainClass'), DependencyItemType::CLASS)
 
   end
 
@@ -59,6 +75,10 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_true(tree.isRegistered?('SimpleStruct'))
     assert_true(tree.connected?('StructWithProtocols', 'ProtocolToExtend'))
     assert_true(tree.connected?('StructWithProtocols', 'AwesomeProtocol'))
+
+    # types check
+    assert_equal(tree.type('StructWithProtocols'), DependencyItemType::STRUCTURE)
+
   end
 
   def test_interfile_dependencies

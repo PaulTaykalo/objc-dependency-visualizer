@@ -1,15 +1,22 @@
 class TreeSerializer
   attr_reader :dependency_tree
 
+  # @param [DependencyTree] dependency_tree
   def initialize(dependency_tree)
     @dependency_tree = dependency_tree
   end
 
 
+  # @return [String]
   def serialize(output_format)
     object_to_serialize = {}
     object_to_serialize[:links] = @dependency_tree.links
     object_to_serialize[:links_count] = @dependency_tree.links_count
+    object_to_serialize[:objects] = Hash[
+      @dependency_tree.objects.map do |o|
+        [o, { type: @dependency_tree.type(o) }]
+      end
+    ]
 
     case output_format
     when 'dot'

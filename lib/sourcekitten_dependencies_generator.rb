@@ -10,7 +10,7 @@ module SKDeclarationType
   OBJC_CLASS = 'sourcekitten.source.lang.objc.decl.class'.freeze
 end
 
-module SK_KEY
+module SKKey
   SUBSTRUCTURE = 'key.substructure'.freeze
   KIND = 'key.kind'.freeze
   INHERITED_TYPES = 'key.inheritedtypes'.freeze
@@ -30,7 +30,10 @@ end
 
 class SourceKittenDependenciesGenerator
 
+  # @return [DependencyTree]
   def generate_dependencies(source_kitten_json)
+
+    tree = DependencyTree.new
 
     file = File.read(source_kitten_json)
     parsed_files = JSON.parse(file)
@@ -39,55 +42,56 @@ class SourceKittenDependenciesGenerator
 
     parsed_files.each do |parsed_file|
       parsed_file.each do |_path, contents|
-        substructures = contents[SK_KEY::SUBSTRUCTURE]
+        substructures = contents[SKKey::SUBSTRUCTURE]
         next unless substructures
         substructures.each { |substructure| parse_substructure(substructure, context) }
       end
     end
 
     context.classes.each do |clz|
-      class_name = clz[SK_KEY::NAME]
-      yield class_name, class_name
+      class_name = clz[SKKey::NAME]
+      tree.register(class_name, DependencyItemType::CLASS)
 
-      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      inherited_types = clz[SKKey::INHERITED_TYPES]
       next unless inherited_types
-      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield class_name, type }
+      inherited_types.map { |o| o[SKKey::NAME] }.each { |type| tree.add(class_name, type) }
     end
 
     context.protocols.each do |clz|
-      protocol_name = clz[SK_KEY::NAME]
-      yield protocol_name, protocol_name
+      protocol_name = clz[SKKey::NAME]
+      tree.register(protocol_name, DependencyItemType::PROTOCOL)
 
-      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      inherited_types = clz[SKKey::INHERITED_TYPES]
       next unless inherited_types
-      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield protocol_name, type }
+      inherited_types.map { |o| o[SKKey::NAME] }.each { |type| tree.add(protocol_name, type) }
     end
 
     context.extensions.each do |clz|
-      extension_name = clz[SK_KEY::NAME]
+      extension_name = clz[SKKey::NAME]
 
-      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      inherited_types = clz[SKKey::INHERITED_TYPES]
       next unless inherited_types
-      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield extension_name, type }
+      inherited_types.map { |o| o[SKKey::NAME] }.each { |type| tree.add(extension_name, type) }
     end
 
     context.structs.each do |clz|
-      struct_name = clz[SK_KEY::NAME]
-      yield struct_name, struct_name
+      struct_name = clz[SKKey::NAME]
+      tree.register(struct_name, DependencyItemType::STRUCTURE)
 
-      inherited_types = clz[SK_KEY::INHERITED_TYPES]
+      inherited_types = clz[SKKey::INHERITED_TYPES]
       next unless inherited_types
-      inherited_types.map { |o| o[SK_KEY::NAME] }.each { |type| yield struct_name, type }
+      inherited_types.map { |o| o[SKKey::NAME] }.each { |type| tree.add(struct_name, type) }
     end
 
+    tree
   end
 
   def parse_substructure(structure, context)
     # any other subsctucst?
-    subsubstructures = structure[SK_KEY::SUBSTRUCTURE]
+    subsubstructures = structure[SKKey::SUBSTRUCTURE]
     subsubstructures.each { |it| parse_substructure(it, context) } if subsubstructures
 
-    kind = structure[SK_KEY::KIND]
+    kind = structure[SKKey::KIND]
 
     case kind
     when SKDeclarationType::SWIFT_EXTENSION

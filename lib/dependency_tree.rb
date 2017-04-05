@@ -1,3 +1,10 @@
+module DependencyItemType
+  CLASS = 'class'.freeze
+  STRUCTURE = 'struct'.freeze
+  PROTOCOL = 'protocol'.freeze
+  UNKNOWN = 'unknown'.freeze
+end
+
 class DependencyTree
 
   attr_reader :links_count
@@ -7,6 +14,7 @@ class DependencyTree
     @links_count = 0
     @links = []
     @registry = {}
+    @types_registry = {}
   end
 
   def add(source, dest)
@@ -24,11 +32,23 @@ class DependencyTree
     @links_count.zero?
   end
 
-  def register(object)
+  def register(object, type = DependencyItemType::UNKNOWN)
     @registry[object] = true
+    if @types_registry[object].nil? || @types_registry[object] == DependencyItemType::UNKNOWN
+      @types_registry[object] = type
+    end
   end
+
   def isRegistered?(object)
     !@registry[object].nil?
+  end
+
+  def type(object)
+    @types_registry[object]
+  end
+
+  def objects
+    @types_registry.keys
   end
 
 

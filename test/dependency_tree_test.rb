@@ -17,7 +17,7 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_equal(false, tree.connected?('dest', 'source'), 'should have unidirectional links')
   end
 
-  def test_isRegistered
+  def test_is_registered
     tree = DependencyTree.new
     assert_false(tree.isRegistered?('source'))
 
@@ -33,4 +33,33 @@ class DependencyTreeTest < Test::Unit::TestCase
     tree.register('source')
     assert_true(tree.isRegistered?('source'))
   end
+
+  def test_registration_with_type
+    tree = DependencyTree.new
+    tree.register('source', DependencyItemType::CLASS)
+    assert_true(tree.isRegistered?('source'))
+    assert_equal(tree.type('source'), DependencyItemType::CLASS)
+  end
+
+  def test_registration_without_type
+    tree = DependencyTree.new
+    tree.register('source')
+    assert_equal(tree.type('source'), DependencyItemType::UNKNOWN)
+  end
+
+  def test_adding_links_doesnt_affect_registration
+    tree = DependencyTree.new
+    tree.register('source', DependencyItemType::CLASS)
+    tree.add('source', 'dest')
+    assert_equal(tree.type('source'), DependencyItemType::CLASS)
+  end
+
+  def test_specific_item_type_should_override_unknown
+    tree = DependencyTree.new
+    tree.register('source')
+    tree.register('source', DependencyItemType::CLASS)
+    assert_equal(tree.type('source'), DependencyItemType::CLASS)
+  end
+
+
 end

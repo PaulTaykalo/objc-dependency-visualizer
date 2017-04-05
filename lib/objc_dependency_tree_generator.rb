@@ -88,15 +88,6 @@ class DependencyTreeGenerator
       end
     }
 
-    if @options[:sourcekitten_dependencies_file]
-      SourceKittenDependenciesGenerator.new.generate_dependencies(
-        @options[:sourcekitten_dependencies_file],
-        &links_block
-      )
-      return links
-    end
-
-
     unless @object_files_directories
       @object_files_directories = find_project_output_directory(
         @options[:derived_data_paths],
@@ -130,6 +121,10 @@ class DependencyTreeGenerator
   end
 
   def build_dependency_tree
+    if @options[:sourcekitten_dependencies_file]
+      return build_sourcekitten_dependency_tree
+    end
+
     tree = DependencyTree.new
     links = find_dependencies
 
@@ -141,6 +136,12 @@ class DependencyTreeGenerator
     end
 
     tree
+  end
+
+  def build_sourcekitten_dependency_tree
+    SourceKittenDependenciesGenerator.new.generate_dependencies(
+      @options[:sourcekitten_dependencies_file]
+    )
   end
 
   def dependencies_to_s

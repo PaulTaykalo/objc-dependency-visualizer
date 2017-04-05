@@ -35,52 +35,52 @@
 </div>
 
 <script type="text/javascript" src="origin.js"></script>
-<script src="dist/components/depvis/depvis-graph-actions-select.js"></script>
-<script src="dist/components/depvis/depvis-parse.js"></script>
+<script src="components/depvis/depvis-graph-actions-select.js"></script>
+<script src="components/depvis/depvis-parse.js"></script>
 <script>
 
     //  ===================================================
     //  =============== CONFIGURABLE PARAMS  ==============
     //  ===================================================
 
-    var default_link_distance = 10;
+    const default_link_distance = 10;
 
     // How far can we change default_link_distance?
     // 0   - I don't care
     // 0.5 - Change it as you want, but it's preferrable to have default_link_distance
     // 1   - One does not change default_link_distance
-    var default_link_strength = 0.7;
+    const default_link_strength = 0.7;
 
     // Should I comment this?
-    var default_circle_radius = 15;
+    const default_circle_radius = 15;
 
     // you can set it to true, but this will not help to understanf what's going on
-    var show_texts_near_circles = false;
-    var default_max_texts_length = 100;
+    const show_texts_near_circles = false;
+    const default_max_texts_length = 100;
 
-    var charge_multiplier = 200;
+    const charge_multiplier = 200;
 
-    var dvgraph = objcdv.parse_dependencies_graph(dependencies);
-    var d3graph = dvgraph.d3jsGraph();
+    const dvgraph = objcdv.parse_dependencies_graph(dependencies);
+    const d3graph = dvgraph.d3jsGraph();
 
-    var w = window,
-            d = document,
-            e = d.documentElement,
-            g = d.getElementsByTagName('body')[0],
-            x = w.innerWidth || e.clientWidth || g.clientWidth,
-            y = w.innerHeight || e.clientHeight || g.clientHeight;
+    const w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
 
     //  ===================================================
     //  =============== http://d3js.org/ Magic ===========
     //  ===================================================
 
     // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
-    var color = d3.scale.category10();
+    const color = d3.scale.category10();
 
-    var container = d3.select("#chart").append("svg")
-            .attr("width", x)
-            .attr("height", y)
-            .style("overflow", "hidden");
+    const container = d3.select("#chart").append("svg")
+        .attr("width", x)
+        .attr("height", y)
+        .style("overflow", "hidden");
 
     //  ===================================================
     //  =============== ZOOM LOGIC ========================
@@ -100,23 +100,23 @@
     //  =============== FORCE LAYOUT ======================
     //  ===================================================
 
-    var force = d3.layout.force()
-            .charge(function (d) {
-                return d.filtered ? 0 : -d.weight * charge_multiplier
-            })
-            .linkDistance(function (l) {
-                return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + default_link_distance
-            })
-            .size([x, y])
-            .nodes(d3.values(d3graph.nodes))
-            .links(d3graph.links)
-            .linkStrength(function (l) {
-                return l.source.filtered || l.target.filtered ? 0 : default_link_strength
-            })
-            .start();
+    const force = d3.layout.force()
+        .charge(function (d) {
+            return d.filtered ? 0 : -d.weight * charge_multiplier
+        })
+        .linkDistance(function (l) {
+            return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + default_link_distance
+        })
+        .size([x, y])
+        .nodes(d3.values(d3graph.nodes))
+        .links(d3graph.links)
+        .linkStrength(function (l) {
+            return l.source.filtered || l.target.filtered ? 0 : default_link_strength
+        })
+        .start();
 
-    var svg = container.append('g');
-    var actions = graph_actions.create(svg, dvgraph);
+    const svg = container.append('g');
+    const actions = graph_actions.create(svg, dvgraph);
 
     //  ===================================================
     //  ===============  MARKERS SETUP   ==================
@@ -143,65 +143,65 @@
     //  ===============  LINKS SETUP     ==================
     //  ===================================================
 
-    var link = svg.append("g").selectAll("path")
-            .data(d3graph.links)
-            .enter().append("path")
-            .attr("class", "link")
-            .attr("marker-end", "url(#default)")
-            .style("stroke-width", function (d) {
-                return 1;
-            });
+    const link = svg.append("g").selectAll("path")
+        .data(d3graph.links)
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("marker-end", "url(#default)")
+        .style("stroke-width", function (d) {
+            return 1;
+        });
 
     //  ===================================================
     //  ===============  NODES SETUP     ==================
     //  ===================================================
 
-    var node = svg.append("g").selectAll("circle.node")
-            .data(d3graph.nodes)
-            .enter()
-            .append("circle")
-            .attr("r", radius)
-            .style("fill", function (d) {
-                return color(d.group)
-            })
-            .attr("class", "node")
-            .attr("source", function (d) {
-                return d.source
-            })
-            .attr("dest", function (d) {
-                return d.dest
-            })
-            .call(force.drag)
-            .on("click", function (d) {
-                if (d3.event.defaultPrevented) {
-                    return
-                }
-                actions.selectNodesStartingFromNode(d, 1);
-                force.start();
-            })
-            .on("contextmenu", function (d) {
-                if (d3.event.defaultPrevented) {
-                    return
-                }
-                // Don't actually show context menu
-                d3.event.preventDefault();
+    const node = svg.append("g").selectAll("circle.node")
+        .data(d3graph.nodes)
+        .enter()
+        .append("circle")
+        .attr("r", radius)
+        .style("fill", function (d) {
+            return color(d.group)
+        })
+        .attr("class", "node")
+        .attr("source", function (d) {
+            return d.source
+        })
+        .attr("dest", function (d) {
+            return d.dest
+        })
+        .call(force.drag)
+        .on("click", function (d) {
+            if (d3.event.defaultPrevented) {
+                return
+            }
+            actions.selectNodesStartingFromNode(d, 1);
+            force.start();
+        })
+        .on("contextmenu", function (d) {
+            if (d3.event.defaultPrevented) {
+                return
+            }
+            // Don't actually show context menu
+            d3.event.preventDefault();
 
-                actions.selectNodesStartingFromNode(d);
-                force.start();
-            });
+            actions.selectNodesStartingFromNode(d);
+            force.start();
+        });
 
     //  ===================================================
     //  ===============  TEXT NODES SETUP     =============
     //  ===================================================
 
-    var text = svg.append("g").selectAll("text")
-            .data(force.nodes())
-            .enter()
-            .append("text")
-            .attr("visibility", "hidden")
-            .text(function (d) {
-                return d.name.substring(0, default_max_texts_length)
-            });
+    const text = svg.append("g").selectAll("text")
+        .data(force.nodes())
+        .enter()
+        .append("text")
+        .attr("visibility", "hidden")
+        .text(function (d) {
+            return d.name.substring(0, default_max_texts_length)
+        });
 
     //  ===================================================
     //  ===============  FORCE UPDATE        =============
@@ -220,17 +220,17 @@
     //  ===============  HELPER FUNCTIONS     =============
     //  ===================================================
     function link_line(d) {
-        var dx = d.target.x - d.source.x,
-                dy = d.target.y - d.source.y,
-                dr = Math.sqrt(dx * dx + dy * dy);
+        const dx = d.target.x - d.source.x,
+            dy = d.target.y - d.source.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
 
-        var rsource = radius(d.sourceNode) / dr;
-        var rdest = radius(d.targetNode) / dr;
-        var startX = d.source.x + dx * rsource;
-        var startY = d.source.y + dy * rsource;
+        const rsource = radius(d.sourceNode) / dr;
+        const rdest = radius(d.targetNode) / dr;
+        const startX = d.source.x + dx * rsource;
+        const startY = d.source.y + dy * rsource;
 
-        var endX = d.target.x - dx * rdest;
-        var endY = d.target.y - dy * rdest;
+        const endX = d.target.x - dx * rdest;
+        const endY = d.target.y - dy * rdest;
         return "M" + startX + "," + startY + "L" + endX + "," + endY;
     }
 
@@ -300,10 +300,10 @@
         classname = typeof classname !== 'undefined' ? classname : "filtered";
         invert = typeof invert !== 'undefined' ? invert : false;
 
-        var re = new RegExp(regexp, "i");
+        const re = new RegExp(regexp, "i");
         svg.selectAll('circle, text')
                 .classed(classname, function (node) {
-                    var filtered = !node.name.match(re);
+                    let filtered = !node.name.match(re);
                     filtered = invert ? !filtered : filtered;
                     node.filtered = filtered;
                     node.neighbours = !filtered;
@@ -313,12 +313,12 @@
 
         svg.selectAll('.link')
                 .classed(classname, function (l) {
-                    var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
                     filtered = invert ? !filtered : filtered;
                     return filtered;
                 })
                 .attr("marker-end", function (l) {
-                    var filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
                     filtered = invert ? !filtered : filtered;
                     return filtered ? "" : "url(#default)"
                 })

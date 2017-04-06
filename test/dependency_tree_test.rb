@@ -19,7 +19,7 @@ class DependencyTreeTest < Test::Unit::TestCase
 
   def test_is_registered
     tree = DependencyTree.new
-    assert_false(tree.isRegistered?('source'))
+    assert(!tree.isRegistered?('source'))
 
     tree.add('source', 'dest')
     assert(tree.isRegistered?('source'))
@@ -28,7 +28,7 @@ class DependencyTreeTest < Test::Unit::TestCase
 
   def test_registration
     tree = DependencyTree.new
-    assert_false(tree.isRegistered?('source'))
+    assert(!tree.isRegistered?('source'))
 
     tree.register('source')
     assert(tree.isRegistered?('source'))

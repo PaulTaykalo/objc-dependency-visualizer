@@ -6,12 +6,12 @@
 // Output:
 let objcdv = {
     version: "0.0.1",
-    _createGraph: function () {
+    _createGraph: function (_objects) {
         return {
             nodes: [],
             links: [],
             nodesSet: {},
-            objects: {},
+            objects: _objects,
 
             addLink: function (link) {
 
@@ -36,7 +36,7 @@ let objcdv = {
                 var node = this.nodesSet[nodeName];
                 if (node == null) {
                     var idx = Object.keys(this.nodesSet).length;
-                    this.nodesSet[nodeName] = node = {idx: idx, name: nodeName, source: 1, dest: 0};
+                    this.nodesSet[nodeName] = node = {idx: idx, name: nodeName, source: 1, dest: 0, type: _objects[nodeName].type};
                 }
                 return node
             },
@@ -139,7 +139,7 @@ let objcdv = {
 
     parse_dependencies_graph: function (dependencies) {
 
-        var graph = this._createGraph();
+        var graph = this._createGraph(dependencies.objects);
         var prefixes = this._createPrefixes();
 
         dependencies.links.forEach((link) => {
@@ -154,8 +154,6 @@ let objcdv = {
             node.weight = node.source;
             node.group = prefixes.prefixIndexForName(node.name) + 1
         });
-
-        graph.objects = dependencies.objects;
 
         return graph
 

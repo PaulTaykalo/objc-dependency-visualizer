@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'test/unit/assertions'
 require 'objc_dependency_tree_generator'
 require 'sourcekitten_dependencies_generator'
 

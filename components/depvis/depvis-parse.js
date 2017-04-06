@@ -147,8 +147,14 @@ let objcdv = {
 
             prefixes.addName(link.source);
             prefixes.addName(link.dest);
-
         });
+
+        // Make sure all nodes are present, even if they aren't connected
+        if (dependencies.objects != null) {
+            for (p in dependencies.objects) {
+                graph.getNode(p)
+            }
+        }
 
         graph.updateNodes((node) => {
             node.weight = node.source;

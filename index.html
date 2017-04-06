@@ -139,7 +139,7 @@
         .attr("r", radius)
         .style("fill", d => color(d.group))
         .style("stroke-dasharray", d => d.type === "protocol" ? [5,5] : "")
-        .style("stroke-width", d => d.type === "protocol" ? 2 : 1)
+        .style("stroke-width", d => d.type === "protocol" ? 5 : 1)
         .attr("class", "node")
         .attr("source", d => d.source)
         .attr("dest", d => d.dest)

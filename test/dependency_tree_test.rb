@@ -6,7 +6,7 @@ class DependencyTreeTest < Test::Unit::TestCase
   def test_initial_state
     tree = DependencyTree.new
     assert_equal(0, tree.links_count, 'should have no links at the start')
-    assert_true(tree.isEmpty?, 'should be empty at the start')
+    assert(tree.isEmpty?, 'should be empty at the start')
   end
 
   def test_link_add
@@ -22,8 +22,8 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_false(tree.isRegistered?('source'))
 
     tree.add('source', 'dest')
-    assert_true(tree.isRegistered?('source'))
-    assert_true(tree.isRegistered?('dest'))
+    assert(tree.isRegistered?('source'))
+    assert(tree.isRegistered?('dest'))
   end
 
   def test_registration
@@ -31,13 +31,13 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_false(tree.isRegistered?('source'))
 
     tree.register('source')
-    assert_true(tree.isRegistered?('source'))
+    assert(tree.isRegistered?('source'))
   end
 
   def test_registration_with_type
     tree = DependencyTree.new
     tree.register('source', DependencyItemType::CLASS)
-    assert_true(tree.isRegistered?('source'))
+    assert(tree.isRegistered?('source'))
     assert_equal(tree.type('source'), DependencyItemType::CLASS)
   end
 

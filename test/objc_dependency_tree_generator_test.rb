@@ -5,7 +5,7 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
   def test_links_generation
     generator = DependencyTreeGenerator.new({})
     tree = generator.build_dependency_tree
-    assert_true(tree.isEmpty?)
+    assert(tree.isEmpty?)
   end
 
   def test_swift_simple_inheritance
@@ -14,13 +14,13 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       swift_dependencies: true
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('TwoClass'))
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.connected?('MasterViewController', 'DetailViewController'))
-    assert_true(tree.connected?('AppDelegate', 'TwoClass'))
-    assert_true(tree.connected?('AppDelegate', 'ThreeClass'))
-    assert_true(tree.connected?('AppDelegate', 'ThreeClass'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('TwoClass'))
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.connected?('MasterViewController', 'DetailViewController'))
+    assert(tree.connected?('AppDelegate', 'TwoClass'))
+    assert(tree.connected?('AppDelegate', 'ThreeClass'))
+    assert(tree.connected?('AppDelegate', 'ThreeClass'))
     # assert_equal(dependencies['TwoClass'], dependencies['ThreeClass'])
 
   end
@@ -32,12 +32,12 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       swift_dependencies: true
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.connected?('AppDelegate', 'Database'))
-    assert_true(tree.connected?('AppDelegate', 'NoteViewController_iOS'))
-    assert_true(tree.connected?('Note', 'Notebook'))
-    assert_true(tree.connected?('NotesViewController_iOS', 'AppDelegate'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.connected?('AppDelegate', 'Database'))
+    assert(tree.connected?('AppDelegate', 'NoteViewController_iOS'))
+    assert(tree.connected?('Note', 'Notebook'))
+    assert(tree.connected?('NotesViewController_iOS', 'AppDelegate'))
 
   end
 
@@ -47,15 +47,15 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       swift_dependencies: true
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.connected?('AppDelegate', 'Database'))
-    assert_true(tree.connected?('AppDelegate', 'NoteViewController_iOS'))
-    assert_true(tree.connected?('Note', 'Notebook'))
-    assert_true(tree.connected?('NotesViewController_iOS', 'AppDelegate'))
-    assert_true(tree.connected?('MasterViewController', 'DetailViewController'))
-    assert_true(tree.connected?('AppDelegate', 'TwoClass'))
-    assert_true(tree.connected?('AppDelegate', 'ThreeClass'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.connected?('AppDelegate', 'Database'))
+    assert(tree.connected?('AppDelegate', 'NoteViewController_iOS'))
+    assert(tree.connected?('Note', 'Notebook'))
+    assert(tree.connected?('NotesViewController_iOS', 'AppDelegate'))
+    assert(tree.connected?('MasterViewController', 'DetailViewController'))
+    assert(tree.connected?('AppDelegate', 'TwoClass'))
+    assert(tree.connected?('AppDelegate', 'ThreeClass'))
   end
 
   def test_multiple_targets
@@ -65,10 +65,10 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       use_dwarf: true
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AWOperationsFactory'))
-    assert_true(tree.connected?('AWOperationsFactory', 'JFFCancelAsyncOperation'))
-    assert_true(tree.connected?('JFFAsyncOperationHelpers', 'JFFCancelAsyncOperation'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AWOperationsFactory'))
+    assert(tree.connected?('AWOperationsFactory', 'JFFCancelAsyncOperation'))
+    assert(tree.connected?('JFFAsyncOperationHelpers', 'JFFCancelAsyncOperation'))
   end
 
 
@@ -80,10 +80,10 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       project_name: ""
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.isRegistered?('SimpleModel'))
-    assert_true(tree.connected?('ViewController', 'SimpleModel'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.isRegistered?('SimpleModel'))
+    assert(tree.connected?('ViewController', 'SimpleModel'))
 
   end
 
@@ -95,10 +95,10 @@ class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
       use_dwarf: true
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.isRegistered?('SimpleModel'))
-    assert_true(tree.connected?('ViewController', 'SimpleModel'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.isRegistered?('SimpleModel'))
+    assert(tree.connected?('ViewController', 'SimpleModel'))
 
   end
 

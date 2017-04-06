@@ -7,7 +7,7 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
   def test_links_generation
     generator = DependencyTreeGenerator.new({})
     tree = generator.build_dependency_tree
-    assert_true(tree.isEmpty?)
+    assert(tree.isEmpty?)
   end
 
   def test_simple_objects
@@ -15,11 +15,11 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten/sourcekitten.json',
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.isRegistered?('MainClass'))
-    assert_true(tree.isRegistered?('SubclassOfSubclass'))
-    assert_true(tree.isRegistered?('Subclass'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.isRegistered?('MainClass'))
+    assert(tree.isRegistered?('SubclassOfSubclass'))
+    assert(tree.isRegistered?('Subclass'))
 
     # types check
     assert_equal(tree.type('AppDelegate'), DependencyItemType::CLASS)
@@ -34,17 +34,17 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten/sourcekitten.json',
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('AppDelegate'))
-    assert_true(tree.connected?('Subclass', 'MainClass'))
-    assert_true(tree.connected?('SubclassOfSubclass', 'Subclass'))
-    assert_true(tree.connected?('SubclassOfSubclass', 'AwesomeProtocol'))
-    assert_true(tree.connected?('SubProtocol', 'AwesomeProtocol'))
-    assert_true(tree.connected?('SubclassOfMainClass', 'MainClass'))
-    assert_true(tree.connected?('SubclassOfMainClass', 'SubProtocol'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('AppDelegate'))
+    assert(tree.connected?('Subclass', 'MainClass'))
+    assert(tree.connected?('SubclassOfSubclass', 'Subclass'))
+    assert(tree.connected?('SubclassOfSubclass', 'AwesomeProtocol'))
+    assert(tree.connected?('SubProtocol', 'AwesomeProtocol'))
+    assert(tree.connected?('SubclassOfMainClass', 'MainClass'))
+    assert(tree.connected?('SubclassOfMainClass', 'SubProtocol'))
 
-    assert_true(tree.isRegistered?('AwesomeProtocol'))
-    assert_true(tree.isRegistered?('SubProtocol'))
+    assert(tree.isRegistered?('AwesomeProtocol'))
+    assert(tree.isRegistered?('SubProtocol'))
 
     # types check
     assert_equal(tree.type('AwesomeProtocol'), DependencyItemType::PROTOCOL)
@@ -57,9 +57,9 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten/sourcekitten.json',
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('ProtocolToExtend'))
-    assert_true(tree.connected?('MainClass', 'ProtocolToExtend'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ProtocolToExtend'))
+    assert(tree.connected?('MainClass', 'ProtocolToExtend'))
 
     # types check
     assert_equal(tree.type('ProtocolToExtend'), DependencyItemType::PROTOCOL)
@@ -72,10 +72,10 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten/sourcekitten.json',
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('SimpleStruct'))
-    assert_true(tree.connected?('StructWithProtocols', 'ProtocolToExtend'))
-    assert_true(tree.connected?('StructWithProtocols', 'AwesomeProtocol'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('SimpleStruct'))
+    assert(tree.connected?('StructWithProtocols', 'ProtocolToExtend'))
+    assert(tree.connected?('StructWithProtocols', 'AwesomeProtocol'))
 
     # types check
     assert_equal(tree.type('StructWithProtocols'), DependencyItemType::STRUCTURE)
@@ -87,12 +87,12 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten/sourcekitten.json',
     )
     tree = generator.build_dependency_tree
-    assert_false(tree.isEmpty?)
-    assert_true(tree.isRegistered?('SecondClass'))
-    assert_true(tree.isRegistered?('SecondClassProtocol'))
-    assert_true(tree.connected?('SecondClass', 'MainClass'))
-    assert_true(tree.connected?('SecondClass', 'SecondClassProtocol'))
-    assert_true(tree.connected?('SecondClass', 'AwesomeProtocol'))
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('SecondClass'))
+    assert(tree.isRegistered?('SecondClassProtocol'))
+    assert(tree.connected?('SecondClass', 'MainClass'))
+    assert(tree.connected?('SecondClass', 'SecondClassProtocol'))
+    assert(tree.connected?('SecondClass', 'AwesomeProtocol'))
   end
 
 

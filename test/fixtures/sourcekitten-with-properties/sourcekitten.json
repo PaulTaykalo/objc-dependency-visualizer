@@ -1,0 +1,257 @@
+[{
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "protocol Protocol1",
+        "key.annotated_decl" : "<Declaration>protocol Protocol1<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>Protocol1<\/decl.name><\/decl.protocol>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 22,
+        "key.runtime_name" : "_TtP8__main__9Protocol1_",
+        "key.parsed_scope.start" : 12,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.protocol",
+        "key.offset" : 170,
+        "key.nameoffset" : 179,
+        "key.typename" : "Protocol1.Protocol",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "Protocol1",
+        "key.usr" : "s:P35SourcekittenWithComplexDependencies9Protocol1",
+        "key.bodyoffset" : 190,
+        "key.bodylength" : 1,
+        "key.parsed_scope.end" : 12,
+        "key.namelength" : 9
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "class Protocol1Impl: Protocol1",
+        "key.annotated_decl" : "<Declaration>class Protocol1Impl : <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Protocol1Impl<\/decl.name> : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/ref.protocol><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 33,
+        "key.runtime_name" : "_TtC8__main__13Protocol1Impl",
+        "key.parsed_scope.start" : 13,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 193,
+        "key.nameoffset" : 199,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 214,
+            "key.length" : 9
+          }
+        ],
+        "key.typename" : "Protocol1Impl.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "Protocol1Impl",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "Protocol1"
+          }
+        ],
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies13Protocol1Impl",
+        "key.bodyoffset" : 225,
+        "key.bodylength" : 0,
+        "key.parsed_scope.end" : 13,
+        "key.namelength" : 13
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "class Class1",
+        "key.annotated_decl" : "<Declaration>class Class1<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Class1<\/decl.name><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 55,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p<\/decl.name>: <decl.var.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/ref.protocol><\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 34,
+            "key.parsed_scope.start" : 16,
+            "key.typeusr" : "_TtP35SourcekittenWithComplexDependencies9Protocol1_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 247,
+            "key.nameoffset" : 251,
+            "key.typename" : "Protocol1",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class11pPS_9Protocol1_",
+            "key.parsed_declaration" : "var p: Protocol1 = Protocol1Impl()",
+            "key.namelength" : 1,
+            "key.parsed_scope.end" : 16,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          }
+        ],
+        "key.runtime_name" : "_TtC8__main__6Class1",
+        "key.parsed_scope.start" : 15,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 228,
+        "key.nameoffset" : 234,
+        "key.typename" : "Class1.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "Class1",
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies6Class1",
+        "key.bodyoffset" : 242,
+        "key.bodylength" : 40,
+        "key.parsed_scope.end" : 17,
+        "key.namelength" : 6
+      }
+    ],
+    "key.offset" : 0,
+    "key.length" : 288
+  }
+}, {
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+
+    ],
+    "key.offset" : 0,
+    "key.length" : 171
+  }
+}, {
+  "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift" : {
+    "key.diagnostic_stage" : "source.diagnostic.stage.swift.parse",
+    "key.substructure" : [
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift",
+        "key.parsed_declaration" : "class AppDelegate: UIResponder, UIApplicationDelegate",
+        "key.annotated_decl" : "<Declaration>@UIApplicationMain class AppDelegate : <Type usr=\"c:objc(cs)UIResponder\">UIResponder<\/Type>, <Type usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@UIApplicationMain<\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>AppDelegate<\/decl.name> : <ref.class usr=\"c:objc(cs)UIResponder\">UIResponder<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UIApplicationDelegate\">UIApplicationDelegate<\/ref.protocol><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 327,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift",
+            "key.annotated_decl" : "<Declaration>var window: <Type usr=\"c:objc(cs)UIWindow\">UIWindow<\/Type>?<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>window<\/decl.name>: <decl.var.type><ref.class usr=\"c:objc(cs)UIWindow\">UIWindow<\/ref.class>?<\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 21,
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(py)window"
+              }
+            ],
+            "key.parsed_scope.start" : 14,
+            "key.typeusr" : "_TtGSqCSo8UIWindow_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 246,
+            "key.nameoffset" : 250,
+            "key.typename" : "UIWindow?",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "window",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies11AppDelegate6windowGSqCSo8UIWindow_",
+            "key.parsed_declaration" : "var window: UIWindow?",
+            "key.namelength" : 6,
+            "key.parsed_scope.end" : 14,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift",
+            "key.parsed_declaration" : "func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool",
+            "key.annotated_decl" : "<Declaration>func application(_ application: <Type usr=\"c:objc(cs)UIApplication\">UIApplication<\/Type>, didFinishLaunchingWithOptions launchOptions: [<Type usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/Type> : Any]?) -&gt; <Type usr=\"s:Sb\">Bool<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>application<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>_<\/decl.var.parameter.argument_label> <decl.var.parameter.name>application<\/decl.var.parameter.name>: <decl.var.parameter.type><ref.class usr=\"c:objc(cs)UIApplication\">UIApplication<\/ref.class><\/decl.var.parameter.type><\/decl.var.parameter>, <decl.var.parameter><decl.var.parameter.argument_label>didFinishLaunchingWithOptions<\/decl.var.parameter.argument_label> <decl.var.parameter.name>launchOptions<\/decl.var.parameter.name>: <decl.var.parameter.type>[<ref.struct usr=\"c:@T@UIApplicationLaunchOptionsKey\">UIApplicationLaunchOptionsKey<\/ref.struct> : Any]?<\/decl.var.parameter.type><\/decl.var.parameter>) -&gt; <decl.function.returntype><ref.struct usr=\"s:Sb\">Bool<\/ref.struct><\/decl.function.returntype><\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 236,
+            "key.substructure" : [
+
+            ],
+            "key.overrides" : [
+              {
+                "key.usr" : "c:objc(pl)UIApplicationDelegate(im)application:didFinishLaunchingWithOptions:"
+              }
+            ],
+            "key.parsed_scope.start" : 17,
+            "key.typeusr" : "_TtFTCSo13UIApplication29didFinishLaunchingWithOptionsGSqGVs10DictionaryVSC29UIApplicationLaunchOptionsKeyP____Sb",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 274,
+            "key.nameoffset" : 279,
+            "key.typename" : "(AppDelegate) -> (UIApplication, [UIApplicationLaunchOptionsKey : Any]?) -> Bool",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "application(_:didFinishLaunchingWithOptions:)",
+            "key.usr" : "s:FC35SourcekittenWithComplexDependencies11AppDelegate11applicationFTCSo13UIApplication29didFinishLaunchingWithOptionsGSqGVs10DictionaryVSC29UIApplicationLaunchOptionsKeyP____Sb",
+            "key.bodyoffset" : 414,
+            "key.bodylength" : 95,
+            "key.parsed_scope.end" : 20,
+            "key.namelength" : 125
+          }
+        ],
+        "key.runtime_name" : "_TtC8__main__11AppDelegate",
+        "key.parsed_scope.start" : 12,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.attributes" : [
+          {
+            "key.attribute" : "source.decl.attribute.UIApplicationMain"
+          }
+        ],
+        "key.offset" : 185,
+        "key.nameoffset" : 191,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 204,
+            "key.length" : 11
+          },
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 217,
+            "key.length" : 21
+          }
+        ],
+        "key.typename" : "AppDelegate.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "AppDelegate",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "UIResponder"
+          },
+          {
+            "key.name" : "UIApplicationDelegate"
+          }
+        ],
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies11AppDelegate",
+        "key.bodyoffset" : 240,
+        "key.bodylength" : 271,
+        "key.parsed_scope.end" : 21,
+        "key.namelength" : 11
+      }
+    ],
+    "key.offset" : 0,
+    "key.length" : 514
+  }
+}]

@@ -68,43 +68,227 @@
       },
       {
         "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "protocol Protocol2",
+        "key.annotated_decl" : "<Declaration>protocol Protocol2<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>Protocol2<\/decl.name><\/decl.protocol>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 22,
+        "key.runtime_name" : "_TtP8__main__9Protocol2_",
+        "key.parsed_scope.start" : 15,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.protocol",
+        "key.offset" : 228,
+        "key.nameoffset" : 237,
+        "key.typename" : "Protocol2.Protocol",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "Protocol2",
+        "key.usr" : "s:P35SourcekittenWithComplexDependencies9Protocol2",
+        "key.bodyoffset" : 248,
+        "key.bodylength" : 1,
+        "key.parsed_scope.end" : 15,
+        "key.namelength" : 9
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "class Protocol2Impl: Protocol2",
+        "key.annotated_decl" : "<Declaration>class Protocol2Impl : <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Protocol2Impl<\/decl.name> : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/ref.protocol><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 33,
+        "key.runtime_name" : "_TtC8__main__13Protocol2Impl",
+        "key.parsed_scope.start" : 16,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 251,
+        "key.nameoffset" : 257,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 272,
+            "key.length" : 9
+          }
+        ],
+        "key.typename" : "Protocol2Impl.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "Protocol2Impl",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "Protocol2"
+          }
+        ],
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies13Protocol2Impl",
+        "key.bodyoffset" : 283,
+        "key.bodylength" : 0,
+        "key.parsed_scope.end" : 16,
+        "key.namelength" : 13
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
         "key.parsed_declaration" : "class Class1",
         "key.annotated_decl" : "<Declaration>class Class1<\/Declaration>",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>Class1<\/decl.name><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
-        "key.length" : 55,
+        "key.length" : 189,
         "key.substructure" : [
           {
             "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
-            "key.annotated_decl" : "<Declaration>var p: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/Type><\/Declaration>",
-            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p<\/decl.name>: <decl.var.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/ref.protocol><\/decl.var.type><\/decl.var.instance>",
+            "key.annotated_decl" : "<Declaration>var p1: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p1<\/decl.name>: <decl.var.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/ref.protocol><\/decl.var.type><\/decl.var.instance>",
             "key.accessibility" : "source.lang.swift.accessibility.internal",
-            "key.length" : 34,
-            "key.parsed_scope.start" : 16,
+            "key.length" : 35,
+            "key.parsed_scope.start" : 19,
             "key.typeusr" : "_TtP35SourcekittenWithComplexDependencies9Protocol1_",
             "key.kind" : "source.lang.swift.decl.var.instance",
-            "key.offset" : 247,
-            "key.nameoffset" : 251,
+            "key.offset" : 305,
+            "key.nameoffset" : 309,
             "key.typename" : "Protocol1",
             "key.actionable" : [
               {
                 "key.actionname" : "Rename"
               }
             ],
-            "key.name" : "p",
-            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class11pPS_9Protocol1_",
-            "key.parsed_declaration" : "var p: Protocol1 = Protocol1Impl()",
-            "key.namelength" : 1,
-            "key.parsed_scope.end" : 16,
+            "key.name" : "p1",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p1PS_9Protocol1_",
+            "key.parsed_declaration" : "var p1: Protocol1 = Protocol1Impl()",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 19,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p2: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/Type>?<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p2<\/decl.name>: <decl.var.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/ref.protocol>?<\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 36,
+            "key.parsed_scope.start" : 20,
+            "key.typeusr" : "_TtGSqP35SourcekittenWithComplexDependencies9Protocol2__",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 345,
+            "key.nameoffset" : 349,
+            "key.typename" : "Protocol2?",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p2",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p2GSqPS_9Protocol2__",
+            "key.parsed_declaration" : "var p2: Protocol2? = Protocol2Impl()",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 20,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p3: <Type usr=\"s:Si\">Int<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p3<\/decl.name>: <decl.var.type><ref.struct usr=\"s:Si\">Int<\/ref.struct><\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 17,
+            "key.parsed_scope.start" : 21,
+            "key.typeusr" : "_TtSi",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 386,
+            "key.nameoffset" : 390,
+            "key.typename" : "Int",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p3",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p3Si",
+            "key.parsed_declaration" : "var p3: Int = 123",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 21,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p4: <Type usr=\"s:Sd\">Double<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p4<\/decl.name>: <decl.var.type><ref.struct usr=\"s:Sd\">Double<\/ref.struct><\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 19,
+            "key.parsed_scope.start" : 22,
+            "key.typeusr" : "_TtSd",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 408,
+            "key.nameoffset" : 412,
+            "key.typename" : "Double",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p4",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p4Sd",
+            "key.parsed_declaration" : "var p4: Double = 24",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 22,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p5: [<Type usr=\"s:Si\">Int<\/Type>]<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p5<\/decl.name>: <decl.var.type>[<ref.struct usr=\"s:Si\">Int<\/ref.struct>]<\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 20,
+            "key.parsed_scope.start" : 23,
+            "key.typeusr" : "_TtGSaSi_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 432,
+            "key.nameoffset" : 436,
+            "key.typename" : "[Int]",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p5",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p5GSaSi_",
+            "key.parsed_declaration" : "var p5: [Int] = [26]",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 23,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.annotated_decl" : "<Declaration>var p6: Any<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p6<\/decl.name>: <decl.var.type>Any<\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 16,
+            "key.parsed_scope.start" : 24,
+            "key.typeusr" : "_TtP_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 457,
+            "key.nameoffset" : 461,
+            "key.typename" : "Any",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "p6",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies6Class12p6P_",
+            "key.parsed_declaration" : "var p6: Any = 17",
+            "key.namelength" : 2,
+            "key.parsed_scope.end" : 24,
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
           }
         ],
         "key.runtime_name" : "_TtC8__main__6Class1",
-        "key.parsed_scope.start" : 15,
+        "key.parsed_scope.start" : 18,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 228,
-        "key.nameoffset" : 234,
+        "key.offset" : 286,
+        "key.nameoffset" : 292,
         "key.typename" : "Class1.Type",
         "key.actionable" : [
           {
@@ -113,14 +297,14 @@
         ],
         "key.name" : "Class1",
         "key.usr" : "s:C35SourcekittenWithComplexDependencies6Class1",
-        "key.bodyoffset" : 242,
-        "key.bodylength" : 40,
-        "key.parsed_scope.end" : 17,
+        "key.bodyoffset" : 300,
+        "key.bodylength" : 174,
+        "key.parsed_scope.end" : 25,
         "key.namelength" : 6
       }
     ],
     "key.offset" : 0,
-    "key.length" : 288
+    "key.length" : 480
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift" : {

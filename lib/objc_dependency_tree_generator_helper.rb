@@ -1,3 +1,5 @@
+require 'set'
+
 def find_project_output_directory(derived_data_paths, project_prefix, project_suffix_pattern, target_names)
 
   return nil unless derived_data_paths
@@ -50,12 +52,205 @@ def find_project_output_directory(derived_data_paths, project_prefix, project_su
   [last_modified_dir]
 end
 
+
+# noinspection RubyLiteralArrayInspection
+class SwiftPrimitives
+  @@primitive_swift_types =
+    Set.new([
+      'BOOL',
+      'alignofValue',
+      'anyGenerator',
+      'anyGenerator',
+      'assert',
+      'assertionFailure',
+      'debugPrint',
+      'debugPrint',
+      'dump',
+      'fatalError',
+      'getVaList',
+      'isUniquelyReferenced',
+      'isUniquelyReferencedNonObjC',
+      'isUniquelyReferencedNonObjC',
+      'max',
+      'max',
+      'min',
+      'abs',
+      'alignof',
+      'min',
+      'numericCast',
+      'numericCast',
+      'numericCast',
+      'numericCast',
+      'precondition',
+      'preconditionFailure',
+      'print',
+      'print',
+      'readLine',
+      'sizeof',
+      'sizeofValue',
+      'strideof',
+      'strideofValue',
+      'swap',
+      'transcode',
+      'unsafeAddressOf',
+      'unsafeBitCast',
+      'unsafeDowncast',
+      'unsafeUnwrap',
+      'withExtendedLifetime',
+      'withExtendedLifetime',
+      'withUnsafeMutablePointer',
+      'withUnsafeMutablePointers',
+      'withUnsafeMutablePointers',
+      'withUnsafePointer',
+      'withUnsafePointers',
+      'withUnsafePointers',
+      'withVaList',
+      'withVaList',
+      'zip',
+      'Any',
+      'AnyClass',
+      'BooleanLiteralType',
+      'CBool',
+      'CChar',
+      'CChar16',
+      'CChar32',
+      'CDouble',
+      'CFloat',
+      'CInt',
+      'CLong',
+      'CLongLong',
+      'CShort',
+      'CSignedChar',
+      'CUnsignedChar',
+      'CUnsignedInt',
+      'CUnsignedLong',
+      'CUnsignedLongLong',
+      'CUnsignedShort',
+      'CWideChar',
+      'ExtendedGraphemeClusterType',
+      'Float32',
+      'Float64',
+      'FloatLiteralType',
+      'IntMax',
+      'IntegerLiteralType',
+      'StringLiteralType',
+      'UIntMax',
+      'UnicodeScalarType',
+      'Void',
+      'AnyBidirectionalCollection',
+      'AnyBidirectionalIndex',
+      'AnyForwardCollection',
+      'AnyForwardIndex',
+      'AnyRandomAccessCollection',
+      'AnyRandomAccessIndex',
+      'AnySequence',
+      'Array',
+      'ArraySlice',
+      'AutoreleasingUnsafeMutablePointer',
+      'Bool',
+      'COpaquePointer',
+      'CVaListPointer',
+      'Character',
+      'ClosedInterval',
+      'CollectionOfOne',
+      'ContiguousArray',
+      'Date',
+      'Dictionary',
+      'DictionaryGenerator',
+      'DictionaryIndex',
+      'DictionaryLiteral',
+      'Double',
+      'EmptyGenerator',
+      'EnumerateGenerator',
+      'EnumerateSequence',
+      'FlattenBidirectionalCollection',
+      'FlattenBidirectionalCollectionIndex',
+      'FlattenCollectionIndex',
+      'FlattenSequence',
+      'Float',
+      'GeneratorSequence',
+      'HalfOpenInterval',
+      'IndexingGenerator',
+      'Int',
+      'Int16',
+      'Int32',
+      'Int64',
+      'Int8',
+      'JoinGenerator',
+      'JoinSequence',
+      'LazyCollection',
+      'LazyFilterCollection',
+      'LazyFilterGenerator',
+      'LazyFilterIndex',
+      'LazyFilterSequence',
+      'LazyMapCollection',
+      'LazyMapGenerator',
+      'LazyMapSequence',
+      'LazySequence',
+      'ManagedBufferPointer',
+      'Mirror',
+      'MutableSlice',
+      'ObjectIdentifier',
+      'PermutationGenerator',
+      'Range',
+      'RangeGenerator',
+      'RawByte',
+      'Repeat',
+      'ReverseCollection',
+      'ReverseIndex',
+      'ReverseRandomAccessCollection',
+      'ReverseRandomAccessIndex',
+      'Set',
+      'SetGenerator',
+      'SetIndex',
+      'Slice',
+      'StaticString',
+      'StrideThrough',
+      'StrideThroughGenerator',
+      'StrideTo',
+      'StrideToGenerator',
+      'String',
+      'String.CharacterView',
+      'String.CharacterView.Index',
+      'String.UTF16View',
+      'String.UTF16View.Index',
+      'String.UTF8View',
+      'String.UTF8View.Index',
+      'String.UnicodeScalarView',
+      'String.UnicodeScalarView.Generator',
+      'String.UnicodeScalarView.Index',
+      'Type',
+      'UInt',
+      'UInt16',
+      'UInt32',
+      'UInt64',
+      'UInt8',
+      'UTF16',
+      'UTF32',
+      'UTF8',
+      'UnicodeScalar',
+      'Unmanaged',
+      'UnsafeBufferPointer',
+      'UnsafeBufferPointerGenerator',
+      'UnsafeMutableBufferPointer',
+      'UnsafeMutablePointer',
+      'UnsafePointer',
+      'Zip2Generator',
+      'Zip2Sequence'
+    ]).freeze
+
+  def self.primitive_types
+    @@primitive_swift_types
+  end
+
+end
+
 def is_primitive_swift_type?(dest)
-    /^(BOOL|alignofValue|anyGenerator|anyGenerator|assert|assertionFailure|debugPrint|debugPrint|dump|dump|fatalError|getVaList|isUniquelyReferenced|isUniquelyReferencedNonObjC|isUniquelyReferencedNonObjC|max|max|min|abs|alignof|min|numericCast|numericCast|numericCast|numericCast|precondition|preconditionFailure|print|print|readLine|sizeof|sizeofValue|strideof|strideofValue|swap|transcode|unsafeAddressOf|unsafeBitCast|unsafeDowncast|unsafeUnwrap|withExtendedLifetime|withExtendedLifetime|withUnsafeMutablePointer|withUnsafeMutablePointers|withUnsafeMutablePointers|withUnsafePointer|withUnsafePointers|withUnsafePointers|withVaList|withVaList|zip|Any|AnyClass|BooleanLiteralType|CBool|CChar|CChar16|CChar32|CDouble|CFloat|CInt|CLong|CLongLong|CShort|CSignedChar|CUnsignedChar|CUnsignedInt|CUnsignedLong|CUnsignedLongLong|CUnsignedShort|CWideChar|ExtendedGraphemeClusterType|Float32|Float64|FloatLiteralType|IntMax|IntegerLiteralType|StringLiteralType|UIntMax|UnicodeScalarType|Void|AnyBidirectionalCollection|AnyBidirectionalIndex|AnyForwardCollection|AnyForwardIndex|AnyRandomAccessCollection|AnyRandomAccessIndex|AnySequence|Array|ArraySlice|AutoreleasingUnsafeMutablePointer|Bool|COpaquePointer|CVaListPointer|Character|ClosedInterval|CollectionOfOne|ContiguousArray|Dictionary|DictionaryGenerator|DictionaryIndex|DictionaryLiteral|Double|EmptyGenerator|EnumerateGenerator|EnumerateSequence|FlattenBidirectionalCollection|FlattenBidirectionalCollectionIndex|FlattenCollectionIndex|FlattenSequence|Float|GeneratorSequence|HalfOpenInterval|IndexingGenerator|Int|Int16|Int32|Int64|Int8|JoinGenerator|JoinSequence|LazyCollection|LazyFilterCollection|LazyFilterGenerator|LazyFilterIndex|LazyFilterSequence|LazyMapCollection|LazyMapGenerator|LazyMapSequence|LazySequence|ManagedBufferPointer|Mirror|MutableSlice|ObjectIdentifier|PermutationGenerator|Range|RangeGenerator|RawByte|Repeat|ReverseCollection|ReverseIndex|ReverseRandomAccessCollection|ReverseRandomAccessIndex|Set|SetGenerator|SetIndex|Slice|StaticString|StrideThrough|StrideThroughGenerator|StrideTo|StrideToGenerator|String|String.CharacterView|String.CharacterView.Index|String.UTF16View|String.UTF16View.Index|String.UTF8View|String.UTF8View.Index|String.UnicodeScalarView|String.UnicodeScalarView.Generator|String.UnicodeScalarView.Index|UInt|UInt16|UInt32|UInt64|UInt8|UTF16|UTF32|UTF8|UnicodeScalar|Unmanaged|UnsafeBufferPointer|UnsafeBufferPointerGenerator|UnsafeMutableBufferPointer|UnsafeMutablePointer|UnsafePointer|Zip2Generator|Zip2Sequence)$/.match(dest) != nil
+  SwiftPrimitives.primitive_types.include?(dest)
 end
 
 def is_filtered_swift_type?(dest)
-  /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil #or /^([a-z])/.match(dest) != nil
+  /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil #or /^([a-z])/.match(dest) != nil',
 end
 
 def is_filtered_objc_type?(dest)
@@ -63,5 +258,10 @@ def is_filtered_objc_type?(dest)
 end
 
 def is_valid_dest?(dest, exclusion_prefixes)
-  dest != nil and /^(#{exclusion_prefixes})/.match(dest) == nil and /^(<\s)?\w/.match(dest) != nil and !is_primitive_swift_type?(dest) and !is_filtered_swift_type?(dest) and !is_filtered_objc_type?(dest)
+  return false if dest.nil?
+  return false unless /^(#{exclusion_prefixes})/.match(dest).nil?
+  return false if is_primitive_swift_type?(dest)
+  return false if is_filtered_swift_type?(dest)
+  return false if is_filtered_objc_type?(dest)
+  true
 end

@@ -105,7 +105,32 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert(tree.isRegistered?('Protocol1'))
     assert(tree.isRegistered?('Protocol1Impl'))
     assert(tree.connected?('Class1', 'Protocol1'))
+  end
 
+  def test_properties_optional_dependencies
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('Class1'))
+    assert(tree.isRegistered?('Protocol2'))
+    assert(tree.isRegistered?('Protocol2Impl'))
+    assert(tree.connected?('Class1', 'Protocol2'))
+  end
+
+  def test_exclude_system_types
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('Class1'))
+    assert(tree.isRegistered?('Protocol2'))
+    assert(!tree.connected?('Class1', 'Int'))
+    assert(!tree.connected?('Class1', 'Double'))
+    assert(!tree.connected?('Class1', 'String'))
+    assert(!tree.connected?('Class1', 'Any'))
   end
 
 

@@ -1,4 +1,5 @@
 require 'json'
+require 'objc_dependency_tree_generator_helper'
 
 module SKDeclarationType
   SWIFT_EXTENSION = 'source.lang.swift.decl.extension'.freeze
@@ -31,7 +32,7 @@ class ParsingContext
   end
 end
 
-class SourceKittenDependenciesGenerator
+class SourcekittenDependenciesGenerator
 
   # @return [DependencyTree]
   def generate_dependencies(source_kitten_json)
@@ -105,12 +106,26 @@ class SourceKittenDependenciesGenerator
       end
 
     when SKDeclarationType::INSTANCE_VARIABLE
-      type_name = element[SKKey::TYPE_NAME]
-      parsing_context.each { |el_name| tree.add(el_name, type_name)} if type_name
+      name = element[SKKey::TYPE_NAME]
+      return if name.nil?
+
+      type_names(name).each do |type_name|
+        parsing_context.each { |el_name| tree.add(el_name, type_name) }
+      end
 
     else
       # do nothing
     end
+  end
+
+  # Returns an array of strings, which represents
+  # @param [String] type_name_string sourcekitten type name
+  # @return [Array<String>] array of types, found in this type
+  def type_names(type_name_string)
+    type_name_string
+      .split(/\W+/)
+      .select { |t| !t.empty? }
+      .select { |t| !is_primitive_swift_type?(t) }
   end
 
 end

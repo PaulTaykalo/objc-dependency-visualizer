@@ -4,3 +4,4 @@
 test/fixtures/sourcekitten/build
 test/fixtures/sourcekitten/SourcekittenExample.xcodeproj/project.xcworkspace/xcuserdata
 test/fixtures/sourcekitten/SourcekittenExample.xcodeproj/xcuserdata
+test/fixtures/sourcekitten-with-properties/build

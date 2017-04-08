@@ -61,5 +61,12 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_equal(tree.type('source'), DependencyItemType::CLASS)
   end
 
+  def test_identical_links
+    tree = DependencyTree.new
+    tree.add('source', 'dest')
+    tree.add('source', 'dest')
+    assert_equal(tree.links_count, 1)
+  end
+
 
 end

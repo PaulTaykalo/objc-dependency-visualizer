@@ -301,10 +301,94 @@
         "key.bodylength" : 174,
         "key.parsed_scope.end" : 25,
         "key.namelength" : 6
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+        "key.parsed_declaration" : "class ClassWithFunctions",
+        "key.annotated_decl" : "<Declaration>class ClassWithFunctions<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>ClassWithFunctions<\/decl.name><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 156,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.parsed_declaration" : "func funcWithParam(item: Protocol1)",
+            "key.annotated_decl" : "<Declaration>func funcWithParam(item: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>funcWithParam<\/decl.name>(<decl.var.parameter><decl.var.parameter.argument_label>item<\/decl.var.parameter.argument_label>: <decl.var.parameter.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol1\">Protocol1<\/ref.protocol><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 38,
+            "key.substructure" : [
+
+            ],
+            "key.parsed_scope.start" : 30,
+            "key.typeusr" : "_TtFT4itemP35SourcekittenWithComplexDependencies9Protocol1__T_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 510,
+            "key.nameoffset" : 515,
+            "key.typename" : "(ClassWithFunctions) -> (Protocol1) -> ()",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "funcWithParam(item:)",
+            "key.usr" : "s:FC35SourcekittenWithComplexDependencies18ClassWithFunctions13funcWithParamFT4itemPS_9Protocol1__T_",
+            "key.bodyoffset" : 547,
+            "key.bodylength" : 0,
+            "key.parsed_scope.end" : 30,
+            "key.namelength" : 30
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
+            "key.parsed_declaration" : "func funcWithReturnValue() -> Protocol2",
+            "key.annotated_decl" : "<Declaration>func funcWithReturnValue() -&gt; <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>funcWithReturnValue<\/decl.name>() -&gt; <decl.function.returntype><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/ref.protocol><\/decl.function.returntype><\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 78,
+            "key.substructure" : [
+
+            ],
+            "key.parsed_scope.start" : 31,
+            "key.typeusr" : "_TtFT_P35SourcekittenWithComplexDependencies9Protocol2_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 553,
+            "key.nameoffset" : 558,
+            "key.typename" : "(ClassWithFunctions) -> () -> Protocol2",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "funcWithReturnValue()",
+            "key.usr" : "s:FC35SourcekittenWithComplexDependencies18ClassWithFunctions19funcWithReturnValueFT_PS_9Protocol2_",
+            "key.bodyoffset" : 594,
+            "key.bodylength" : 36,
+            "key.parsed_scope.end" : 33,
+            "key.namelength" : 21
+          }
+        ],
+        "key.runtime_name" : "_TtC8__main__18ClassWithFunctions",
+        "key.parsed_scope.start" : 28,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 478,
+        "key.nameoffset" : 484,
+        "key.typename" : "ClassWithFunctions.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "ClassWithFunctions",
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies18ClassWithFunctions",
+        "key.bodyoffset" : 504,
+        "key.bodylength" : 129,
+        "key.parsed_scope.end" : 35,
+        "key.namelength" : 18
       }
     ],
     "key.offset" : 0,
-    "key.length" : 480
+    "key.length" : 639
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift" : {

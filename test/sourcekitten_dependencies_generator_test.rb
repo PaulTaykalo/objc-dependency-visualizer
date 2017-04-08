@@ -134,4 +134,25 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
 
+  def test_func_parameters_dependencies
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithFunctions'))
+    assert(tree.connected?('ClassWithFunctions', 'Protocol1'))
+  end
+
+  def test_func_return_dependencies
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithFunctions'))
+    assert(tree.connected?('ClassWithFunctions', 'Protocol2'))
+  end
+
+
 end

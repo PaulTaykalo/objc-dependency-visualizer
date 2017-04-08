@@ -25,5 +25,15 @@ class Class1 {
 }
 
 
+class ClassWithFunctions {
+
+    func funcWithParam(item: Protocol1) {}
+    func funcWithReturnValue() -> Protocol2 {
+        return Protocol2Impl()
+    }
+
+}
+
+
 
 

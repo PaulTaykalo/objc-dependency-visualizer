@@ -18,10 +18,14 @@ class DependencyTree
   end
 
   def add(source, dest)
-    @links_count += 1
-    @links += [{ source: source, dest: dest}]
     register source
     register dest
+
+    already_registered_link = @links.any? { |item| item[:source] == source && item[:dest] == dest }
+    return if already_registered_link
+    @links_count += 1
+    @links += [{ source: source, dest: dest }]
+
   end
 
   def connected?(source, dest)

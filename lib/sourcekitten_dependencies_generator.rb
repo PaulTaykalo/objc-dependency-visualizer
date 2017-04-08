@@ -11,6 +11,7 @@ module SKDeclarationType
   OBJC_CLASS = 'sourcekitten.source.lang.objc.decl.class'.freeze
 
   INSTANCE_VARIABLE = 'source.lang.swift.decl.var.instance'.freeze
+  INSTANCE_METHOD = 'source.lang.swift.decl.function.method.instance'.freeze
 end
 
 module SKKey
@@ -21,16 +22,6 @@ module SKKey
   TYPE_NAME = 'key.typename'.freeze
 end
 
-class ParsingContext
-  attr_accessor :structs, :protocols, :classes, :extensions
-
-  def initialize()
-    @structs = []
-    @protocols = []
-    @classes = []
-    @extensions = []
-  end
-end
 
 class SourcekittenDependenciesGenerator
 
@@ -105,7 +96,7 @@ class SourcekittenDependenciesGenerator
         sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
       end
 
-    when SKDeclarationType::INSTANCE_VARIABLE
+    when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD
       name = element[SKKey::TYPE_NAME]
       return if name.nil?
 

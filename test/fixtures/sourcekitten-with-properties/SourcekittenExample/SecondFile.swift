@@ -19,4 +19,21 @@ class GenericClass3<C:ProtocolForGeneric, D:ProtocolForGeneric2> {}
 
 class TheButton: UIButton {}
 
+class GenericClassWithProp<E:ProtocolForGeneric> {
+    var item: E
+    init(item:E) {
+        self.item = item
+    }
+}
 
+protocol ProtocolWithGenericFunction {
+    func genericFunction<F>(item:F) -> F
+    func genericFunction2<G:ProtocolForGeneric2>(item:G) -> G
+}
+
+protocol ProtocolForTypeAlias {}
+
+public class ClassWithTypeaLias {
+    typealias H = ProtocolForTypeAlias
+    var item: (H) -> () = {_ in}
+}

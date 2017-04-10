@@ -154,7 +154,6 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert(tree.connected?('ClassWithFunctions', 'Protocol2'))
   end
 
-
   def test_ignore_generic_parameters
     generator = DependencyTreeGenerator.new(
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
@@ -197,6 +196,17 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert(!tree.connected?('GenericClass3', 'D'))
   end
 
+  def test_ignore_generic_parameters_in_variables
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('GenericClassWithProp'))
+    assert(!tree.isRegistered?('E'))
+    assert(!tree.connected?('GenericClassWithProp', 'E'))
+  end
+
   def test_another_module_inheritacne
     generator = DependencyTreeGenerator.new(
       sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
@@ -210,6 +220,47 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert_equal(tree.type('UIApplicationDelegate'), DependencyItemType::PROTOCOL)
     assert_equal(tree.type('UIButton'), DependencyItemType::CLASS)
 
+  end
+
+  def test_ignore_parameters_in_generic_functions
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ProtocolWithGenericFunction'))
+    assert(!tree.isRegistered?('F'))
+  end
+
+  def test_include_parameters_in_generic_functions_requirements
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ProtocolWithGenericFunction'))
+    assert(!tree.isRegistered?('G'))
+    assert(tree.connected?('ProtocolWithGenericFunction', 'ProtocolForGeneric2'))
+    assert(!tree.connected?('ProtocolWithGenericFunction', 'G'))
+  end
+
+  def test_ignore_typealiases
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithTypeaLias'))
+    assert(!tree.isRegistered?('H'))
+  end
+
+  def test_register_typealiases_types
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.connected?('ClassWithTypeaLias', 'ProtocolForTypeAlias'))
   end
 
 

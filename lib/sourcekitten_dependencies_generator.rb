@@ -22,6 +22,7 @@ module SKKey
   NAME = 'key.name'.freeze
   TYPE_NAME = 'key.typename'.freeze
   ANNOTATED_DECLARATION = 'key.annotated_decl'.freeze
+  FULLY_ANNOTATED_DECLARATION = 'key.fully_annotated_decl'.freeze
 end
 
 
@@ -101,11 +102,8 @@ class SourcekittenDependenciesGenerator
       end
 
     when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD
-      name = element[SKKey::TYPE_NAME]
-      return if name.nil?
-
-      type_names(name).each do |type_name|
-        parsing_context.each { |el_name| tree.add(el_name, type_name) }
+      parsing_context.each do |el_name|
+        register_types_from_annotated_declaration(element, el_name, tree)
       end
 
     else
@@ -117,26 +115,55 @@ class SourcekittenDependenciesGenerator
     annotated_decl = element[SKKey::ANNOTATED_DECLARATION]
     return if annotated_decl.nil?
     doc = REXML::Document.new(annotated_decl)
+
+    has_typealiases = false
     doc.each_element('//Declaration/Type') do |el|
       dependency_type = el.text.to_s
-      tree.add(item_name, dependency_type)
 
       # get el type
       attribute_el = el.attribute('usr')
       next if attribute_el.nil?
 
-      attribute = attribute_el.to_s
-      if attribute.start_with? 's:P'
-        tree.register(dependency_type, DependencyItemType::PROTOCOL)
-      elsif attribute.start_with? 'c:objc(pl)'
-        tree.register(dependency_type, DependencyItemType::PROTOCOL)
-      elsif attribute.start_with? 'c:objc(cs)'
-        tree.register(dependency_type, DependencyItemType::CLASS)
-      elsif attribute.start_with? 's:C'
-        tree.register(dependency_type, DependencyItemType::CLASS)
+      if is_typealias(element, dependency_type)
+        has_typealiases = true
+        next
       end
 
+      attribute = attribute_el.to_s
+      if attribute.start_with? 's:P'
+        tree.add(item_name, dependency_type)
+        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+      elsif attribute.start_with? 'c:objc(pl)'
+        tree.add(item_name, dependency_type)
+        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+      elsif attribute.start_with? 'c:objc(cs)'
+        tree.add(item_name, dependency_type)
+        tree.register(dependency_type, DependencyItemType::CLASS)
+      elsif attribute.start_with? 's:C'
+        tree.add(item_name, dependency_type)
+        tree.register(dependency_type, DependencyItemType::CLASS)
+      end
     end
+
+    register_types_from_type_name(element, item_name, tree) if has_typealiases
+  end
+
+  def register_types_from_type_name(element, item_name, tree)
+    type_name_string = element[SKKey::TYPE_NAME]
+    return if type_name_string.nil?
+
+    type_names(type_name_string).each { |type_name| tree.add(item_name, type_name)}
+  end
+
+  def is_typealias(element, name)
+    fully_annotated_decl = element[SKKey::FULLY_ANNOTATED_DECLARATION]
+    return false if fully_annotated_decl.nil?
+    doc = REXML::Document.new(fully_annotated_decl)
+    doc.each_element('//decl.var.type//ref.typealias') do |el|
+      return true if el.text.to_s == name
+    end
+
+    false
   end
 
   # Returns an array of strings, which represents

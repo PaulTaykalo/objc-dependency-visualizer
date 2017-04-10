@@ -558,10 +558,247 @@
         "key.bodylength" : 0,
         "key.parsed_scope.end" : 20,
         "key.namelength" : 9
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+        "key.parsed_declaration" : "class GenericClassWithProp<E:ProtocolForGeneric>",
+        "key.annotated_decl" : "<Declaration>class GenericClassWithProp&lt;E&gt; where E : <Type usr=\"s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric\">ProtocolForGeneric<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>GenericClassWithProp<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies20GenericClassWithProp1EMx\"><decl.generic_type_param.name>E<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt; <syntaxtype.keyword>where<\/syntaxtype.keyword> <decl.generic_type_requirement>E : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric\">ProtocolForGeneric<\/ref.protocol><\/decl.generic_type_requirement><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 118,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+            "key.annotated_decl" : "<Declaration>var item: <Type usr=\"s:tC35SourcekittenWithComplexDependencies20GenericClassWithProp1EMx\">E<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>item<\/decl.name>: <decl.var.type><ref.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies20GenericClassWithProp1EMx\">E<\/ref.generic_type_param><\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 11,
+            "key.parsed_scope.start" : 23,
+            "key.typeusr" : "_Ttx",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 514,
+            "key.nameoffset" : 518,
+            "key.typename" : "E",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "item",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies20GenericClassWithProp4itemx",
+            "key.parsed_declaration" : "var item: E",
+            "key.namelength" : 4,
+            "key.parsed_scope.end" : 23,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+            "key.parsed_declaration" : "init(item:E)",
+            "key.annotated_decl" : "<Declaration>init(item: <Type usr=\"s:tC35SourcekittenWithComplexDependencies20GenericClassWithProp1EMx\">E<\/Type>)<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.constructor><syntaxtype.keyword>init<\/syntaxtype.keyword>(<decl.var.parameter><decl.var.parameter.argument_label>item<\/decl.var.parameter.argument_label>: <decl.var.parameter.type><ref.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies20GenericClassWithProp1EMx\">E<\/ref.generic_type_param><\/decl.var.parameter.type><\/decl.var.parameter>)<\/decl.function.constructor>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 45,
+            "key.substructure" : [
+
+            ],
+            "key.parsed_scope.start" : 24,
+            "key.typeusr" : "_TtFT4itemx_GC35SourcekittenWithComplexDependencies20GenericClassWithPropx_",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 530,
+            "key.nameoffset" : 530,
+            "key.typename" : "<E where E : ProtocolForGeneric> (GenericClassWithProp<E>.Type) -> (E) -> GenericClassWithProp<E>",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "init(item:)",
+            "key.usr" : "s:FC35SourcekittenWithComplexDependencies20GenericClassWithPropcFT4itemx_GS0_x_",
+            "key.bodyoffset" : 544,
+            "key.bodylength" : 30,
+            "key.parsed_scope.end" : 26,
+            "key.namelength" : 12
+          }
+        ],
+        "key.parsed_scope.start" : 22,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 459,
+        "key.nameoffset" : 465,
+        "key.typename" : "GenericClassWithProp<E>.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "GenericClassWithProp",
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies20GenericClassWithProp",
+        "key.bodyoffset" : 509,
+        "key.bodylength" : 67,
+        "key.parsed_scope.end" : 27,
+        "key.namelength" : 20
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+        "key.parsed_declaration" : "protocol ProtocolWithGenericFunction",
+        "key.annotated_decl" : "<Declaration>protocol ProtocolWithGenericFunction<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>ProtocolWithGenericFunction<\/decl.name><\/decl.protocol>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 143,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+            "key.annotated_decl" : "<Declaration>func genericFunction&lt;F&gt;(item: <Type usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__L_1FMqd__\">F<\/Type>) -&gt; <Type usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__L_1FMqd__\">F<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>genericFunction<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__L_1FMqd__\"><decl.generic_type_param.name>F<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt;(<decl.var.parameter><decl.var.parameter.argument_label>item<\/decl.var.parameter.argument_label>: <decl.var.parameter.type><ref.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__L_1FMqd__\">F<\/ref.generic_type_param><\/decl.var.parameter.type><\/decl.var.parameter>) -&gt; <decl.function.returntype><ref.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__L_1FMqd__\">F<\/ref.generic_type_param><\/decl.function.returntype><\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 36,
+            "key.substructure" : [
+
+            ],
+            "key.parsed_scope.start" : 30,
+            "key.typeusr" : "_TturFT4itemqd___qd__",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 622,
+            "key.nameoffset" : 627,
+            "key.typename" : "<Self, F where Self : ProtocolWithGenericFunction> (Self) -> (F) -> F",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "genericFunction(item:)",
+            "key.usr" : "s:FP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction15genericFunctionurFT4itemqd___qd__",
+            "key.parsed_declaration" : "func genericFunction<F>(item:F) -> F",
+            "key.namelength" : 26,
+            "key.parsed_scope.end" : 30
+          },
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+            "key.annotated_decl" : "<Declaration>func genericFunction2&lt;G&gt;(item: <Type usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__L_1GMqd__\">G<\/Type>) -&gt; <Type usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__L_1GMqd__\">G<\/Type> where G : <Type usr=\"s:P35SourcekittenWithComplexDependencies19ProtocolForGeneric2\">ProtocolForGeneric2<\/Type><\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.function.method.instance><syntaxtype.keyword>func<\/syntaxtype.keyword> <decl.name>genericFunction2<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__L_1GMqd__\"><decl.generic_type_param.name>G<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt;(<decl.var.parameter><decl.var.parameter.argument_label>item<\/decl.var.parameter.argument_label>: <decl.var.parameter.type><ref.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__L_1GMqd__\">G<\/ref.generic_type_param><\/decl.var.parameter.type><\/decl.var.parameter>) -&gt; <decl.function.returntype><ref.generic_type_param usr=\"s:tFP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__L_1GMqd__\">G<\/ref.generic_type_param><\/decl.function.returntype> <syntaxtype.keyword>where<\/syntaxtype.keyword> <decl.generic_type_requirement>G : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies19ProtocolForGeneric2\">ProtocolForGeneric2<\/ref.protocol><\/decl.generic_type_requirement><\/decl.function.method.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 57,
+            "key.substructure" : [
+
+            ],
+            "key.parsed_scope.start" : 31,
+            "key.typeusr" : "_TtuRd__35SourcekittenWithComplexDependencies19ProtocolForGeneric2rFT4itemqd___qd__",
+            "key.kind" : "source.lang.swift.decl.function.method.instance",
+            "key.offset" : 663,
+            "key.nameoffset" : 668,
+            "key.typename" : "<Self, G where Self : ProtocolWithGenericFunction, G : ProtocolForGeneric2> (Self) -> (G) -> G",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "genericFunction2(item:)",
+            "key.usr" : "s:FP35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction16genericFunction2uRd__S_19ProtocolForGeneric2rFT4itemqd___qd__",
+            "key.parsed_declaration" : "func genericFunction2<G:ProtocolForGeneric2>(item:G) -> G",
+            "key.namelength" : 47,
+            "key.parsed_scope.end" : 31
+          }
+        ],
+        "key.runtime_name" : "_TtP8__main__27ProtocolWithGenericFunction_",
+        "key.parsed_scope.start" : 29,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.protocol",
+        "key.offset" : 579,
+        "key.nameoffset" : 588,
+        "key.typename" : "ProtocolWithGenericFunction.Protocol",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "ProtocolWithGenericFunction",
+        "key.usr" : "s:P35SourcekittenWithComplexDependencies27ProtocolWithGenericFunction",
+        "key.bodyoffset" : 617,
+        "key.bodylength" : 104,
+        "key.parsed_scope.end" : 32,
+        "key.namelength" : 27
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+        "key.parsed_declaration" : "protocol ProtocolForTypeAlias",
+        "key.annotated_decl" : "<Declaration>protocol ProtocolForTypeAlias<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.protocol><syntaxtype.keyword>protocol<\/syntaxtype.keyword> <decl.name>ProtocolForTypeAlias<\/decl.name><\/decl.protocol>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 32,
+        "key.runtime_name" : "_TtP8__main__20ProtocolForTypeAlias_",
+        "key.parsed_scope.start" : 34,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.protocol",
+        "key.offset" : 724,
+        "key.nameoffset" : 733,
+        "key.typename" : "ProtocolForTypeAlias.Protocol",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "ProtocolForTypeAlias",
+        "key.usr" : "s:P35SourcekittenWithComplexDependencies20ProtocolForTypeAlias",
+        "key.bodyoffset" : 755,
+        "key.bodylength" : 0,
+        "key.parsed_scope.end" : 34,
+        "key.namelength" : 20
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+        "key.parsed_declaration" : "public class ClassWithTypeaLias",
+        "key.annotated_decl" : "<Declaration>public class ClassWithTypeaLias<\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>public<\/syntaxtype.keyword> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>ClassWithTypeaLias<\/decl.name><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.public",
+        "key.length" : 100,
+        "key.substructure" : [
+          {
+            "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+            "key.annotated_decl" : "<Declaration>var item: (<Type usr=\"s:C35SourcekittenWithComplexDependencies18ClassWithTypeaLias\">ClassWithTypeaLias<\/Type>.<Type usr=\"s:C35SourcekittenWithComplexDependencies18ClassWithTypeaLias1H\">H<\/Type>) -&gt; ()<\/Declaration>",
+            "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>item<\/decl.name>: <decl.var.type>(<ref.class usr=\"s:C35SourcekittenWithComplexDependencies18ClassWithTypeaLias\">ClassWithTypeaLias<\/ref.class>.<ref.typealias usr=\"s:C35SourcekittenWithComplexDependencies18ClassWithTypeaLias1H\">H<\/ref.typealias>) -&gt; <decl.function.returntype><tuple>()<\/tuple><\/decl.function.returntype><\/decl.var.type><\/decl.var.instance>",
+            "key.accessibility" : "source.lang.swift.accessibility.internal",
+            "key.length" : 28,
+            "key.parsed_scope.start" : 38,
+            "key.typeusr" : "_TtFP35SourcekittenWithComplexDependencies20ProtocolForTypeAlias_T_",
+            "key.kind" : "source.lang.swift.decl.var.instance",
+            "key.offset" : 835,
+            "key.nameoffset" : 839,
+            "key.typename" : "(ProtocolForTypeAlias) -> ()",
+            "key.actionable" : [
+              {
+                "key.actionname" : "Rename"
+              }
+            ],
+            "key.name" : "item",
+            "key.usr" : "s:vC35SourcekittenWithComplexDependencies18ClassWithTypeaLias4itemFPS_20ProtocolForTypeAlias_T_",
+            "key.parsed_declaration" : "var item: (H) -> () = {_ in}",
+            "key.namelength" : 4,
+            "key.parsed_scope.end" : 38,
+            "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          }
+        ],
+        "key.runtime_name" : "_TtC8__main__18ClassWithTypeaLias",
+        "key.parsed_scope.start" : 36,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 765,
+        "key.nameoffset" : 771,
+        "key.typename" : "ClassWithTypeaLias.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "ClassWithTypeaLias",
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies18ClassWithTypeaLias",
+        "key.bodyoffset" : 791,
+        "key.bodylength" : 73,
+        "key.parsed_scope.end" : 39,
+        "key.namelength" : 18
       }
     ],
     "key.offset" : 0,
-    "key.length" : 460
+    "key.length" : 866
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift" : {

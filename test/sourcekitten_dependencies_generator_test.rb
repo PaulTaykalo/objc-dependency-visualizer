@@ -197,4 +197,20 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert(!tree.connected?('GenericClass3', 'D'))
   end
 
+  def test_another_module_inheritacne
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.connected?('AppDelegate', 'UIResponder'))
+    assert(tree.connected?('AppDelegate', 'UIApplicationDelegate'))
+    assert(tree.connected?('TheButton', 'UIButton'))
+    assert_equal(tree.type('UIResponder'), DependencyItemType::CLASS)
+    assert_equal(tree.type('UIApplicationDelegate'), DependencyItemType::PROTOCOL)
+    assert_equal(tree.type('UIButton'), DependencyItemType::CLASS)
+
+  end
+
+
 end

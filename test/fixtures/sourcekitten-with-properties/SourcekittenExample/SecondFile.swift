@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ProtocolForGeneric {}
 protocol ProtocolForGeneric2 {}
@@ -14,3 +15,8 @@ protocol ProtocolForGeneric2 {}
 class GenericClass<A:ProtocolForGeneric> {}
 class GenericClass2<B:ProtocolForGeneric & ProtocolForGeneric2> {}
 class GenericClass3<C:ProtocolForGeneric, D:ProtocolForGeneric2> {}
+
+
+class TheButton: UIButton {}
+
+

@@ -402,11 +402,11 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 30,
         "key.runtime_name" : "_TtP8__main__18ProtocolForGeneric_",
-        "key.parsed_scope.start" : 11,
+        "key.parsed_scope.start" : 12,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.protocol",
-        "key.offset" : 171,
-        "key.nameoffset" : 180,
+        "key.offset" : 184,
+        "key.nameoffset" : 193,
         "key.typename" : "ProtocolForGeneric.Protocol",
         "key.actionable" : [
           {
@@ -415,9 +415,9 @@
         ],
         "key.name" : "ProtocolForGeneric",
         "key.usr" : "s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric",
-        "key.bodyoffset" : 200,
+        "key.bodyoffset" : 213,
         "key.bodylength" : 0,
-        "key.parsed_scope.end" : 11,
+        "key.parsed_scope.end" : 12,
         "key.namelength" : 18
       },
       {
@@ -428,11 +428,11 @@
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 31,
         "key.runtime_name" : "_TtP8__main__19ProtocolForGeneric2_",
-        "key.parsed_scope.start" : 12,
+        "key.parsed_scope.start" : 13,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.protocol",
-        "key.offset" : 202,
-        "key.nameoffset" : 211,
+        "key.offset" : 215,
+        "key.nameoffset" : 224,
         "key.typename" : "ProtocolForGeneric2.Protocol",
         "key.actionable" : [
           {
@@ -441,9 +441,9 @@
         ],
         "key.name" : "ProtocolForGeneric2",
         "key.usr" : "s:P35SourcekittenWithComplexDependencies19ProtocolForGeneric2",
-        "key.bodyoffset" : 232,
+        "key.bodyoffset" : 245,
         "key.bodylength" : 0,
-        "key.parsed_scope.end" : 12,
+        "key.parsed_scope.end" : 13,
         "key.namelength" : 19
       },
       {
@@ -453,11 +453,11 @@
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>GenericClass<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies12GenericClass1AMx\"><decl.generic_type_param.name>A<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt; <syntaxtype.keyword>where<\/syntaxtype.keyword> <decl.generic_type_requirement>A : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric\">ProtocolForGeneric<\/ref.protocol><\/decl.generic_type_requirement><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 43,
-        "key.parsed_scope.start" : 14,
+        "key.parsed_scope.start" : 15,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 235,
-        "key.nameoffset" : 241,
+        "key.offset" : 248,
+        "key.nameoffset" : 254,
         "key.typename" : "GenericClass<A>.Type",
         "key.actionable" : [
           {
@@ -466,9 +466,9 @@
         ],
         "key.name" : "GenericClass",
         "key.usr" : "s:C35SourcekittenWithComplexDependencies12GenericClass",
-        "key.bodyoffset" : 277,
+        "key.bodyoffset" : 290,
         "key.bodylength" : 0,
-        "key.parsed_scope.end" : 14,
+        "key.parsed_scope.end" : 15,
         "key.namelength" : 12
       },
       {
@@ -478,11 +478,11 @@
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>GenericClass2<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies13GenericClass21BMx\"><decl.generic_type_param.name>B<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt; <syntaxtype.keyword>where<\/syntaxtype.keyword> <decl.generic_type_requirement>B : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric\">ProtocolForGeneric<\/ref.protocol><\/decl.generic_type_requirement>, <decl.generic_type_requirement>B : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies19ProtocolForGeneric2\">ProtocolForGeneric2<\/ref.protocol><\/decl.generic_type_requirement><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 66,
-        "key.parsed_scope.start" : 15,
+        "key.parsed_scope.start" : 16,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 279,
-        "key.nameoffset" : 285,
+        "key.offset" : 292,
+        "key.nameoffset" : 298,
         "key.typename" : "GenericClass2<B>.Type",
         "key.actionable" : [
           {
@@ -491,9 +491,9 @@
         ],
         "key.name" : "GenericClass2",
         "key.usr" : "s:C35SourcekittenWithComplexDependencies13GenericClass2",
-        "key.bodyoffset" : 344,
+        "key.bodyoffset" : 357,
         "key.bodylength" : 0,
-        "key.parsed_scope.end" : 15,
+        "key.parsed_scope.end" : 16,
         "key.namelength" : 13
       },
       {
@@ -503,11 +503,11 @@
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>GenericClass3<\/decl.name>&lt;<decl.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies13GenericClass31CMx\"><decl.generic_type_param.name>C<\/decl.generic_type_param.name><\/decl.generic_type_param>, <decl.generic_type_param usr=\"s:tC35SourcekittenWithComplexDependencies13GenericClass31DMq_\"><decl.generic_type_param.name>D<\/decl.generic_type_param.name><\/decl.generic_type_param>&gt; <syntaxtype.keyword>where<\/syntaxtype.keyword> <decl.generic_type_requirement>C : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies18ProtocolForGeneric\">ProtocolForGeneric<\/ref.protocol><\/decl.generic_type_requirement>, <decl.generic_type_requirement>D : <ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies19ProtocolForGeneric2\">ProtocolForGeneric2<\/ref.protocol><\/decl.generic_type_requirement><\/decl.class>",
         "key.accessibility" : "source.lang.swift.accessibility.internal",
         "key.length" : 67,
-        "key.parsed_scope.start" : 16,
+        "key.parsed_scope.start" : 17,
         "key.typeusr" : "_Tt",
         "key.kind" : "source.lang.swift.decl.class",
-        "key.offset" : 346,
-        "key.nameoffset" : 352,
+        "key.offset" : 359,
+        "key.nameoffset" : 365,
         "key.typename" : "GenericClass3<C, D>.Type",
         "key.actionable" : [
           {
@@ -516,14 +516,52 @@
         ],
         "key.name" : "GenericClass3",
         "key.usr" : "s:C35SourcekittenWithComplexDependencies13GenericClass3",
-        "key.bodyoffset" : 412,
+        "key.bodyoffset" : 425,
         "key.bodylength" : 0,
-        "key.parsed_scope.end" : 16,
+        "key.parsed_scope.end" : 17,
         "key.namelength" : 13
+      },
+      {
+        "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift",
+        "key.parsed_declaration" : "class TheButton: UIButton",
+        "key.annotated_decl" : "<Declaration>class TheButton : <Type usr=\"c:objc(cs)UIButton\">UIButton<\/Type><\/Declaration>",
+        "key.fully_annotated_decl" : "<decl.class><syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>TheButton<\/decl.name> : <ref.class usr=\"c:objc(cs)UIButton\">UIButton<\/ref.class><\/decl.class>",
+        "key.accessibility" : "source.lang.swift.accessibility.internal",
+        "key.length" : 28,
+        "key.runtime_name" : "_TtC8__main__9TheButton",
+        "key.parsed_scope.start" : 20,
+        "key.typeusr" : "_Tt",
+        "key.kind" : "source.lang.swift.decl.class",
+        "key.offset" : 429,
+        "key.nameoffset" : 435,
+        "key.elements" : [
+          {
+            "key.kind" : "source.lang.swift.structure.elem.typeref",
+            "key.offset" : 446,
+            "key.length" : 8
+          }
+        ],
+        "key.typename" : "TheButton.Type",
+        "key.actionable" : [
+          {
+            "key.actionname" : "Rename"
+          }
+        ],
+        "key.name" : "TheButton",
+        "key.inheritedtypes" : [
+          {
+            "key.name" : "UIButton"
+          }
+        ],
+        "key.usr" : "s:C35SourcekittenWithComplexDependencies9TheButton",
+        "key.bodyoffset" : 456,
+        "key.bodylength" : 0,
+        "key.parsed_scope.end" : 20,
+        "key.namelength" : 9
       }
     ],
     "key.offset" : 0,
-    "key.length" : 414
+    "key.length" : 460
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/AppDelegate.swift" : {

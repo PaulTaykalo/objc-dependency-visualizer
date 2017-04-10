@@ -21,7 +21,7 @@ module SKKey
   INHERITED_TYPES = 'key.inheritedtypes'.freeze
   NAME = 'key.name'.freeze
   TYPE_NAME = 'key.typename'.freeze
-  FULLY_ANNOTATED_DECLARATION = 'key.annotated_decl'.freeze
+  ANNOTATED_DECLARATION = 'key.annotated_decl'.freeze
 end
 
 
@@ -97,14 +97,7 @@ class SourcekittenDependenciesGenerator
         parsing_context.each { |el_name| tree.add(el_name, item_name)}
         sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
 
-        annotated_decl = element[SKKey::FULLY_ANNOTATED_DECLARATION]
-        if annotated_decl
-          doc = REXML::Document.new(annotated_decl)
-          doc.each_element('//Declaration/Type') do |el|
-            dependency_type = el.text.to_s
-            tree.add(item_name, dependency_type)
-          end
-        end
+        register_types_from_annotated_declaration(element, item_name, tree)
       end
 
     when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD
@@ -117,6 +110,32 @@ class SourcekittenDependenciesGenerator
 
     else
       # do nothing
+    end
+  end
+
+  def register_types_from_annotated_declaration(element, item_name, tree)
+    annotated_decl = element[SKKey::ANNOTATED_DECLARATION]
+    return if annotated_decl.nil?
+    doc = REXML::Document.new(annotated_decl)
+    doc.each_element('//Declaration/Type') do |el|
+      dependency_type = el.text.to_s
+      tree.add(item_name, dependency_type)
+
+      # get el type
+      attribute_el = el.attribute('usr')
+      next if attribute_el.nil?
+
+      attribute = attribute_el.to_s
+      if attribute.start_with? 's:P'
+        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+      elsif attribute.start_with? 'c:objc(pl)'
+        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+      elsif attribute.start_with? 'c:objc(cs)'
+        tree.register(dependency_type, DependencyItemType::CLASS)
+      elsif attribute.start_with? 's:C'
+        tree.register(dependency_type, DependencyItemType::CLASS)
+      end
+
     end
   end
 

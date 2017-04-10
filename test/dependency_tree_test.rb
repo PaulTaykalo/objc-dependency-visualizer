@@ -61,6 +61,14 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_equal(tree.type('source'), DependencyItemType::CLASS)
   end
 
+  def test_unknown_shouldnt_override_specific_item_type
+    tree = DependencyTree.new
+    tree.register('source', DependencyItemType::CLASS)
+    tree.register('source', DependencyItemType::UNKNOWN)
+    assert_equal(tree.type('source'), DependencyItemType::CLASS)
+  end
+
+
   def test_identical_links
     tree = DependencyTree.new
     tree.add('source', 'dest')

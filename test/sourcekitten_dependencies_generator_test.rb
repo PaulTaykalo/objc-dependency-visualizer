@@ -230,6 +230,7 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     assert(!tree.isEmpty?)
     assert(tree.isRegistered?('ProtocolWithGenericFunction'))
     assert(!tree.isRegistered?('F'))
+    assert(!tree.isRegistered?('N'))
   end
 
   def test_include_parameters_in_generic_functions_requirements
@@ -261,6 +262,49 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
     tree = generator.build_dependency_tree
     assert(!tree.isEmpty?)
     assert(tree.connected?('ClassWithTypeaLias', 'ProtocolForTypeAlias'))
+  end
+
+  def test_ignore_typealiases_in_functions
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithTypeaLiasInFunctionParams'))
+    assert(!tree.isRegistered?('I'))
+  end
+
+  def test_ignore_generics_in_functions
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithGenericFunction'))
+    assert(!tree.isRegistered?('J'))
+  end
+
+  def test_ignore_generics_in_functions_in_extensions
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithGenericFunction'))
+    assert(!tree.isRegistered?('K'))
+  end
+
+  def test_ignore_generics_in_functions_in_extensions_by_protocol_impl
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('ClassWithGenericFunction'))
+    assert(!tree.isRegistered?('L'))
+    assert(!tree.isRegistered?('M'))
+    assert(tree.connected?('ClassWithGenericFunction', 'ProtocolWithGenericFunctionToImplement'))
+
   end
 
 

@@ -255,6 +255,10 @@
             dy = d.target.y - d.source.y,
             dr = Math.sqrt(dx * dx + dy * dy);
 
+        if (dr === 0) {
+            return "M0,0L0,0"
+        }
+
         const rsource = radius(d.sourceNode) / dr;
         const rdest = radius(d.targetNode) / dr;
         const startX = d.source.x + dx * rsource;

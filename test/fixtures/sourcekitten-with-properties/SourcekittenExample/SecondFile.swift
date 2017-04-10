@@ -29,11 +29,46 @@ class GenericClassWithProp<E:ProtocolForGeneric> {
 protocol ProtocolWithGenericFunction {
     func genericFunction<F>(item:F) -> F
     func genericFunction2<G:ProtocolForGeneric2>(item:G) -> G
+    func genericFunction3<N>(item:N) -> String
+
 }
 
+class ClassWithGenericFunction {
+    func genericFunction<J>(item:J) -> J {
+        return item
+    }
+}
+
+extension ClassWithGenericFunction {
+    func genericFunctionInExtension<K>(item:K) -> K {
+        return item
+    }
+}
+
+
+protocol ProtocolWithGenericFunctionToImplement {
+    func genericFunctionFromProtocol<L>(item:L) -> L
+}
+extension ClassWithGenericFunction: ProtocolWithGenericFunctionToImplement {
+    func genericFunctionFromProtocol<M>(item:M) -> M {
+        return item
+    }
+}
+
+
+//MARK - Typealiases
 protocol ProtocolForTypeAlias {}
 
 public class ClassWithTypeaLias {
     typealias H = ProtocolForTypeAlias
     var item: (H) -> () = {_ in}
 }
+
+public class ClassWithTypeaLiasInFunctionParams {
+    typealias I = ProtocolForTypeAlias
+    func doSomething(name: I) {}
+    func doSomethingElse() -> I? {
+        return nil
+    }
+}
+

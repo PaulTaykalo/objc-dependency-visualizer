@@ -67,6 +67,7 @@ class SwiftPrimitives
       'debugPrint',
       'debugPrint',
       'dump',
+      'escaping',
       'fatalError',
       'getVaList',
       'isUniquelyReferenced',

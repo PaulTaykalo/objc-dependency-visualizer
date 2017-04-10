@@ -152,14 +152,30 @@ class SourcekittenDependenciesGenerator
     type_name_string = element[SKKey::TYPE_NAME]
     return if type_name_string.nil?
 
-    type_names(type_name_string).each { |type_name| tree.add(item_name, type_name)}
+    generics = generic_parameters(element)
+    type_names(type_name_string)
+      .select { |type_name| !generics.include?(type_name) }
+      .each { |type_name| tree.add(item_name, type_name) }
+
+  end
+
+  # @return [Array<String>] array of generic names for element
+  def generic_parameters(element)
+    fully_annotated_decl = element[SKKey::FULLY_ANNOTATED_DECLARATION]
+    return [] if fully_annotated_decl.nil?
+    generics = []
+    doc = REXML::Document.new(fully_annotated_decl)
+    doc.each_element('//decl.generic_type_param.name') do |el|
+      generics.push(el.text.to_s)
+    end
+    generics
   end
 
   def is_typealias(element, name)
     fully_annotated_decl = element[SKKey::FULLY_ANNOTATED_DECLARATION]
     return false if fully_annotated_decl.nil?
     doc = REXML::Document.new(fully_annotated_decl)
-    doc.each_element('//decl.var.type//ref.typealias') do |el|
+    doc.each_element('//ref.typealias') do |el|
       return true if el.text.to_s == name
     end
 

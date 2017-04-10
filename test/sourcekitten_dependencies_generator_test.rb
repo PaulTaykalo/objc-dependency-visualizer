@@ -155,4 +155,46 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
   end
 
 
+  def test_ignore_generic_parameters
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('GenericClass'))
+    assert(tree.isRegistered?('ProtocolForGeneric'))
+    assert(tree.connected?('GenericClass', 'ProtocolForGeneric'))
+    assert(!tree.isRegistered?('A'))
+    assert(!tree.connected?('GenericClass', 'A'))
+  end
+
+  def test_ignore_generic_parameters_with_multiple_protocols
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('GenericClass2'))
+    assert(tree.isRegistered?('ProtocolForGeneric2'))
+    assert(tree.connected?('GenericClass2', 'ProtocolForGeneric'))
+    assert(tree.connected?('GenericClass2', 'ProtocolForGeneric2'))
+    assert(!tree.isRegistered?('B'))
+    assert(!tree.connected?('GenericClass2', 'B'))
+  end
+
+  def test_ignore_generic_multiple_parameters
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.isRegistered?('GenericClass3'))
+    assert(tree.connected?('GenericClass3', 'ProtocolForGeneric'))
+    assert(tree.connected?('GenericClass3', 'ProtocolForGeneric2'))
+    assert(!tree.isRegistered?('C'))
+    assert(!tree.isRegistered?('D'))
+    assert(!tree.connected?('GenericClass3', 'C'))
+    assert(!tree.connected?('GenericClass3', 'D'))
+  end
+
 end

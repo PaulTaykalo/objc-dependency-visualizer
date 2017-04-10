@@ -63,6 +63,7 @@ class SwiftPrimitives
       'anyGenerator',
       'assert',
       'assertionFailure',
+      'autoclosure',
       'debugPrint',
       'debugPrint',
       'dump',

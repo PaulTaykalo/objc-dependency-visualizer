@@ -1,5 +1,6 @@
 require 'json'
 require 'objc_dependency_tree_generator_helper'
+require 'rexml/document'
 
 module SKDeclarationType
   SWIFT_EXTENSION = 'source.lang.swift.decl.extension'.freeze
@@ -20,6 +21,7 @@ module SKKey
   INHERITED_TYPES = 'key.inheritedtypes'.freeze
   NAME = 'key.name'.freeze
   TYPE_NAME = 'key.typename'.freeze
+  FULLY_ANNOTATED_DECLARATION = 'key.annotated_decl'.freeze
 end
 
 
@@ -94,6 +96,15 @@ class SourcekittenDependenciesGenerator
         context = parsing_context + [item_name]
         parsing_context.each { |el_name| tree.add(el_name, item_name)}
         sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
+
+        annotated_decl = element[SKKey::FULLY_ANNOTATED_DECLARATION]
+        if annotated_decl
+          doc = REXML::Document.new(annotated_decl)
+          doc.each_element('//Declaration/Type') do |el|
+            dependency_type = el.text.to_s
+            tree.add(item_name, dependency_type)
+          end
+        end
       end
 
     when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD

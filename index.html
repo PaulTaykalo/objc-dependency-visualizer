@@ -72,7 +72,7 @@
     //  =============== ZOOM LOGIC ========================
     //  ===================================================
     const zoom = d3.zoom()
-        .on("zoom", zoomed)
+        .on("zoom", zoomed);
 
     function zoomed() {
         svg.attr("transform", d3.event.transform);
@@ -146,13 +146,12 @@
         .attr("class", "node")
         .attr("source", d => d.source)
         .attr("dest", d => d.dest)
-//        .call(force.drag)  // TODO FIXME
         .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
             }
             actions.selectNodesStartingFromNode(d, 1);
-            force.start();
+//            force.start(); // TODO: FIXME
         })
         .on("contextmenu", d => {
             if (d3.event.defaultPrevented) {
@@ -162,7 +161,7 @@
             d3.event.preventDefault();
 
             actions.selectNodesStartingFromNode(d);
-            force.start();
+//            force.start(); // TODO : FIXME
         });
 
     const structNodes = svg.append("g").selectAll(".structNode")
@@ -190,13 +189,12 @@
         .attr("class", "structNode")
         .attr("source", d => d.source)
         .attr("dest", d => d.dest)
-                //        .call(force.drag)  // TODO: FIXME
         .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
             }
             actions.selectNodesStartingFromNode(d, 1);
-            force.start();
+//            force.start();  // TODO: FIXME
         })
         .on("contextmenu", d => {
             if (d3.event.defaultPrevented) {
@@ -206,7 +204,7 @@
             d3.event.preventDefault();
 
             actions.selectNodesStartingFromNode(d);
-            force.start();
+//            force.start();  // TODO: FIXME
         });
 
 
@@ -253,9 +251,38 @@
         link.attr("d", link_line);
         node.attr("transform", transform);
         structNodes.attr("transform", transform);
-//        if (config.show_texts_near_circles) {
+//        if (config.show_texts_near_circles) { // TODO: FIXME
 //            text.attr("transform", transform);
 //        }
+    }
+
+    //  ===================================================
+    //  ===============  DRAGGING             =============
+    //  ===================================================
+
+    svg.selectAll(".node")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended)
+        );
+
+
+    function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
     }
 
     //  ===================================================
@@ -296,7 +323,7 @@
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         container.attr("width", Math.ceil(x)).attr("height", Math.ceil(y));
-        force.size([Math.ceil(x), Math.ceil(y)]).start();
+//        force.size([Math.ceil(x), Math.ceil(y)]).start(); // TODO: FIXME
     };
 
 
@@ -310,23 +337,23 @@
 
         if (this.name === "circle_size") {
             config.default_circle_radius = parseInt(this.value);
-            force.start();
+//            force.start(); // TODO: FIXME
         }
 
         if (this.name === "charge_multiplier") {
             config.charge_multiplier = parseInt(this.value);
-            force.start();
+//            force.start(); // TODO: FIXME
         }
 
         if (this.name === "link_strength") {
             config.default_link_strength = parseInt(this.value) / 10;
-            force.start();
+//            force.start(); // TODO: FIXME
         }
 
         if (this.name === "show_texts_near_circles") {
             text.attr("visibility", this.checked ? "visible" : "hidden");
             config.show_texts_near_circles = this.checked;
-            force.start();
+//            force.start(); // TODO: FIXME
         }
 
     });
@@ -375,7 +402,7 @@
 
         if (this.value && this.value.length) {
             live_filter_graph(this.value, "filtered");
-            force.start();
+//            force.start(); // TODO: FIXME
         }
     });
 </script>

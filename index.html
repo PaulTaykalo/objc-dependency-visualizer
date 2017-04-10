@@ -10,7 +10,7 @@
 <!-- A lot of Javascript here :) -->
 <script type="text/javascript" src="components/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="components/d3/d3.v3.js"></script>
+<script type="text/javascript" src="components/d3/d3.js"></script>
 
 <!-- ================================================= -->
 <!-- ===========ACTUAL HTML           ================ -->
@@ -61,7 +61,7 @@
     //  ===================================================
 
     // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
-    var color = d3.scale.category10();
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
 
     const container = d3.select("#chart").append("svg")
         .attr("width", x)
@@ -71,29 +71,32 @@
     //  ===================================================
     //  =============== ZOOM LOGIC ========================
     //  ===================================================
+    const zoom = d3.zoom()
+        .on("zoom", zoomed)
+
+    function zoomed() {
+        svg.attr("transform", d3.event.transform);
+    }
 
     container.append("rect")
         .attr("width", x)
         .attr("height", y)
         .style("fill", "none")
         .style("pointer-events", "all")
-        .call(d3.behavior.zoom().on("zoom", () => {
-            svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-        }));
-
+        .call(zoom);
 
     //  ===================================================
     //  =============== FORCE LAYOUT ======================
     //  ===================================================
 
-    const force = d3.layout.force()
-        .charge(d => d.filtered ? 0 : -d.weight * config.charge_multiplier)
-        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance)
-        .size([x, y])
-        .nodes(d3.values(d3graph.nodes))
-        .links(d3graph.links)
-        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : config.default_link_strength)
-        .start();
+//    const force = d3.layout.force()
+//        .charge(d => d.filtered ? 0 : -d.weight * config.charge_multiplier)
+//        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance)
+//        .size([x, y])
+//        .nodes(d3.values(d3graph.nodes))
+//        .links(d3graph.links)
+//        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : config.default_link_strength)
+//        .start();
 
     const svg = container.append('g');
     const actions = graph_actions.create(svg, dvgraph);
@@ -143,7 +146,7 @@
         .attr("class", "node")
         .attr("source", d => d.source)
         .attr("dest", d => d.dest)
-        .call(force.drag)
+//        .call(force.drag)  // TODO FIXME
         .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
@@ -187,7 +190,7 @@
         .attr("class", "structNode")
         .attr("source", d => d.source)
         .attr("dest", d => d.dest)
-        .call(force.drag)
+                //        .call(force.drag)  // TODO: FIXME
         .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
@@ -211,18 +214,26 @@
     //  ===============  TEXT NODES SETUP     =============
     //  ===================================================
 
-    const text = svg.append("g").selectAll("text")
-        .data(force.nodes())
-        .enter()
-        .append("text")
-        .attr("visibility", "hidden")
-        .text(d => d.name.substring(0, config.default_max_texts_length));
+//    const text = svg.append("g").selectAll("text")
+//        .data(force.nodes())
+//        .enter()
+//        .append("text")
+//        .attr("visibility", "hidden")
+//        .text(d => d.name.substring(0, config.default_max_texts_length));
+
+    /// Simulation
+    const simulation = d3.forceSimulation(d3.values(d3graph.nodes))
+        .force("x", d3.forceX())
+        .force("y", d3.forceY())
+        .force("charge", d3.forceManyBody().strength(-1000))
+        .force("link", d3.forceLink(d3graph.links).distance(200))
+        .on("tick", ticked);
 
     //  ===================================================
     //  ===============  FORCE UPDATE        =============
     //  ===================================================
 
-    force.on("tick", e => {
+    function ticked() {
         svg.selectAll(".node").attr("r", radius);
         svg.selectAll(".structNode").attr("points", d => {
             let r = radius(d);
@@ -242,10 +253,10 @@
         link.attr("d", link_line);
         node.attr("transform", transform);
         structNodes.attr("transform", transform);
-        if (config.show_texts_near_circles) {
-            text.attr("transform", transform);
-        }
-    });
+//        if (config.show_texts_near_circles) {
+//            text.attr("transform", transform);
+//        }
+    }
 
     //  ===================================================
     //  ===============  HELPER FUNCTIONS     =============

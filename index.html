@@ -27,7 +27,7 @@
 <!-- Add editor logic with button and everything else -->
 <script type="text/javascript" src="components/sidr/jquery.sidr.js"></script>
 <script type="text/javascript" src="components/ace/ace.js"></script>
-<script type="text/javascript" src="components/editor/editor-compiled.js"></script>
+<script type="text/javascript" src="components/editor/editor.js"></script>
 <a id="simple-menu" class="editor-button" href="#sidr">Live editor</a>
 
 <div id="chart">
@@ -88,15 +88,6 @@
     //  ===================================================
     //  =============== FORCE LAYOUT ======================
     //  ===================================================
-
-//    const force = d3.layout.force()
-//        .charge(d => d.filtered ? 0 : -d.weight * config.charge_multiplier)
-//        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance)
-//        .size([x, y])
-//        .nodes(d3.values(d3graph.nodes))
-//        .links(d3graph.links)
-//        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : config.default_link_strength)
-//        .start();
 
     const svg = container.append('g');
     const actions = graph_actions.create(svg, dvgraph);
@@ -208,24 +199,67 @@
         });
 
 
+    /// Simulation
+
+    //    const force = d3.layout.force()
+    //        .charge(d => d.filtered ? 0 : -d.weight * config.charge_multiplier)
+    //        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance)
+    //        .size([x, y])
+    //        .nodes(d3.values(d3graph.nodes))
+    //        .links(d3graph.links)
+    //        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : config.default_link_strength)
+    //        .start();
+
+    const simulation = d3.forceSimulation(d3.values(d3graph.nodes))
+        .force("x", d3.forceX())
+        .force("y", d3.forceY())
+        .force("charge", d3.forceManyBody().strength(d => {
+            return d.filtered ? 0 : -d.weight * config.charge_multiplier;
+        }))
+        .force("link", d3.forceLink(d3graph.links)
+            .distance(l => {
+                return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance;
+            })
+            .strength(l => {
+                return l.source.filtered || l.target.filtered ? 0 : config.default_link_strength;
+            })
+        )
+        .on("tick", ticked);
+
+    //  ===================================================
+    //  ===============  RECOMPUTE_FORCE     =============
+    //  ===================================================
+    function reapply_charge() {
+        simulation.force("charge", d3.forceManyBody().strength(d => {
+            return d.filtered ? 0 : -d.weight * config.charge_multiplier;
+        }));
+        simulation.alphaTarget(0.3).restart()
+    }
+
+    function reapply_links_strength() {
+        simulation.force("link", d3.forceLink(d3graph.links)
+            .distance(l => {
+                return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance;
+            })
+            .strength(l => {
+                return l.source.filtered || l.target.filtered ? 0 : config.default_link_strength;
+            })
+        );
+        simulation.alphaTarget(0.3).restart()
+    }
+
     //  ===================================================
     //  ===============  TEXT NODES SETUP     =============
     //  ===================================================
 
-//    const text = svg.append("g").selectAll("text")
-//        .data(force.nodes())
-//        .enter()
-//        .append("text")
-//        .attr("visibility", "hidden")
-//        .text(d => d.name.substring(0, config.default_max_texts_length));
 
-    /// Simulation
-    const simulation = d3.forceSimulation(d3.values(d3graph.nodes))
-        .force("x", d3.forceX())
-        .force("y", d3.forceY())
-        .force("charge", d3.forceManyBody().strength(-1000))
-        .force("link", d3.forceLink(d3graph.links).distance(200))
-        .on("tick", ticked);
+    const text = svg.append("g").selectAll("text")
+        .data(simulation.nodes())
+        .enter()
+        .append("text")
+        .attr("visibility", "hidden")
+        .text(d => d.name.substring(0, config.default_max_texts_length));
+
 
     //  ===================================================
     //  ===============  FORCE UPDATE        =============
@@ -266,7 +300,6 @@
             .on("drag", dragged)
             .on("end", dragended)
         );
-
 
     function dragstarted(d) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -337,23 +370,23 @@
 
         if (this.name === "circle_size") {
             config.default_circle_radius = parseInt(this.value);
-//            force.start(); // TODO: FIXME
+            simulation.restart()
         }
 
         if (this.name === "charge_multiplier") {
             config.charge_multiplier = parseInt(this.value);
-//            force.start(); // TODO: FIXME
+            reapply_charge()
         }
 
         if (this.name === "link_strength") {
             config.default_link_strength = parseInt(this.value) / 10;
-//            force.start(); // TODO: FIXME
+            reapply_links_strength()
         }
 
         if (this.name === "show_texts_near_circles") {
             text.attr("visibility", this.checked ? "visible" : "hidden");
             config.show_texts_near_circles = this.checked;
-//            force.start(); // TODO: FIXME
+            simulation.restart()
         }
 
     });

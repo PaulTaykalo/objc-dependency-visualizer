@@ -76,5 +76,24 @@ class DependencyTreeTest < Test::Unit::TestCase
     assert_equal(tree.links_count, 1)
   end
 
+  def test_typed_link
+    tree = DependencyTree.new
+    tree.add('source', 'dest', DependencyLinkType::INHERITANCE)
+    assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::INHERITANCE)
+  end
+
+  def test_typed_link_explicit_type_overrides_unknown
+    tree = DependencyTree.new
+    tree.add('source', 'dest', DependencyLinkType::UNKNOWN)
+    tree.add('source', 'dest', DependencyLinkType::INHERITANCE)
+    assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::INHERITANCE)
+  end
+
+  def test_typed_link_unknown_type_doesnt_override_explicit
+    tree = DependencyTree.new
+    tree.add('source', 'dest', DependencyLinkType::CALL)
+    tree.add('source', 'dest', DependencyLinkType::UNKNOWN)
+    assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::CALL)
+  end
 
 end

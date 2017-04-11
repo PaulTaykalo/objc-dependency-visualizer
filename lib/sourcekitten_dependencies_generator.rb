@@ -11,8 +11,15 @@ module SKDeclarationType
   OBJC_STRUCT = 'sourcekitten.source.lang.objc.decl.struct'.freeze
   OBJC_CLASS = 'sourcekitten.source.lang.objc.decl.class'.freeze
 
+
   INSTANCE_VARIABLE = 'source.lang.swift.decl.var.instance'.freeze
+  STATIC_VARIABLE = 'source.lang.swift.decl.var.static'.freeze
   INSTANCE_METHOD = 'source.lang.swift.decl.function.method.instance'.freeze
+  CLASS_METHOD = 'source.lang.swift.decl.function.method.class'.freeze
+  CALL = 'source.lang.swift.expr.call'.freeze
+  ARGUMENT = 'source.lang.swift.expr.argument'.freeze
+  DICTIONARY = 'source.lang.swift.expr.dictionary'.freeze
+  ARRAY = 'source.lang.swift.expr.array'.freeze
 end
 
 module SKKey
@@ -101,10 +108,21 @@ class SourcekittenDependenciesGenerator
         register_types_from_annotated_declaration(element, item_name, tree)
       end
 
-    when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD
+    when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD, SKDeclarationType::STATIC_VARIABLE, SKDeclarationType::CLASS_METHOD
       parsing_context.each do |el_name|
         register_types_from_annotated_declaration(element, el_name, tree)
       end
+      sub_structures.each { |it| parse_structure(it, tree, parsing_context) } if sub_structures
+
+    when SKDeclarationType::CALL
+      if item_name
+        object_names = potential_object_anmes(item_name)
+        object_names.each { |on| parsing_context.each { |el_name| tree.add(el_name, on)} }
+      end
+      sub_structures.each { |it| parse_structure(it, tree, parsing_context) } if sub_structures
+
+    when SKDeclarationType::ARGUMENT, SKDeclarationType::DICTIONARY, SKDeclarationType::ARRAY
+      sub_structures.each { |it| parse_structure(it, tree, parsing_context) } if sub_structures
 
     else
       # do nothing
@@ -182,12 +200,18 @@ class SourcekittenDependenciesGenerator
     false
   end
 
-  # Returns an array of strings, which represents
+  # Returns an array of strings, which represents type names
   # @param [String] type_name_string sourcekitten type name
   # @return [Array<String>] array of types, found in this type
   def type_names(type_name_string)
     type_name_string
       .split(/\W+/)
+      .select { |t| !t.empty? }
+      .select { |t| !is_primitive_swift_type?(t) }
+  end
+
+  def potential_object_anmes(call_string)
+    (call_string.scan(/^[A-Z_][A-Za-z0-9_]+/) + call_string.scan(/\s[A-Z_][A-Za-z0-9_]+/))
       .select { |t| !t.empty? }
       .select { |t| !is_primitive_swift_type?(t) }
   end

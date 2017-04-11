@@ -163,6 +163,16 @@
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
           },
           {
+            "key.namelength" : 13,
+            "key.nameoffset" : 325,
+            "key.length" : 15,
+            "key.name" : "Protocol1Impl",
+            "key.bodyoffset" : 339,
+            "key.bodylength" : 0,
+            "key.kind" : "source.lang.swift.expr.call",
+            "key.offset" : 325
+          },
+          {
             "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
             "key.annotated_decl" : "<Declaration>var p2: <Type usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/Type>?<\/Declaration>",
             "key.fully_annotated_decl" : "<decl.var.instance><syntaxtype.keyword>var<\/syntaxtype.keyword> <decl.name>p2<\/decl.name>: <decl.var.type><ref.protocol usr=\"s:P35SourcekittenWithComplexDependencies9Protocol2\">Protocol2<\/ref.protocol>?<\/decl.var.type><\/decl.var.instance>",
@@ -185,6 +195,16 @@
             "key.namelength" : 2,
             "key.parsed_scope.end" : 20,
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.namelength" : 13,
+            "key.nameoffset" : 366,
+            "key.length" : 15,
+            "key.name" : "Protocol2Impl",
+            "key.bodyoffset" : 380,
+            "key.bodylength" : 0,
+            "key.kind" : "source.lang.swift.expr.call",
+            "key.offset" : 366
           },
           {
             "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
@@ -257,6 +277,22 @@
             "key.namelength" : 2,
             "key.parsed_scope.end" : 23,
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal"
+          },
+          {
+            "key.namelength" : 0,
+            "key.nameoffset" : 0,
+            "key.elements" : [
+              {
+                "key.kind" : "source.lang.swift.structure.elem.expr",
+                "key.offset" : 449,
+                "key.length" : 2
+              }
+            ],
+            "key.length" : 4,
+            "key.kind" : "source.lang.swift.expr.array",
+            "key.bodylength" : 2,
+            "key.bodyoffset" : 449,
+            "key.offset" : 448
           },
           {
             "key.filepath" : "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/FirstFile.swift",
@@ -346,7 +382,16 @@
             "key.accessibility" : "source.lang.swift.accessibility.internal",
             "key.length" : 78,
             "key.substructure" : [
-
+              {
+                "key.namelength" : 13,
+                "key.nameoffset" : 610,
+                "key.length" : 15,
+                "key.name" : "Protocol2Impl",
+                "key.bodyoffset" : 624,
+                "key.bodylength" : 0,
+                "key.kind" : "source.lang.swift.expr.call",
+                "key.offset" : 610
+              }
             ],
             "key.parsed_scope.start" : 31,
             "key.typeusr" : "_TtFT_P35SourcekittenWithComplexDependencies9Protocol2_",
@@ -388,7 +433,7 @@
       }
     ],
     "key.offset" : 0,
-    "key.length" : 639
+    "key.length" : 635
   }
 }, {
   "\/Users\/paultaykalo\/Projects\/objc-dependency-visualizer\/test\/fixtures\/sourcekitten-with-properties\/SourcekittenExample\/SecondFile.swift" : {

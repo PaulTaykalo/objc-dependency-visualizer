@@ -307,5 +307,15 @@ class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
 
   end
 
+  def test_hidden_dependencies
+    generator = DependencyTreeGenerator.new(
+      sourcekitten_dependencies_file: './test/fixtures/sourcekitten-with-properties/sourcekitten.json',
+    )
+    tree = generator.build_dependency_tree
+    assert(!tree.isEmpty?)
+    assert(tree.connected?('ClassWithFunctions', 'Protocol2Impl'))
+
+  end
+
 
 end

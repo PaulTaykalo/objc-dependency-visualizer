@@ -139,9 +139,10 @@ class DependencyTreeGenerator
   end
 
   def build_sourcekitten_dependency_tree
-    SourcekittenDependenciesGenerator.new.generate_dependencies(
+    generator = SourcekittenDependenciesGenerator.new(
       @options[:sourcekitten_dependencies_file]
     )
+    generator.generate_dependencies
   end
 
   def dependencies_to_s

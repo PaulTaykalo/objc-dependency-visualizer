@@ -10,7 +10,7 @@ class TreeSerializer
   # @return [String]
   def serialize(output_format)
     object_to_serialize = {}
-    object_to_serialize[:links] = @dependency_tree.links
+    object_to_serialize[:links] = @dependency_tree.links_with_types
     object_to_serialize[:links_count] = @dependency_tree.links_count
     object_to_serialize[:objects] = Hash[
       @dependency_tree.objects.map do |o|

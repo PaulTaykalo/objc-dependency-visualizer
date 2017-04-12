@@ -33,7 +33,7 @@ class DependencyTree
     return if connected?(source, dest)
 
     @links_count += 1
-    @links += [{ source: source, dest: dest }]
+    @links += [{source: source, dest: dest}]
 
   end
 
@@ -66,6 +66,14 @@ class DependencyTree
 
   def link_type(source, dest)
     @links_registry[link_key(source, dest)] || DependencyLinkType::UNKNOWN
+  end
+
+  def links_with_types
+    @links.map do |l|
+      type = link_type(l[:source], l[:dest])
+      l[:type] = type unless type == DependencyLinkType::UNKNOWN
+      l
+    end
   end
 
   private

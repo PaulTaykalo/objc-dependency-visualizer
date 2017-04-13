@@ -33,7 +33,3 @@ class ClassWithFunctions {
     }
 
 }
-
-
-
-

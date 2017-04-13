@@ -11,8 +11,15 @@ module SKDeclarationType
   OBJC_STRUCT = 'sourcekitten.source.lang.objc.decl.struct'.freeze
   OBJC_CLASS = 'sourcekitten.source.lang.objc.decl.class'.freeze
 
+
   INSTANCE_VARIABLE = 'source.lang.swift.decl.var.instance'.freeze
+  STATIC_VARIABLE = 'source.lang.swift.decl.var.static'.freeze
   INSTANCE_METHOD = 'source.lang.swift.decl.function.method.instance'.freeze
+  CLASS_METHOD = 'source.lang.swift.decl.function.method.class'.freeze
+  CALL = 'source.lang.swift.expr.call'.freeze
+  ARGUMENT = 'source.lang.swift.expr.argument'.freeze
+  DICTIONARY = 'source.lang.swift.expr.dictionary'.freeze
+  ARRAY = 'source.lang.swift.expr.array'.freeze
 end
 
 module SKKey
@@ -28,92 +35,114 @@ end
 
 class SourcekittenDependenciesGenerator
 
+  def initialize(source_kitten_json)
+    @source_kitten_json = source_kitten_json
+  end
   # @return [DependencyTree]
-  def generate_dependencies(source_kitten_json)
+  def generate_dependencies
 
-    tree = DependencyTree.new
+    @tree = DependencyTree.new
+    @context = []
 
-    file = File.read(source_kitten_json)
+    file = File.read(@source_kitten_json)
     parsed_files = JSON.parse(file)
 
     parsed_files.each do |parsed_file|
       parsed_file.each do |_path, contents|
-        substructures = contents[SKKey::SUBSTRUCTURE]
-        next unless substructures
-        substructures.each { |substructure| parse_structure(substructure, tree) }
+        substructures = contents[SKKey::SUBSTRUCTURE] || next
+        substructures.each { |substructure| parse_structure(substructure) }
       end
     end
 
-    tree
+    @tree
+  end
+
+  def in_context(name)
+    @context.push(name)
+    yield
+    @context.pop
   end
 
   # @param [Hash] item array of sourcekitten substructure of class, protocol, whatever
-  # @param [DependencyTree] tree Dependency tree to where register item
   # @param [DependencyItemType] type type of items to register
-  def register_item_in_tree(item, type, tree)
+  def register_item(item, type)
     item_name = item[SKKey::NAME]
-    tree.register(item_name, type)
+    @tree.register(item_name, type)
 
-    inherited_types = item[SKKey::INHERITED_TYPES]
-    return unless inherited_types
-    inherited_types.map { |o| o[SKKey::NAME] }.each { |inherited_type| tree.add(item_name, inherited_type) }
+    inherited_types = item[SKKey::INHERITED_TYPES] || return
+
+    inherited_types.each do |inherited_type|
+      inherited_type_name = inherited_type[SKKey::NAME]
+      @tree.add(item_name, inherited_type_name)
+    end
+
   end
 
-  def parse_structure(element, tree, parsing_context = [])
-    # any other subsctucst?
-    sub_structures = element[SKKey::SUBSTRUCTURE]
+  # @param [Hash] element SourceKitten source
+  def parse_structure(element)
 
     kind = element[SKKey::KIND]
     item_name = element[SKKey::NAME]
 
     case kind
     when SKDeclarationType::SWIFT_EXTENSION
-      register_item_in_tree(element, DependencyItemType::UNKNOWN, tree)
-      if item_name
-        context = parsing_context + [item_name]
-        parsing_context.each { |el_name| tree.add(el_name, item_name)}
-        sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
-      end
+      process_element(element, DependencyItemType::UNKNOWN)
 
     when SKDeclarationType::SWIFT_PROTOCOL, SKDeclarationType::OBJC_PROTOCOL
-      register_item_in_tree(element, DependencyItemType::PROTOCOL, tree)
-      if item_name
-        context = parsing_context + [item_name]
-        parsing_context.each { |el_name| tree.add(el_name, item_name)}
-        sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
-      end
+      process_element(element, DependencyItemType::PROTOCOL)
 
     when SKDeclarationType::SWIFT_STRUCT, SKDeclarationType::OBJC_STRUCT
-      register_item_in_tree(element, DependencyItemType::STRUCTURE, tree)
-      if item_name
-        context = parsing_context + [item_name]
-        parsing_context.each { |el_name| tree.add(el_name, item_name)}
-        sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
-      end
+      process_element(element, DependencyItemType::STRUCTURE)
 
     when SKDeclarationType::SWIFT_CLASS, SKDeclarationType::OBJC_CLASS
-      register_item_in_tree(element, DependencyItemType::CLASS, tree)
+      process_element(element, DependencyItemType::CLASS)
+      register_types_from_annotated_declaration(element)
+
+    when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD, SKDeclarationType::STATIC_VARIABLE, SKDeclarationType::CLASS_METHOD
+      @context.each do |el_name|
+        register_types_from_annotated_declaration(element, el_name)
+      end
+      parse_substructures(element)
+
+    when SKDeclarationType::CALL
       if item_name
-        context = parsing_context + [item_name]
-        parsing_context.each { |el_name| tree.add(el_name, item_name)}
-        sub_structures.each { |it| parse_structure(it, tree, context) } if sub_structures
-
-        register_types_from_annotated_declaration(element, item_name, tree)
+        object_names = potential_object_names(item_name)
+        object_names.each { |on| @context.each { |el_name| @tree.add(el_name, on, DependencyLinkType::CALL)} }
       end
+      parse_substructures(element)
 
-    when SKDeclarationType::INSTANCE_VARIABLE, SKDeclarationType::INSTANCE_METHOD
-      parsing_context.each do |el_name|
-        register_types_from_annotated_declaration(element, el_name, tree)
-      end
+    when SKDeclarationType::ARGUMENT, SKDeclarationType::DICTIONARY, SKDeclarationType::ARRAY
+      parse_substructures(element)
 
     else
       # do nothing
     end
   end
 
-  def register_types_from_annotated_declaration(element, item_name, tree)
-    annotated_decl = element[SKKey::ANNOTATED_DECLARATION]
-    return if annotated_decl.nil?
+  # @param [Hash] item array of sourcekitten substructure of class, protocol, whatever
+  # @param [DependencyItemType] type type of items to register
+  def process_element(element, type)
+    register_item(element, type)
+    item_name = element[SKKey::NAME] || return
+    link_items_from_context(item_name)
+    in_context(item_name) do
+      parse_substructures(element)
+    end
+  end
+
+  def parse_substructures(element)
+    sub_structures = element[SKKey::SUBSTRUCTURE] || return
+    sub_structures.each { |it| parse_structure(it) }
+  end
+
+  def link_items_from_context(item_name)
+    @context.each { |el_name| @tree.add(el_name, item_name) }
+  end
+
+  def register_types_from_annotated_declaration(element, name = nil)
+    item_name = name || element[SKKey::NAME] || return
+    annotated_decl = element[SKKey::ANNOTATED_DECLARATION] || return
+
     doc = REXML::Document.new(annotated_decl)
 
     has_typealiases = false
@@ -121,8 +150,7 @@ class SourcekittenDependenciesGenerator
       dependency_type = el.text.to_s
 
       # get el type
-      attribute_el = el.attribute('usr')
-      next if attribute_el.nil?
+      attribute_el = el.attribute('usr') || next
 
       if is_typealias(element, dependency_type)
         has_typealiases = true
@@ -131,31 +159,30 @@ class SourcekittenDependenciesGenerator
 
       attribute = attribute_el.to_s
       if attribute.start_with? 's:P'
-        tree.add(item_name, dependency_type)
-        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+        @tree.add(item_name, dependency_type)
+        @tree.register(dependency_type, DependencyItemType::PROTOCOL)
       elsif attribute.start_with? 'c:objc(pl)'
-        tree.add(item_name, dependency_type)
-        tree.register(dependency_type, DependencyItemType::PROTOCOL)
+        @tree.add(item_name, dependency_type)
+        @tree.register(dependency_type, DependencyItemType::PROTOCOL)
       elsif attribute.start_with? 'c:objc(cs)'
-        tree.add(item_name, dependency_type)
-        tree.register(dependency_type, DependencyItemType::CLASS)
+        @tree.add(item_name, dependency_type)
+        @tree.register(dependency_type, DependencyItemType::CLASS)
       elsif attribute.start_with? 's:C'
-        tree.add(item_name, dependency_type)
-        tree.register(dependency_type, DependencyItemType::CLASS)
+        @tree.add(item_name, dependency_type)
+        @tree.register(dependency_type, DependencyItemType::CLASS)
       end
     end
 
-    register_types_from_type_name(element, item_name, tree) if has_typealiases
+    register_types_from_type_name(element, item_name) if has_typealiases
   end
 
-  def register_types_from_type_name(element, item_name, tree)
-    type_name_string = element[SKKey::TYPE_NAME]
-    return if type_name_string.nil?
+  def register_types_from_type_name(element, item_name)
+    type_name_string = element[SKKey::TYPE_NAME] || return
 
     generics = generic_parameters(element)
     type_names(type_name_string)
       .select { |type_name| !generics.include?(type_name) }
-      .each { |type_name| tree.add(item_name, type_name) }
+      .each { |type_name| @tree.add(item_name, type_name) }
 
   end
 
@@ -182,12 +209,18 @@ class SourcekittenDependenciesGenerator
     false
   end
 
-  # Returns an array of strings, which represents
+  # Returns an array of strings, which represents type names
   # @param [String] type_name_string sourcekitten type name
   # @return [Array<String>] array of types, found in this type
   def type_names(type_name_string)
     type_name_string
       .split(/\W+/)
+      .select { |t| !t.empty? }
+      .select { |t| !is_primitive_swift_type?(t) }
+  end
+
+  def potential_object_names(call_string)
+    (call_string.scan(/^[A-Z_][A-Za-z0-9_]+/) + call_string.scan(/\s[A-Z_][A-Za-z0-9_]+/))
       .select { |t| !t.empty? }
       .select { |t| !is_primitive_swift_type?(t) }
   end

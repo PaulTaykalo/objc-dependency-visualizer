@@ -101,6 +101,10 @@
             { "source" : "TRGoogleMapsAutocompletionCellFactory", "dest" : "TRGoogleMapsAutocompletionCell" },
             { "source" : "UIImageView+AFNetworking", "dest" : "AFImageCache" },
             { "source" : "UIImageView+AFNetworking", "dest" : "AFImageRequestOperation" },
-         ]
+         ],
+       objects: {
+           "AFHTTPRequestOperation": {"type": "protocol"},
+           "SFBOOLMapper": {"type": "struct"}
+       }
     }
   ;  

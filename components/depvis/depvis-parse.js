@@ -11,7 +11,7 @@ let objcdv = {
             nodes: [],
             links: [],
             nodesSet: {},
-            objects: _objects,
+            objects: setDefaultValue(_objects, []),
 
             addLink: function (link) {
 
@@ -36,7 +36,8 @@ let objcdv = {
                 var node = this.nodesSet[nodeName];
                 if (node == null) {
                     var idx = Object.keys(this.nodesSet).length;
-                    this.nodesSet[nodeName] = node = {idx: idx, name: nodeName, source: 1, dest: 0, type: _objects[nodeName].type};
+                    let object = setDefaultValue(this.objects[nodeName], {})
+                    this.nodesSet[nodeName] = node = {idx: idx, name: nodeName, source: 1, dest: 0, type: object.type};
                 }
                 return node
             },
@@ -168,6 +169,8 @@ let objcdv = {
 };
 
 
-
+function setDefaultValue(value, defaultValue){
+    return (value === undefined) ? defaultValue : value;
+}
 
 

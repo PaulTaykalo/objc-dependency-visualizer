@@ -17,7 +17,7 @@ let graph_actions = {
                 this.selectedIdx = -1;
                 this.selectedObject = {};
 
-                this.svg.selectAll('circle')
+                this.svg.selectAll('.node, .structNode')
                     .each(function (node) {
                         node.filtered = false
                     })
@@ -67,7 +67,7 @@ let graph_actions = {
 
             _fadeOutAllNodesAndLinks: function () {
                 // Fade out all circles
-                this.svg.selectAll('circle')
+                this.svg.selectAll('.node, .structNode')
                     .classed('filtered', true)
                     .each(function (node) {
                         node.filtered = true;
@@ -87,7 +87,7 @@ let graph_actions = {
             },
 
             _highlightNodesWithIndexes: function (indexesArray) {
-                this.svg.selectAll('circle, text')
+                this.svg.selectAll('.node, .structNode, text')
                     .filter((node) => indexesArray.indexOf(node.index) > -1)
                     .classed('filtered', false)
                     .each((node) => {

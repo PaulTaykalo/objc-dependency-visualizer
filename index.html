@@ -126,39 +126,22 @@
     //  ===============  NODES SETUP     ==================
     //  ===================================================
 
+    let nonStructNodesData = d3graph.nodes.filter(d => d.type !== "struct");
     const node = svg.append("g").selectAll(".node")
-        .data(d3graph.nodes.filter( d => d.type !== "struct"))
+        .data(nonStructNodesData)
         .enter()
         .append("circle")
-        .attr("r", radius)
-        .style("fill", d => color(d.group))
-        .style("stroke-dasharray", d => d.type === "protocol" ? [5,5] : "")
-        .style("stroke-width", d => d.type === "protocol" ? 5 : 1)
         .attr("class", "node")
-        .attr("source", d => d.source)
-        .attr("dest", d => d.dest)
-        .on("click", d => {
-            if (d3.event.defaultPrevented) {
-                return
-            }
-            actions.selectNodesStartingFromNode(d, 1);
-//            force.start(); // TODO: FIXME
-        })
-        .on("contextmenu", d => {
-            if (d3.event.defaultPrevented) {
-                return
-            }
-            // Don't actually show context menu
-            d3.event.preventDefault();
+        .attr("r", radius)
+        .style("stroke-dasharray", d => d.type === "protocol" ? [5, 5] : "")
+        .style("stroke-width", d => d.type === "protocol" ? 5 : 1);
 
-            actions.selectNodesStartingFromNode(d);
-//            force.start(); // TODO : FIXME
-        });
-
+    let structNodesData = d3graph.nodes.filter(d => d.type === "struct");
     const structNodes = svg.append("g").selectAll(".structNode")
-        .data(d3graph.nodes.filter(d => d.type === "struct"))
+        .data(structNodesData)
         .enter()
         .append("polygon")
+        .attr("class", "structNode")
         .attr("points", d => {
             let r = radius(d);
             let pts = [
@@ -174,18 +157,24 @@
 
             return pts.map(p => p.x + "," + p.y).join(" ")
         })
-        .style("stroke-width", 1)
-        .style("stroke", 'rgb(0,0,0)')
+        .style("stroke-width", 1);
+
+    // Setting up source/ dest and coloring
+    svg.selectAll('.node, .structNode')
         .style("fill", d => color(d.group))
-        .attr("class", "structNode")
         .attr("source", d => d.source)
-        .attr("dest", d => d.dest)
+        .attr("dest", d => d.dest);
+
+
+    // Handling pressing
+    svg.selectAll('.node, .structNode')
         .on("click", d => {
             if (d3.event.defaultPrevented) {
                 return
             }
             actions.selectNodesStartingFromNode(d, 1);
-//            force.start();  // TODO: FIXME
+            reapply_charge();
+            reapply_links_strength();
         })
         .on("contextmenu", d => {
             if (d3.event.defaultPrevented) {
@@ -195,27 +184,19 @@
             d3.event.preventDefault();
 
             actions.selectNodesStartingFromNode(d);
-//            force.start();  // TODO: FIXME
+            reapply_charge();
+            reapply_links_strength();
         });
-
-
-    /// Simulation
-
-    //    const force = d3.layout.force()
-    //        .charge(d => d.filtered ? 0 : -d.weight * config.charge_multiplier)
-    //        .linkDistance(l => l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance)
-    //        .size([x, y])
-    //        .nodes(d3.values(d3graph.nodes))
-    //        .links(d3graph.links)
-    //        .linkStrength(l => l.source.filtered || l.target.filtered ? 0 : config.default_link_strength)
-    //        .start();
 
     const simulation = d3.forceSimulation(d3.values(d3graph.nodes))
         .force("x", d3.forceX())
         .force("y", d3.forceY())
-        .force("charge", d3.forceManyBody().strength(d => {
-            return d.filtered ? 0 : -d.weight * config.charge_multiplier;
-        }))
+        .force("center", d3.forceCenter(x / 2, y / 2))
+        .force("charge", d3.forceManyBody()
+            .strength(d => {
+                return d.filtered ? 0 : -d.weight * config.charge_multiplier;
+            })
+        )
         .force("link", d3.forceLink(d3graph.links)
             .distance(l => {
                 return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance;
@@ -227,12 +208,14 @@
         .on("tick", ticked);
 
     //  ===================================================
-    //  ===============  RECOMPUTE_FORCE     =============
+    //  ===============  RECOMPUTE            =============
     //  ===================================================
     function reapply_charge() {
-        simulation.force("charge", d3.forceManyBody().strength(d => {
-            return d.filtered ? 0 : -d.weight * config.charge_multiplier;
-        }));
+        simulation.force("charge", d3.forceManyBody()
+            .strength(d => {
+                return d.filtered ? 0 : -d.weight * config.charge_multiplier;
+            })
+        );
         simulation.alphaTarget(0.3).restart()
     }
 
@@ -246,6 +229,25 @@
             })
         );
         simulation.alphaTarget(0.3).restart()
+    }
+
+    function updateRadiuses() {
+        svg.selectAll(".node").attr("r", radius);
+        svg.selectAll(".structNode").attr("points", d => {
+            let r = radius(d);
+            let pts = [
+                {x: -r, y: 0},
+                {x: -r * 0.707, y: -r * 0.707},
+                {x: 0, y: -r},
+                {x: r * 0.707, y: -r * 0.707},
+                {x: r, y: 0},
+                {x: r * 0.707, y: r * 0.707},
+                {x: 0, y: r},
+                {x: -r * 0.707, y: r * 0.707},
+            ];
+
+            return pts.map(p => p.x + "," + p.y).join(" ")
+        });
     }
 
     //  ===================================================
@@ -266,28 +268,12 @@
     //  ===================================================
 
     function ticked() {
-        svg.selectAll(".node").attr("r", radius);
-        svg.selectAll(".structNode").attr("points", d => {
-            let r = radius(d);
-            let pts = [
-                {x: -r, y: 0},
-                {x: -r * 0.707, y: -r * 0.707},
-                {x: 0, y: -r},
-                {x: r * 0.707, y: -r * 0.707},
-                {x: r, y: 0},
-                {x: r * 0.707, y: r * 0.707},
-                {x: 0, y: r},
-                {x: -r * 0.707, y: r * 0.707},
-            ];
-
-            return pts.map(p => p.x + "," + p.y).join(" ")
-        });
         link.attr("d", link_line);
         node.attr("transform", transform);
         structNodes.attr("transform", transform);
-//        if (config.show_texts_near_circles) { // TODO: FIXME
-//            text.attr("transform", transform);
-//        }
+        if (config.show_texts_near_circles) {
+            text.attr("transform", transform);
+        }
     }
 
     //  ===================================================
@@ -356,7 +342,7 @@
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         container.attr("width", Math.ceil(x)).attr("height", Math.ceil(y));
-//        force.size([Math.ceil(x), Math.ceil(y)]).start(); // TODO: FIXME
+        simulation.force("center", d3.forceCenter(x / 2, y / 2))
     };
 
 
@@ -370,7 +356,8 @@
 
         if (this.name === "circle_size") {
             config.default_circle_radius = parseInt(this.value);
-            simulation.restart()
+            updateRadiuses();
+            simulation.alphaTarget(0.3).restart()
         }
 
         if (this.name === "charge_multiplier") {
@@ -386,7 +373,7 @@
         if (this.name === "show_texts_near_circles") {
             text.attr("visibility", this.checked ? "visible" : "hidden");
             config.show_texts_near_circles = this.checked;
-            simulation.restart()
+            simulation.alphaTarget(0.3).restart()
         }
 
     });
@@ -403,7 +390,7 @@
         invert = typeof invert !== 'undefined' ? invert : false;
 
         const re = new RegExp(regexp, "i");
-        svg.selectAll('circle, text')
+        svg.selectAll('.node, .structNode, text')
             .classed(classname, node => {
                 let filtered = !node.name.match(re);
                 filtered = invert ? !filtered : filtered;
@@ -435,7 +422,7 @@
 
         if (this.value && this.value.length) {
             live_filter_graph(this.value, "filtered");
-//            force.start(); // TODO: FIXME
         }
+        reapply_charge();
     });
 </script>

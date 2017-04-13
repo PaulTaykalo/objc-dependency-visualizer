@@ -109,6 +109,18 @@ text {
     pointer-events: none;
 }
 
+svg text {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+svg text::selection {
+    background: none;
+}
+
 form {
     position: absolute;
     right: 10px;

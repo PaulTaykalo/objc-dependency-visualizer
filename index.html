@@ -92,23 +92,48 @@
     const svg = container.append('g');
     const actions = graph_actions.create(svg, dvgraph);
 
-    function setupMarkers() {
+    function updateMarkers(size) {
+
+        function viewBox(x, y, w, h) { return [x + "", y + "", w + "", h + ""].join(" ") }
+        function moveTo(x, y) { return "M" + x + "," + y }
+        function lineTo(x, y) { return "L" + x + "," + y }
+
+        function arrow(size) {
+            return [
+                moveTo(0, -size),
+                lineTo(size * 2, 0),
+                lineTo(0, size),
+            ].join("")
+        }
+
+        svg.selectAll("marker")
+            .transition()
+            .attr("viewBox", viewBox(0, -size, size * 2, size * 2))
+            .attr("refX", size * 2)
+            .attr("refY", 0)
+            .attr("markerWidth", size * 2)
+            .attr("markerHeight", size * 2);
+
+        svg.selectAll("marker path")
+            .transition()
+            .attr("d", arrow(size));
+    }
+
+    function setupMarkers(size) {
+
         svg.append("defs").selectAll("marker")
             .data(["default", "dependency", "dependants"])
             .enter().append("marker")
             .attr("id", (d) => d)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 10)
-            .attr("refY", 0)
-            .attr("markerWidth", 10)
-            .attr("markerHeight", 10)
             .attr("orient", "auto")
             .attr("class", "marker")
-            .append("path")
-            .attr("d", "M0,-5L10,0L0,5");
+            .append("path");
+
+        updateMarkers(size);
     }
 
-    setupMarkers();
+
+    setupMarkers(config.default_circle_radius / 3);
 
 
     //  ===================================================
@@ -232,8 +257,8 @@
     }
 
     function updateRadiuses() {
-        svg.selectAll(".node").attr("r", radius);
-        svg.selectAll(".structNode").attr("points", d => {
+        svg.selectAll(".node").transition().attr("r", radius);
+        svg.selectAll(".structNode").transition().attr("points", d => {
             let r = radius(d);
             let pts = [
                 {x: -r, y: 0},
@@ -357,6 +382,7 @@
         if (this.name === "circle_size") {
             config.default_circle_radius = parseInt(this.value);
             updateRadiuses();
+            updateMarkers(config.default_circle_radius / 3);
             simulation.alphaTarget(0.3).restart()
         }
 

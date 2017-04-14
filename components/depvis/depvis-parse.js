@@ -143,12 +143,14 @@ let objcdv = {
         var graph = this._createGraph(dependencies.objects);
         var prefixes = this._createPrefixes();
 
-        dependencies.links.forEach((link) => {
-            graph.addLink(link);
+        dependencies.links
+            .filter(link => link.source != link.dest)
+            .forEach(link => {
+                graph.addLink(link);
 
-            prefixes.addName(link.source);
-            prefixes.addName(link.dest);
-        });
+                prefixes.addName(link.source);
+                prefixes.addName(link.dest);
+            });
 
         // Make sure all nodes are present, even if they aren't connected
         if (dependencies.objects != null) {

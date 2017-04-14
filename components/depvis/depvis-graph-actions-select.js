@@ -13,7 +13,7 @@ let graph_actions = {
             dvgraph: dvgraph,
 
             deselect_node: function (d) {
-                delete d.fixed;
+                this._unlockNode(d);
                 this.selectedIdx = -1;
                 this.selectedObject = {};
 
@@ -43,10 +43,14 @@ let graph_actions = {
 
             _lockNode: function (node) {
                 node.fixed = true;
+                node.fx = node.x;
+                node.fy = node.y;
             },
 
             _unlockNode: function (node) {
                 delete node.fixed;
+                node.fx = null;
+                node.fy = null;
             },
 
             _selectAndLockNode: function (node, type) {

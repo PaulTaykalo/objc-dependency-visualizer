@@ -127,14 +127,14 @@ let dvvisualizer = {
 
             _linkStrength: function(link) {
                 if (link.source.filtered || link.target.filtered) {
-                    return 0;
+                    return 0.01;
                 }
                 return config.default_link_strength;
             },
 
             _chargeStrength: function (node) {
                 if (node.filtered) {
-                    return 0;
+                    return -0.01;
                 }
                 return -node.weight * config.charge_multiplier;
             },
@@ -171,7 +171,7 @@ let dvvisualizer = {
             },
 
             reapply_charge: function (value) {
-                config.charge_multiplier = value;
+                config.charge_multiplier = setDefaultValue(value, config.charge_multiplier);
                 this.simulation.force("charge", d3.forceManyBody().strength(this._chargeStrength));
                 this.simulation.alphaTarget(0.3).restart()
             },
@@ -183,7 +183,7 @@ let dvvisualizer = {
             },
 
             reapply_links_strength: function (linkStrength) {
-                config.default_link_strength = linkStrength;
+                config.default_link_strength = setDefaultValue(linkStrength, config.default_link_strength);
                 this.simulation.force("link", d3.forceLink(d3graph.links)
                     .distance(this._linkDistance)
                     .strength(this._linkStrength)
@@ -209,8 +209,10 @@ let dvvisualizer = {
 
                 let dragended = function (d) {
                     if (!d3.event.active) this.simulation.alphaTarget(0);
-                    d.fx = null;
-                    d.fy = null;
+                    if (!d.fixed) {
+                        d.fx = null;
+                        d.fy = null;
+                    }
                 }.bind(visualizer);
 
 

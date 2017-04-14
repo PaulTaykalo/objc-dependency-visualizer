@@ -163,7 +163,7 @@ let dvvisualizer = {
                 this._structNode.transition().attr("points", this._structurePoints);
 
                 this.updateMarkers(value / 3);
-                simulation.alphaTarget(0.3).restart()
+                this.simulation.alphaTarget(0.3).restart()
             },
 
             reapply_charge_and_links: function() {
@@ -173,31 +173,27 @@ let dvvisualizer = {
 
             reapply_charge: function (value) {
                 config.charge_multiplier = value;
-                simulation.force("charge", d3.forceManyBody()
+                this.simulation.force("charge", d3.forceManyBody()
                     .strength(d => {
                         return d.filtered ? 0 : -d.weight * value;
                     })
                 );
-                simulation.alphaTarget(0.3).restart()
+                this.simulation.alphaTarget(0.3).restart()
             },
 
             updateTextVisibility: function (visible) {
                 text.attr("visibility", visible ? "visible" : "hidden");
                 config.show_texts_near_circles = visible;
-                simulation.alphaTarget(0.3).restart()
+                this.simulation.alphaTarget(0.3).restart()
             },
 
             reapply_links_strength: function (linkStrength) {
                 config.default_link_strength = linkStrength;
-                simulation.force("link", d3.forceLink(d3graph.links)
-                    .distance(l => {
-                        return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + linkStrength;
-                    })
-                    .strength(l => {
-                        return l.source.filtered || l.target.filtered ? 0 : linkStrength;
-                    })
+                this.simulation.force("link", d3.forceLink(d3graph.links)
+                    .distance(this._linkDistance)
+                    .strength(this._linkStrength)
                 );
-                simulation.alphaTarget(0.3).restart()
+                this.simulation.alphaTarget(0.3).restart()
             },
 
             updateCenter: function (x, y) {
@@ -205,29 +201,29 @@ let dvvisualizer = {
             },
 
             _setupDragging: function () {
-                function dragstarted(d) {
-                    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                let dragstarted = function (d) {
+                    if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
                     d.fx = d.x;
                     d.fy = d.y;
-                }
+                }.bind(visualizer);
 
-                function dragged(d) {
+                let dragged = function (d) {
                     d.fx = d3.event.x;
                     d.fy = d3.event.y;
-                }
+                }.bind(visualizer);
 
-                function dragended(d) {
-                    if (!d3.event.active) simulation.alphaTarget(0);
+                let dragended = function (d) {
+                    if (!d3.event.active) this.simulation.alphaTarget(0);
                     d.fx = null;
                     d.fy = null;
-                }
+                }.bind(visualizer);
 
-                svg.selectAll(".node")
+
+                svg.selectAll(".node, .structNode")
                     .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)
-                        .on("end", dragended)
-                    );
+                        .on("end", dragended));
             },
 
             _setupTexts: function () {
@@ -275,6 +271,7 @@ let dvvisualizer = {
                     .attr("height", y)
                     .style("fill", "none")
                     .style("pointer-events", "all")
+                    .lower()
                     .call(zoom);
             },
 
@@ -303,8 +300,8 @@ let dvvisualizer = {
                 this._setupLinks();
                 this._setupNodes();
                 this._setupSimulation();
-                this._setupDragging();
                 this._setupTexts();
+                this._setupDragging();
             }
         });
         return visualizer

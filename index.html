@@ -38,6 +38,7 @@
 <script src="components/depvis/depvis-graph-actions-select.js"></script>
 <script src="components/depvis/depvis-parse.js"></script>
 <script src="components/depvis/depvis-config.js"></script>
+<script src="components/depvis/depvis-visualizer.js"></script>
 <script>
 
     //  ===================================================
@@ -60,146 +61,29 @@
     //  =============== http://d3js.org/ Magic ===========
     //  ===================================================
 
-    // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
-
     const container = d3.select("#chart").append("svg")
         .attr("width", x)
         .attr("height", y)
         .style("overflow", "hidden");
 
-    //  ===================================================
-    //  =============== ZOOM LOGIC ========================
-    //  ===================================================
-    const zoom = d3.zoom()
-        .on("zoom", zoomed);
-
-    function zoomed() {
-        svg.attr("transform", d3.event.transform);
-    }
-
-    container.append("rect")
-        .attr("width", x)
-        .attr("height", y)
-        .style("fill", "none")
-        .style("pointer-events", "all")
-        .call(zoom);
-
-    //  ===================================================
-    //  =============== FORCE LAYOUT ======================
-    //  ===================================================
-
     const svg = container.append('g');
     const actions = graph_actions.create(svg, dvgraph);
+    let visualizer = dvvisualizer.create(svg, config, d3graph);
+    visualizer.initialize();
+    visualizer.setupZoom(container);
 
-    function updateMarkers(size) {
-
-        function viewBox(x, y, w, h) { return [x + "", y + "", w + "", h + ""].join(" ") }
-        function moveTo(x, y) { return "M" + x + "," + y }
-        function lineTo(x, y) { return "L" + x + "," + y }
-
-        function arrow(size) {
-            return [
-                moveTo(0, -size),
-                lineTo(size * 2, 0),
-                lineTo(0, size),
-            ].join("")
-        }
-
-        svg.selectAll("marker")
-            .transition()
-            .attr("viewBox", viewBox(0, -size, size * 2, size * 2))
-            .attr("refX", size * 2)
-            .attr("refY", 0)
-            .attr("markerWidth", size * 2)
-            .attr("markerHeight", size * 2);
-
-        svg.selectAll("marker path")
-            .transition()
-            .attr("d", arrow(size));
-    }
-
-    function setupMarkers(size) {
-
-        svg.append("defs").selectAll("marker")
-            .data(["default", "dependency", "dependants"])
-            .enter().append("marker")
-            .attr("id", (d) => d)
-            .attr("orient", "auto")
-            .attr("class", "marker")
-            .append("path");
-
-        updateMarkers(size);
-    }
-
-
-    setupMarkers(config.default_circle_radius / 3);
-
-
-    //  ===================================================
-    //  ===============  LINKS SETUP     ==================
-    //  ===================================================
-
-    const link = svg.append("g").selectAll("path")
-        .data(d3graph.links)
-        .enter().append("path")
-        .attr("class", "link")
-        .attr("marker-end", "url(#default)")
-        .style("stroke-width", (d) => d);
 
     //  ===================================================
     //  ===============  NODES SETUP     ==================
     //  ===================================================
 
-    let nonStructNodesData = d3graph.nodes.filter(d => d.type !== "struct");
-    const node = svg.append("g").selectAll(".node")
-        .data(nonStructNodesData)
-        .enter()
-        .append("circle")
-        .attr("class", "node")
-        .attr("r", radius)
-        .style("stroke-dasharray", d => d.type === "protocol" ? [5, 5] : "")
-        .style("stroke-width", d => d.type === "protocol" ? 5 : 1);
-
-    let structNodesData = d3graph.nodes.filter(d => d.type === "struct");
-    const structNodes = svg.append("g").selectAll(".structNode")
-        .data(structNodesData)
-        .enter()
-        .append("polygon")
-        .attr("class", "structNode")
-        .attr("points", d => {
-            let r = radius(d);
-            let pts = [
-                {x: -r, y: 0},
-                {x: -r * 0.707, y: -r * 0.707},
-                {x: 0, y: -r},
-                {x: r * 0.707, y: -r * 0.707},
-                {x: r, y: 0},
-                {x: r * 0.707, y: r * 0.707},
-                {x: 0, y: r},
-                {x: -r * 0.707, y: r * 0.707},
-            ];
-
-            return pts.map(p => p.x + "," + p.y).join(" ")
-        })
-        .style("stroke-width", 1);
-
-    // Setting up source/ dest and coloring
-    svg.selectAll('.node, .structNode')
-        .style("fill", d => color(d.group))
-        .attr("source", d => d.source)
-        .attr("dest", d => d.dest);
-
 
     // Handling pressing
     svg.selectAll('.node, .structNode')
         .on("click", d => {
-            if (d3.event.defaultPrevented) {
-                return
-            }
+            if (d3.event.defaultPrevented) { return }
             actions.selectNodesStartingFromNode(d, 1);
-            reapply_charge();
-            reapply_links_strength();
+            visualizer.reapply_charge_and_links()
         })
         .on("contextmenu", d => {
             if (d3.event.defaultPrevented) {
@@ -209,155 +93,9 @@
             d3.event.preventDefault();
 
             actions.selectNodesStartingFromNode(d);
-            reapply_charge();
-            reapply_links_strength();
+            visualizer.reapply_charge_and_links()
         });
 
-    const simulation = d3.forceSimulation(d3.values(d3graph.nodes))
-        .force("x", d3.forceX())
-        .force("y", d3.forceY())
-        .force("center", d3.forceCenter(x / 2, y / 2))
-        .force("charge", d3.forceManyBody()
-            .strength(d => {
-                return d.filtered ? 0 : -d.weight * config.charge_multiplier;
-            })
-        )
-        .force("link", d3.forceLink(d3graph.links)
-            .distance(l => {
-                return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance;
-            })
-            .strength(l => {
-                return l.source.filtered || l.target.filtered ? 0 : config.default_link_strength;
-            })
-        )
-        .on("tick", ticked);
-
-    //  ===================================================
-    //  ===============  RECOMPUTE            =============
-    //  ===================================================
-    function reapply_charge() {
-        simulation.force("charge", d3.forceManyBody()
-            .strength(d => {
-                return d.filtered ? 0 : -d.weight * config.charge_multiplier;
-            })
-        );
-        simulation.alphaTarget(0.3).restart()
-    }
-
-    function reapply_links_strength() {
-        simulation.force("link", d3.forceLink(d3graph.links)
-            .distance(l => {
-                return l.source.filtered || l.target.filtered ? 500 : radius(l.source) + radius(l.target) + config.default_link_distance;
-            })
-            .strength(l => {
-                return l.source.filtered || l.target.filtered ? 0 : config.default_link_strength;
-            })
-        );
-        simulation.alphaTarget(0.3).restart()
-    }
-
-    function updateRadiuses() {
-        svg.selectAll(".node").transition().attr("r", radius);
-        svg.selectAll(".structNode").transition().attr("points", d => {
-            let r = radius(d);
-            let pts = [
-                {x: -r, y: 0},
-                {x: -r * 0.707, y: -r * 0.707},
-                {x: 0, y: -r},
-                {x: r * 0.707, y: -r * 0.707},
-                {x: r, y: 0},
-                {x: r * 0.707, y: r * 0.707},
-                {x: 0, y: r},
-                {x: -r * 0.707, y: r * 0.707},
-            ];
-
-            return pts.map(p => p.x + "," + p.y).join(" ")
-        });
-    }
-
-    //  ===================================================
-    //  ===============  TEXT NODES SETUP     =============
-    //  ===================================================
-
-
-    const text = svg.append("g").selectAll("text")
-        .data(simulation.nodes())
-        .enter()
-        .append("text")
-        .attr("visibility", "hidden")
-        .text(d => d.name.substring(0, config.default_max_texts_length));
-
-
-    //  ===================================================
-    //  ===============  FORCE UPDATE        =============
-    //  ===================================================
-
-    function ticked() {
-        link.attr("d", link_line);
-        node.attr("transform", transform);
-        structNodes.attr("transform", transform);
-        if (config.show_texts_near_circles) {
-            text.attr("transform", transform);
-        }
-    }
-
-    //  ===================================================
-    //  ===============  DRAGGING             =============
-    //  ===================================================
-
-    svg.selectAll(".node")
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)
-        );
-
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
-
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
-
-    function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
-
-    //  ===================================================
-    //  ===============  HELPER FUNCTIONS     =============
-    //  ===================================================
-    function link_line(d) {
-        const dx = d.target.x - d.source.x,
-            dy = d.target.y - d.source.y,
-            dr = Math.sqrt(dx * dx + dy * dy);
-
-        if (dr === 0) {
-            return "M0,0L0,0"
-        }
-
-        const rsource = radius(d.sourceNode) / dr;
-        const rdest = radius(d.targetNode) / dr;
-        const startX = d.source.x + dx * rsource;
-        const startY = d.source.y + dy * rsource;
-
-        const endX = d.target.x - dx * rdest;
-        const endY = d.target.y - dy * rdest;
-        return "M" + startX + "," + startY + "L" + endX + "," + endY;
-    }
-
-    function transform(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    }
-
-    function radius(d) {
-        return config.default_circle_radius + config.default_circle_radius * d.source / 10;
-    }
 
     /*
      Window resize update
@@ -367,7 +105,7 @@
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         container.attr("width", Math.ceil(x)).attr("height", Math.ceil(y));
-        simulation.force("center", d3.forceCenter(x / 2, y / 2))
+        visualizer.updateCenter( x /2, y/2);
     };
 
 
@@ -381,25 +119,21 @@
 
         if (this.name === "circle_size") {
             config.default_circle_radius = parseInt(this.value);
-            updateRadiuses();
-            updateMarkers(config.default_circle_radius / 3);
-            simulation.alphaTarget(0.3).restart()
+            visualizer.updateRadiuses(parseInt(this.value));
         }
 
         if (this.name === "charge_multiplier") {
-            config.charge_multiplier = parseInt(this.value);
-            reapply_charge()
+            let chargeMultiplier = parseInt(this.value);
+            visualizer.reapply_charge(chargeMultiplier)
         }
 
         if (this.name === "link_strength") {
-            config.default_link_strength = parseInt(this.value) / 10;
-            reapply_links_strength()
+            let linkStrength = parseInt(this.value) / 10;
+            visualizer.reapply_links_strength(linkStrength)
         }
 
         if (this.name === "show_texts_near_circles") {
-            text.attr("visibility", this.checked ? "visible" : "hidden");
-            config.show_texts_near_circles = this.checked;
-            simulation.alphaTarget(0.3).restart()
+            visualizer.updateTextVisibility(this.checked)
         }
 
     });
@@ -412,8 +146,8 @@
     //  ===================================================
 
     function live_filter_graph(regexp, classname, invert) {
-        classname = typeof classname !== 'undefined' ? classname : "filtered";
-        invert = typeof invert !== 'undefined' ? invert : false;
+        classname = setDefaultValue(classname, "filtered");
+        invert = setDefaultValue(invert, false);
 
         const re = new RegExp(regexp, "i");
         svg.selectAll('.node, .structNode, text')

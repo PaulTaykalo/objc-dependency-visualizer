@@ -14,11 +14,14 @@ let dvvisualizer = {
             _node: null,          // d3 selection of all nodes (non-struct)
             _textNode: null,      // d3 selection of all text nodes
             _structNode: null,    // d3 selection of all struct nodes
+            objectNodes: null,    // d3 selection for struct and other nodes
+            allNodes: null,       // d3 selection for all Possible nodes
 
             updateMarkers: function (size) {
                 function viewBox(x, y, w, h) { return [x + "", y + "", w + "", h + ""].join(" ") }
                 function moveTo(x, y) { return "M" + x + "," + y }
                 function lineTo(x, y) { return "L" + x + "," + y }
+
                 function arrow(size) {
                     return [
                         moveTo(0, -size),
@@ -88,8 +91,10 @@ let dvvisualizer = {
                     .style("stroke-width", 1);
 
 
+                this.objectNodes = svg.selectAll('.node, .structNode');
                 // Setting up source/ dest and coloring
-                svg.selectAll('.node, .structNode')
+
+                this.objectNodes
                     .style("fill", d => this.color(d.group))
                     .attr("source", d => d.source)
                     .attr("dest", d => d.dest);
@@ -97,7 +102,7 @@ let dvvisualizer = {
                 this._node = svg.selectAll('.node');
                 this._structNode = svg.selectAll('.structNode');
 
-            },
+            }.bind(visualizer),
 
             _radius: function (node) {
                 return config.default_circle_radius + config.default_circle_radius * node.source / 10;
@@ -125,7 +130,7 @@ let dvvisualizer = {
                 return this._radius(link.source) + this._radius(link.target) + this.config.default_link_distance;
             }.bind(visualizer),
 
-            _linkStrength: function(link) {
+            _linkStrength: function (link) {
                 if (link.source.filtered || link.target.filtered) {
                     return 0.01;
                 }
@@ -139,8 +144,7 @@ let dvvisualizer = {
                 return -node.weight * config.charge_multiplier;
             },
 
-
-            _structurePoints: function(d) {
+            _structurePoints: function (d) {
                 let r = this._radius(d);
                 let pts = [
                     {x: -r, y: 0},
@@ -165,7 +169,7 @@ let dvvisualizer = {
                 this.simulation.alphaTarget(0.3).restart()
             },
 
-            reapply_charge_and_links: function() {
+            reapply_charge_and_links: function () {
                 this.reapply_charge();
                 this.reapply_links_strength()
             },
@@ -215,8 +219,7 @@ let dvvisualizer = {
                     }
                 }.bind(visualizer);
 
-
-                svg.selectAll(".node, .structNode")
+                this.objectNodes
                     .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)
@@ -239,9 +242,7 @@ let dvvisualizer = {
                     dy = d.target.y - d.source.y,
                     dr = Math.sqrt(dx * dx + dy * dy);
 
-                if (dr === 0) {
-                    return "M0,0L0,0"
-                }
+                if (dr === 0) { return "M0,0L0,0" }
 
                 const rsource = this._radius(d.sourceNode) / dr;
                 const rdest = this._radius(d.targetNode) / dr;
@@ -292,6 +293,9 @@ let dvvisualizer = {
                 this.color = d3.scaleOrdinal(d3.schemeCategory10);
             },
 
+            _setupAllNodes: function () {
+                this.allNodes = svg.select(".node, .structNode, text")
+            },
             initialize: function () {
                 this._setupColors();
                 this._setupMarkers(this.config.default_circle_radius / 3);
@@ -300,6 +304,7 @@ let dvvisualizer = {
                 this._setupSimulation();
                 this._setupTexts();
                 this._setupDragging();
+                this._setupAllNodes();
             }
         });
         return visualizer
@@ -308,7 +313,6 @@ let dvvisualizer = {
 };
 
 
-
-function setDefaultValue(value, defaultValue){
+function setDefaultValue(value, defaultValue) {
     return (value === undefined) ? defaultValue : value;
 }

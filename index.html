@@ -79,16 +79,14 @@
 
 
     // Handling pressing
-    svg.selectAll('.node, .structNode')
+    visualizer.objectNodes
         .on("click", d => {
             if (d3.event.defaultPrevented) { return }
             actions.selectNodesStartingFromNode(d, 1);
             visualizer.reapply_charge_and_links()
         })
         .on("contextmenu", d => {
-            if (d3.event.defaultPrevented) {
-                return
-            }
+            if (d3.event.defaultPrevented) { return }
             // Don't actually show context menu
             d3.event.preventDefault();
 
@@ -150,7 +148,7 @@
         invert = setDefaultValue(invert, false);
 
         const re = new RegExp(regexp, "i");
-        svg.selectAll('.node, .structNode, text')
+        visualizer.allNodes
             .classed(classname, node => {
                 let filtered = !node.name.match(re);
                 filtered = invert ? !filtered : filtered;

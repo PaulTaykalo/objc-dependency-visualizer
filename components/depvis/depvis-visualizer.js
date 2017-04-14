@@ -10,9 +10,10 @@ let dvvisualizer = {
             simulation: null,
             color: null,
 
-            _link: null,
-            _node: null,
-            _structNode: null,
+            _link: null,          // d3 selection of all links
+            _node: null,          // d3 selection of all nodes (non-struct)
+            _textNode: null,      // d3 selection of all text nodes
+            _structNode: null,    // d3 selection of all struct nodes
 
             updateMarkers: function (size) {
                 function viewBox(x, y, w, h) { return [x + "", y + "", w + "", h + ""].join(" ") }
@@ -103,22 +104,12 @@ let dvvisualizer = {
             },
 
             _setupSimulation: function () {
-                // var w = window,
-                //     d = document,
-                //     e = d.documentElement,
-                //     g = d.getElementsByTagName('body')[0],
-                //     x = w.innerWidth || e.clientWidth || g.clientWidth,
-                //     y = w.innerHeight || e.clientHeight || g.clientHeight;
 
                 this.simulation = d3.forceSimulation(d3.values(d3graph.nodes))
                     .force("x", d3.forceX())
                     .force("y", d3.forceY())
                     .force("center", d3.forceCenter(x / 2, y / 2)) // TODO Move to somewhere else?
-                    .force("charge", d3.forceManyBody()
-                        .strength(d => {
-                            return d.filtered ? 0 : -d.weight * config.charge_multiplier;
-                        })
-                    )
+                    .force("charge", d3.forceManyBody().strength(this._chargeStrength))
                     .force("link", d3.forceLink(d3graph.links)
                         .distance(this._linkDistance)
                         .strength(this._linkStrength)
@@ -140,6 +131,14 @@ let dvvisualizer = {
                 }
                 return config.default_link_strength;
             },
+
+            _chargeStrength: function (node) {
+                if (node.filtered) {
+                    return 0;
+                }
+                return -node.weight * config.charge_multiplier;
+            },
+
 
             _structurePoints: function(d) {
                 let r = this._radius(d);
@@ -173,17 +172,13 @@ let dvvisualizer = {
 
             reapply_charge: function (value) {
                 config.charge_multiplier = value;
-                this.simulation.force("charge", d3.forceManyBody()
-                    .strength(d => {
-                        return d.filtered ? 0 : -d.weight * value;
-                    })
-                );
+                this.simulation.force("charge", d3.forceManyBody().strength(this._chargeStrength));
                 this.simulation.alphaTarget(0.3).restart()
             },
 
             updateTextVisibility: function (visible) {
-                text.attr("visibility", visible ? "visible" : "hidden");
-                config.show_texts_near_circles = visible;
+                this.config.show_texts_near_circles = visible;
+                this._textNode.attr("visibility", visible ? "visible" : "hidden");
                 this.simulation.alphaTarget(0.3).restart()
             },
 
@@ -227,13 +222,14 @@ let dvvisualizer = {
             },
 
             _setupTexts: function () {
-                const text = svg.append("g").selectAll("text")
+                svg.append("g").selectAll("text")
                     .data(this.simulation.nodes())
                     .enter()
                     .append("text")
                     .attr("visibility", "hidden")
                     .text(d => d.name.substring(0, this.config.default_max_texts_length));
 
+                this._textNode = svg.selectAll("text");
             },
 
             _link_line: function (d) {
@@ -256,7 +252,7 @@ let dvvisualizer = {
             }.bind(visualizer),
 
             setupZoom: function (container) {
-                var w = window,
+                const w = window,
                     d = document,
                     e = d.documentElement,
                     g = d.getElementsByTagName('body')[0],
@@ -285,7 +281,7 @@ let dvvisualizer = {
                 this._node.attr("transform", this._transform);
                 this._structNode.attr("transform", this._transform);
                 if (config.show_texts_near_circles) {
-                    text.attr("transform", this._transform);
+                    this._textNode.attr("transform", this._transform);
                 }
             }.bind(visualizer),
 

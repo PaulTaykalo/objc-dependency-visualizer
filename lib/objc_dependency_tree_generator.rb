@@ -82,8 +82,10 @@ class DependencyTreeGenerator
 
     links = {}
     links_block = lambda { |source, dest|
-      links[source] = {} unless links[source]
-      if source != dest and is_valid_dest?(dest, @exclusion_prefixes)
+      if is_valid_dest?(source, @exclusion_prefixes)
+        links[source] = {} unless links[source]
+      end  
+      if source != dest and is_valid_dest?(dest, @exclusion_prefixes) && is_valid_dest?(source, @exclusion_prefixes)
         links[source][dest] = 'set up'
       end
     }

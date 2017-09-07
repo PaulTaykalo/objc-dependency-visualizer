@@ -56,6 +56,11 @@ class DependencyTreeGenerator
       o.on('-k FILENAME', 'Generate dependencies from source kitten output (json)') do |v|
         options[:sourcekitten_dependencies_file] = v
       end
+
+      o.on('-k FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
+        options[:swift_ast_dump_file] = v
+      end
+
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') do |f|
         options[:output_format] = f
       end
@@ -111,6 +116,8 @@ class DependencyTreeGenerator
         @object_files_directories,
         &links_block
       )
+    elsif @options[:swift_ast_dump_file]
+
     else
       ObjcDependenciesGenerator.new.generate_dependencies(
         @object_files_directories,
@@ -127,6 +134,10 @@ class DependencyTreeGenerator
       return build_sourcekitten_dependency_tree
     end
 
+    if @options[:swift_ast_dump_file]
+      return build_ast_dependency_tree
+    end
+
     tree = DependencyTree.new
     links = find_dependencies
 
@@ -138,6 +149,15 @@ class DependencyTreeGenerator
     end
 
     tree
+  end
+
+  def build_ast_dependency_tree
+    require 'swift_ast_dependencies_generator'
+    generator = SwiftAstDependenciesGenerator.new(
+      @options[:swift_ast_dump_file]
+    )
+    generator.generate_dependencies
+
   end
 
   def build_sourcekitten_dependency_tree

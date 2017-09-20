@@ -54,7 +54,7 @@ module SwiftAST
 
         next_char = @scanner.peek(1)
         if next_char == ":"
-          result += scan_line_and_column
+          result += (scan_line_and_column || ":")
         elsif next_char == "="
           result +=  @scanner.scan(/=/) + ( scan_parameter?(false) || "" )
         elsif next_char == "("

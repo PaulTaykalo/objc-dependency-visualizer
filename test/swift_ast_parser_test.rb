@@ -67,6 +67,12 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.parameters, ["implicit", "type='(_MaxBuiltinIntegerType) -> Int'", "location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22", "range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22]", "nothrow"]
   end  
 
+  def test_node_builtin_literal
+    ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr arg_labels=_builtinBooleanLiteral:)")
+    assert_equal ast.name, "constructor_ref_call_expr"
+    assert_equal ast.parameters, ["arg_labels=_builtinBooleanLiteral:"]
+  end  
+
   def test_children_parsing
     source = """
     (brace_stmt\
@@ -82,6 +88,18 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal return_statement.parameters, ["implicit"]
 
   end
+
+  def test_complex_file_parsing
+    source = IO.read('./test/fixtures/swift-dump-ast/appdelegate.ast')
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "source_file"
+  end  
+
+  def test_even_more_complex_file_parsing
+    source = IO.read('./test/fixtures/swift-dump-ast/complex-file.ast')
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "source_file"
+  end  
     
 
 end

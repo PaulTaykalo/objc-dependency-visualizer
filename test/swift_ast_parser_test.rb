@@ -43,6 +43,12 @@ class SwiftAstParserTest < Minitest::Test
 
   end  
 
+  def test_custom_node_with_assignment
+    ast = SwiftAST::Parser.new.parse("(assignment weather=cool")
+    assert_equal ast.name, "assignment"
+    assert_equal ast.parameters, ["weather=cool"]
+  end  
+
   def test_custom_node_paramters
     ast = SwiftAST::Parser.new.parse("(hello \"Protocol1\" <Self : Protocol1> interface type='Protocol1.Protocol' access=internal @_fixed_layout requirement signature=<Self>)")
     assert_equal ast.name, "hello"
@@ -54,5 +60,28 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.name, "component"
     assert_equal ast.parameters, ["id='Protocol1'", "bind=SourcekittenWithComplexDependencies.(file).Protocol1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:12:10" ] 
   end  
+
+  def test_node_range_parameter
+    ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] nothrow)")
+    assert_equal ast.name, "constructor_ref_call_expr"
+    assert_equal ast.parameters, ["implicit", "type='(_MaxBuiltinIntegerType) -> Int'", "location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22", "range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22]", "nothrow"]
+  end  
+
+  def test_children_parsing
+    source = """
+    (brace_stmt\
+        (return_stmt implicit))
+    """
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "brace_stmt"
+    assert_equal ast.parameters, []
+    assert !ast.children.empty?, "Parser should be able to parse subtrees"
+
+    return_statement = ast.children.first
+    assert_equal return_statement.name, "return_stmt"
+    assert_equal return_statement.parameters, ["implicit"]
+
+  end
+    
 
 end

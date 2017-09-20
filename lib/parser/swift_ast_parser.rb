@@ -1,16 +1,10 @@
 module SwiftAST
   class Parser 
     def parse(string)
+
       @scanner = StringScanner.new(string)
-      @scanner.scan( /\(/)
-      name = @scanner.scan(/\w+/)
-      @scanner.skip(/\s+/)
-
-      parameters = scan_parameters
-
-      node = Node.new(name, parameters)
+      node = scan_children.first
       node
-
     end 
 
     def scan_parameters
@@ -26,8 +20,18 @@ module SwiftAST
       parameters
     end  
 
+    def scan_children
+      children = []
+      while true
+        return children unless @scanner.scan_until(/\(/)
+        children << Node.new(scan_parameter?, scan_parameters, scan_children)
+        @scanner.scan(/(\s|\\)*\)/)
+      end  
+      children
+    end  
+
     def scan_parameter?(unwrap_strings = true)
-      prefix = @scanner.scan_until(/\w|<|"|'|@|_/)
+      prefix = @scanner.scan(/(\s|\\)*(\w|<|"|'|@|_|\/|\[)/)
       return nil unless prefix
 
       char = prefix[-1]
@@ -41,29 +45,29 @@ module SwiftAST
         result = result[1..-2] if unwrap_strings
       when char == "<"
         result = char + @scanner.scan_until(/>/)
-      when isalpha(char)
-        rest = @scanner.scan(/([\w\.@\d\/-])*/)
+      when char == "["
+        result = char + @scanner.scan_until(/\]/)
+      when isalpha(char) || char == "/"
+        rest = @scanner.scan(/([\w\.@\/-])*/)
         param_name = (char + rest)
+        result = param_name
 
         next_char = @scanner.peek(1)
         if next_char == ":"
-          line_and_column = @scanner.scan(/:\d+:\d+/)
-          return param_name + line_and_column
+          result += scan_line_and_column
         elsif next_char == "="
-          param_value = scan_parameter?(false) || ""
-          return param_name + "=" + param_value    
+          result +=  @scanner.scan(/=/) + ( scan_parameter?(false) || "" )
         elsif next_char == "("
-          file_part = @scanner.scan(/\(file\)\./)
-          rest_part = scan_parameter? || ""
-          return param_name + file_part + rest_part
-                          
-        else  
-          return param_name
+          is_file = @scanner.peek(7) == "(file)."
+          result += @scanner.scan(/\(file\)\./) + ( scan_parameter?(false) || "" ) if is_file 
         end  
       end 
       result
-
     end    
+
+    def scan_line_and_column
+      @scanner.scan(/:\d+:\d+/)
+    end  
 
     def isalpha(str)
       !str.match(/[^A-Za-z@_]/)
@@ -73,9 +77,10 @@ module SwiftAST
 
   class Node
 
-    def initialize(name, parameters = [])
+    def initialize(name, parameters = [], children = [])
       @name = name
       @parameters = parameters
+      @children = children
     end    
 
     def name
@@ -84,6 +89,10 @@ module SwiftAST
 
     def parameters
       @parameters
+    end
+
+    def children
+      @children
     end    
   end      
 

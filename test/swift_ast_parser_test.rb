@@ -44,9 +44,9 @@ class SwiftAstParserTest < Minitest::Test
   end  
 
   def test_custom_node_with_assignment
-    ast = SwiftAST::Parser.new.parse("(assignment weather=cool")
+    ast = SwiftAST::Parser.new.parse("(assignment weather=cool temperature=123")
     assert_equal ast.name, "assignment"
-    assert_equal ast.parameters, ["weather=cool"]
+    assert_equal ast.parameters, ["weather=cool", "temperature=123"]
   end  
 
   def test_custom_node_paramters
@@ -61,6 +61,12 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.parameters, ["id='Protocol1'", "bind=SourcekittenWithComplexDependencies.(file).Protocol1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:12:10" ] 
   end  
 
+  def test_node_filetype_parameter2
+    ast = SwiftAST::Parser.new.parse("(component id='Protocol1' bind=SourcekittenWithComplexDependencies.(file).Protocol1.<anonymous>.@/Users/paultaykalo/Projects/A.swift:12:10)")
+    assert_equal ast.name, "component"
+    assert_equal ast.parameters, ["id='Protocol1'", "bind=SourcekittenWithComplexDependencies.(file).Protocol1.<anonymous>.@/Users/paultaykalo/Projects/A.swift:12:10"]
+  end  
+
   def test_node_range_parameter
     ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] nothrow)")
     assert_equal ast.name, "constructor_ref_call_expr"
@@ -71,6 +77,20 @@ class SwiftAstParserTest < Minitest::Test
     ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr arg_labels=_builtinBooleanLiteral:)")
     assert_equal ast.name, "constructor_ref_call_expr"
     assert_equal ast.parameters, ["arg_labels=_builtinBooleanLiteral:"]
+  end  
+
+  def test_comma_parsing
+    ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr inherits: UIResponder, UIApplicationDelegate)")
+    assert_equal ast.name, "constructor_ref_call_expr"
+    assert_equal ast.parameters, ["inherits:", "UIResponder,", "UIApplicationDelegate"]
+  end  
+
+  def test_nilliteral_parameter_parsing
+    ast = SwiftAST::Parser.new.parse("(declref_expr implicit type='(Optional<UIWindow>.Type) -> (()) -> Optional<UIWindow>' decl=Swift.(file).Optional.init(nilLiteral:) [with UIWindow] function_ref=single)
+")
+    assert_equal ast.name, "declref_expr"
+    assert_equal ast.parameters, ["implicit", "type='(Optional<UIWindow>.Type) -> (()) -> Optional<UIWindow>'", "decl=Swift.(file).Optional.init(nilLiteral:)", "[with UIWindow]", "function_ref=single"]
+
   end  
 
   def test_children_parsing
@@ -88,6 +108,22 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal return_statement.parameters, ["implicit"]
 
   end
+
+  def test_multiple_children_parsing 
+    source = %{
+    (func_decl implicit 'anonname=0x7f85f59df460' interface type='(AppDelegate) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=window\
+    (parameter_list\
+    (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+    (parameter_list\
+    (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+    (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    }
+
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "func_decl"
+    assert_equal ast.children.count, 2
+
+  end  
 
   def test_complex_file_parsing
     source = IO.read('./test/fixtures/swift-dump-ast/appdelegate.ast')

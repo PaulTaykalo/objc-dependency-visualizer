@@ -26,7 +26,7 @@ class DependencyTreeGenerator
     options[:derived_data_paths] = ['~/Library/Developer/Xcode/DerivedData', '~/Library/Caches/appCode*/DerivedData']
     options[:project_name] = ''
     options[:output_format] = 'json'
-
+    options[:verbose] = 'true'
 
     OptionParser.new do |o|
       o.separator 'General options:'
@@ -100,7 +100,8 @@ class DependencyTreeGenerator
         @options[:derived_data_paths],
         @options[:project_name],
         @options[:derived_data_project_pattern],
-        @options[:target_names]
+        @options[:target_names],
+        @options[:verbose]
       )
       return {} unless @object_files_directories
     end

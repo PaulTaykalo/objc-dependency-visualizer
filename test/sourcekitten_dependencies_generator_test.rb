@@ -1,9 +1,8 @@
-require 'test/unit'
-require 'test/unit/assertions'
+require 'minitest/autorun'
 require 'objc_dependency_tree_generator'
 require 'sourcekitten_dependencies_generator'
 
-class SourceKittenDependencyTreeGeneratorTest < Test::Unit::TestCase
+class SourceKittenDependencyTreeGeneratorTest < Minitest::Test
   def test_links_generation
     generator = DependencyTreeGenerator.new({})
     tree = generator.build_dependency_tree

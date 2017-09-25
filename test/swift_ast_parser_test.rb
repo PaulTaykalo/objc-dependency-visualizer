@@ -132,7 +132,7 @@ class SwiftAstParserTest < Minitest::Test
   end  
 
   def test_even_more_complex_file_parsing
-    source = IO.read('./test/fixtures/swift-dump-ast/complex-file.ast')
+    source = IO.read('./test/fixtures/swift-dump-ast/first-file.ast')
     ast = SwiftAST::Parser.new.parse(source)
     assert_equal ast.name, "source_file"
   end  

@@ -24,18 +24,18 @@ class SwiftAstDependenciesGenerator
   def scan_source_files
     classes = @ast_tree.find_nodes("class_decl")
     classes.each { |node| 
-      return unless classname = node.parameters.first
+      next unless classname = node.parameters.first
       @tree.register(classname, DependencyItemType::CLASS) 
     }
 
     protocols = @ast_tree.find_nodes("protocol")
     protocols.each { |node| 
-      return unless protoname = node.parameters.first
+      next unless protoname = node.parameters.first
       @tree.register(protoname, DependencyItemType::PROTOCOL) 
     }
 
     classes.each { |node| 
-      return unless classname = node.parameters.first
+      next unless classname = node.parameters.first
       generic_names = register_generic_parameters(node, classname) 
       @generics_context << generic_names
 
@@ -52,6 +52,12 @@ class SwiftAstDependenciesGenerator
       return unless proto_name = node.parameters.first
       register_inheritance(node, proto_name) 
       register_function_parameters(node, proto_name) 
+    }
+
+    extensions = @ast_tree.find_nodes("extension_decl")
+    extensions.each { |node|
+      return unless extension_name = node.parameters.first
+      register_inheritance(node, extension_name) 
     }
 
   end
@@ -82,15 +88,12 @@ class SwiftAstDependenciesGenerator
 
       generic_name = leftPart.strip || leftPart
       generic_decls << generic_name
-      puts "generic added #{generic_name}"
 
       next unless rightPart
 
 
       rightPart.split("&").each { |protocol_or_class|
         proto_name = protocol_or_class.strip || protocol_or_class
-        puts "Registering #{proto_name} as generic parameter"
-
         add_tree_dependency(name, proto_name, DependencyLinkType::INHERITANCE)
       }
     }
@@ -116,14 +119,10 @@ class SwiftAstDependenciesGenerator
   end
 
   def register_function_parameters(node, name)  
-    puts "Registrign function parameters for node with #{name}"
     node.find_nodes("func_decl").each { |func_decl|
 
-      puts "Registering generic params for node #{func_decl.parameters} -> #{name}"    
       generic_names = register_generic_parameters(func_decl, name)
       @generics_context << generic_names
-      puts "Found generics #{generic_names}"
-
 
       func_decl.find_nodes("parameter_list").each { |param_list|
         param_list.find_nodes("parameter").each { |parameter|
@@ -160,8 +159,6 @@ class SwiftAstDependenciesGenerator
 
     to = normalized_name(to_name)
     return if skip_names.include? to
-
-    puts "Adding #{from} -> #{to} -> with #{type}  Skippables #{skip_names}"
     @tree.add(from, to, type)
   end
 

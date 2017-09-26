@@ -49,8 +49,9 @@ class SwiftAstDependenciesGenerator
     }
 
     protocols.each { |node|
-      proto_name = node.parameters.first
-      register_inheritance(node, proto_name) if proto_name
+      return unless proto_name = node.parameters.first
+      register_inheritance(node, proto_name) 
+      register_function_parameters(node, proto_name) 
     }
 
   end
@@ -76,13 +77,20 @@ class SwiftAstDependenciesGenerator
       parts = decl.split(":")
       leftPart = parts[0]
       rightPart = parts[1]
-      return unless rightPart && leftPart
+
+      next unless leftPart
 
       generic_name = leftPart.strip || leftPart
       generic_decls << generic_name
+      puts "generic added #{generic_name}"
+
+      next unless rightPart
+
 
       rightPart.split("&").each { |protocol_or_class|
         proto_name = protocol_or_class.strip || protocol_or_class
+        puts "Registering #{proto_name} as generic parameter"
+
         add_tree_dependency(name, proto_name, DependencyLinkType::INHERITANCE)
       }
     }
@@ -93,7 +101,7 @@ class SwiftAstDependenciesGenerator
 
   def register_variables(node, name)  
     node.find_nodes("var_decl").each { |variable|
-      return unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
+      next unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
       type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
       add_tree_dependency(name, type_name, DependencyLinkType::IVAR)
     }
@@ -101,18 +109,25 @@ class SwiftAstDependenciesGenerator
 
   def register_calls(node, name)
     node.find_nodes("call_expr").each { |variable|
-      return unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
+      next unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
       type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
       add_tree_dependency(name, type_name, DependencyLinkType::CALL)
     }
   end
 
   def register_function_parameters(node, name)  
+    puts "Registrign function parameters for node with #{name}"
     node.find_nodes("func_decl").each { |func_decl|
+
+      puts "Registering generic params for node #{func_decl.parameters} -> #{name}"    
+      generic_names = register_generic_parameters(func_decl, name)
+      @generics_context << generic_names
+      puts "Found generics #{generic_names}"
+
 
       func_decl.find_nodes("parameter_list").each { |param_list|
         param_list.find_nodes("parameter").each { |parameter|
-          return unless type_decl = parameter.parameters.find { |el| el.start_with?("type=") }
+          next unless type_decl = parameter.parameters.find { |el| el.start_with?("type=") }
           type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
           add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
         }
@@ -121,12 +136,13 @@ class SwiftAstDependenciesGenerator
       func_decl.find_nodes("result").each { |result_decl|
         result_decl.find_nodes("type_ident").each { |type_id|
           type_id.find_nodes("component").each { |comp|
-            return unless type_decl = comp.parameters.find { |el| el.start_with?("id=") }
+            next unless type_decl = comp.parameters.find { |el| el.start_with?("id=") }
             type_name = type_decl.sub("id=", '')[1..-2].chomp("?")
             add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
           }
         }
       }
+      @generics_context.pop
     }
   end 
 
@@ -137,7 +153,7 @@ class SwiftAstDependenciesGenerator
   def add_tree_dependency(from_name, to_name, type) 
     # skip names from generics
     # we also will need to skip generics_from_functions
-    skip_names = @generics_context.last || []
+    skip_names = (@generics_context || []).flatten
 
     from = normalized_name(from_name)
     return if skip_names.include? from
@@ -145,6 +161,7 @@ class SwiftAstDependenciesGenerator
     to = normalized_name(to_name)
     return if skip_names.include? to
 
+    puts "Adding #{from} -> #{to} -> with #{type}  Skippables #{skip_names}"
     @tree.add(from, to, type)
   end
 

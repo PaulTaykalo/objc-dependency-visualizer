@@ -35,7 +35,6 @@ module SwiftAST
       return nil unless prefix
 
       char = prefix[-1]
-
       case 
       when char == "\""
         result = char + @scanner.scan_until(/"/)
@@ -46,7 +45,7 @@ module SwiftAST
       when char == "<"
         result = char + @scanner.scan_until(/>/)
       when char == "["
-        result = char + @scanner.scan_until(/\]/)
+        result = char + scan_range
       when isAlphaDigit(char) || char == "/"
         rest = @scanner.scan(/([\w\.@\/,-])*/)
         param_name = (char + rest)
@@ -69,6 +68,15 @@ module SwiftAST
       end 
       result
     end    
+
+    def scan_range
+      to_bracket = @scanner.scan_until(/\[|\]/)
+      if to_bracket.end_with? "["
+        to_bracket += scan_range #find closing of the opened
+        to_bracket += scan_range #find closing of the original
+      end
+      return to_bracket
+    end  
 
     def scan_line_and_column
       @scanner.scan(/:\d+:\d+/)

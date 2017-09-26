@@ -112,12 +112,36 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
 
     assert(tree.isRegistered?('ProtocolForGeneric'))
     assert(tree.isRegistered?('ProtocolForGeneric2'))
-    assert(!tree.isRegistered?('E'))
+    assert(!tree.isRegistered?('E'), "Parser should skip regisestering generic parameters")
 
     assert tree.connected?('GenericClassWithProp', 'ProtocolForGeneric')
-    assert !tree.connected?('GenericClassWithProp', 'E')
+    assert !tree.connected?('GenericClassWithProp', 'E'), "Parser should skip regisestering generic parameters"
 
     assert(!tree.isRegistered?('GenericClassWithProp<E>'))
+
+  end  
+
+  def test_generic_functions_in_protocols
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
+      )
+    tree = generator.build_dependency_tree
+
+    assert(tree.isRegistered?('ProtocolWithGenericFunction'))
+    assert(!tree.isRegistered?('F'))
+    assert(!tree.isRegistered?('G'))
+    assert(!tree.isRegistered?('N'))
+
+  end 
+
+  def test_generic_functions_restrictions
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
+      )
+    tree = generator.build_dependency_tree
+
+    assert(tree.isRegistered?('ProtocolWithGenericFunction'))
+    assert tree.connected?('ProtocolWithGenericFunction', 'ProtocolForGeneric2'), "Parser should get types from generic restrictions of type `func a<P: Type>()`"
 
   end  
 

@@ -73,6 +73,12 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.parameters, ["implicit", "type='(_MaxBuiltinIntegerType) -> Int'", "location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22", "range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22]", "nothrow"]
   end  
 
+  def test_node_range_recursive_parameter
+    ast = SwiftAST::Parser.new.parse("(with_recursive [with E[abstract:ProtocolForGeneric]])")
+    assert_equal ast.name, "with_recursive"
+    assert_equal ast.parameters, ["[with E[abstract:ProtocolForGeneric]]"]
+  end  
+
   def test_node_builtin_literal
     ast = SwiftAST::Parser.new.parse("(constructor_ref_call_expr arg_labels=_builtinBooleanLiteral:)")
     assert_equal ast.name, "constructor_ref_call_expr"

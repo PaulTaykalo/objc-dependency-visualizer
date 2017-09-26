@@ -38,6 +38,7 @@ class SwiftAstDependenciesGenerator
       next unless classname = node.parameters.first
       generic_names = register_generic_parameters(node, classname) 
       @generics_context << generic_names
+      register_typealiases(node, classname)
 
       register_inheritance(node, classname) 
       register_variables(node, classname) 
@@ -70,6 +71,15 @@ class SwiftAstDependenciesGenerator
       add_tree_dependency(name, inh_name, DependencyLinkType::INHERITANCE)
     }
   end
+
+  def register_typealiases(node, name)
+    node.find_nodes("typealias").each { |typealias|
+      typealias.parameters.select { |el| el.start_with?("type=") }.each { |type_decl|
+        type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
+        add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
+      }
+    }
+  end  
 
   def register_generic_parameters(node, name)
     return [] unless generic = node.parameters[1] # Second parameter

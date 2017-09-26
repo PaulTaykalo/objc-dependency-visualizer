@@ -164,5 +164,33 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
 
   end  
 
+  def test_typealias_dependencies
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
+      )
+    tree = generator.build_dependency_tree
+
+    assert(tree.isRegistered?('ClassWithTypeaLias'))
+    assert(tree.isRegistered?('ProtocolForTypeAlias'))
+    assert(!tree.isRegistered?('H'), "Parser should skip regisestering typealias parameters")
+    assert tree.connected?('ClassWithTypeaLias', 'ProtocolForTypeAlias'), "Parser should get types from typealiases `typealias H = Protocol`"
+
+  end  
+
+  def test_typealias_dependencies_in_params
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
+      )
+    tree = generator.build_dependency_tree
+
+    assert(tree.isRegistered?('ClassWithTypeaLiasInFunctionParams'))
+    assert(tree.isRegistered?('ProtocolForTypeAlias'))
+    assert(!tree.isRegistered?('I'), "Parser should skip regisestering typealias parameters")
+    assert tree.connected?('ClassWithTypeaLiasInFunctionParams', 'ProtocolForTypeAlias'), "Parser should get types from typealiases `typealias H = Protocol`"
+
+  end  
+
+  
+
 
 end

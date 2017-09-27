@@ -6,6 +6,6 @@ cache: bundler
 language: 
   - objective-c
 rvm:
-  - 1.9.3
+  - 2.3.3
 script:
   - rake

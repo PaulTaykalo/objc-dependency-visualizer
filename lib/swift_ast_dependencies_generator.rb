@@ -169,6 +169,9 @@ class SwiftAstDependenciesGenerator
 
     to = normalized_name(to_name)
     return if skip_names.include? to
+
+    return unless to
+    return unless from
     @tree.add(from, to, type)
   end
 

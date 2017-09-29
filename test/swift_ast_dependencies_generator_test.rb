@@ -190,6 +190,14 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
 
   end  
 
+  def test_realwordl_example
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/cell-file.ast'
+      )
+    tree = generator.build_dependency_tree
+    assert tree, "Parsher should be able to parse real-world examples"
+
+  end  
   
 
 

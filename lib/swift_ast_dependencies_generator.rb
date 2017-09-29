@@ -14,8 +14,8 @@ class SwiftAstDependenciesGenerator
     @context = []
     @generics_context = []
 
-    @ast_tree = SwiftAST::Parser.new().parse(File.read(@ast_file))
-    # @ast_tree.dump
+    @ast_tree = SwiftAST::Parser.new().parse_build_log_output(File.read(@ast_file))
+    @ast_tree.dump
     scan_source_files
 
     @tree

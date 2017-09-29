@@ -143,5 +143,18 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.name, "source_file"
   end  
     
+  def test_some_unusual_params
+    source = %{
+    (string_expr builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:) initializer=**NULL** names='',animated
+      (parameter_list)\
+    )
+    }
+
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "string_expr"
+    assert_equal ast.parameters, ["builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)", "initializer=**NULL**", "names='',animated"]
+    assert_equal ast.children.count, 1
+
+  end  
 
 end

@@ -1,11 +1,20 @@
 module SwiftAST
   class Parser 
     def parse(string)
-
       @scanner = StringScanner.new(string)
       node = scan_children.first
       node
     end 
+
+    
+    def parse_build_log_output(string)
+      @scanner = StringScanner.new(string)
+      return unless @scanner.scan_until(/^\(source_file\\/)
+      @scanner.pos = @scanner.pos - 13
+      node = scan_children.first
+      node
+    end 
+
 
     def scan_parameters
       parameters = []
@@ -31,7 +40,7 @@ module SwiftAST
     end  
 
     def scan_parameter?(unwrap_strings = true)
-      prefix = @scanner.scan(/(\s|\\)*(\w|\d|<|"|'|@|_|\/|\[)/)
+      prefix = @scanner.scan(/(\s|\\)*(\w|\d|<|"|'|@|_|\/|\[|\*)/)
       return nil unless prefix
 
       char = prefix[-1]
@@ -42,10 +51,13 @@ module SwiftAST
       when char == "'"
         result = char + @scanner.scan_until(/'/)
         result = result[1..-2] if unwrap_strings
+        result += (@scanner.scan(/./) + scan_parameter?(false) || "") if isalphaOrDot(@scanner.peek(1))
       when char == "<"
         result = char + @scanner.scan_until(/>/)
       when char == "["
         result = char + scan_range
+      when char == "*" 
+        result = char + @scanner.scan_until(/\*NULL\*\*/) if @scanner.peek(7) == "*NULL**"
       when isAlphaDigit(char) || char == "/"
         rest = @scanner.scan(/([\w\.@\/,-])*/)
         param_name = (char + rest)
@@ -89,7 +101,7 @@ module SwiftAST
       !str.match(/[^A-Za-z@_0-9]/)
     end  
     def isalphaOrDot(str)
-      !str.match(/[^A-Za-z@_.]/)
+      !str.match(/[^A-Za-z@_.,]/)
     end
 
   end

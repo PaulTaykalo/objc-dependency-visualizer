@@ -57,7 +57,7 @@ class DependencyTreeGenerator
         options[:sourcekitten_dependencies_file] = v
       end
 
-      o.on('-k FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
+      o.on('-a FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
         options[:swift_ast_dump_file] = v
       end
 

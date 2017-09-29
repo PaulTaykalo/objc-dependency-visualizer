@@ -1,0 +1,365 @@
+(source_file\
+  (import_decl 'UIKit')\
+  (class_decl "TheCell" interface type='TheCell.Type' access=internal @objc @_fixed_layout inherits: UITableViewCell\
+    (pattern_binding_decl\
+      (pattern_typed type='UIImageView!'\
+        (pattern_named type='UIImageView!' 'userImageView')\
+)\
+      (call_expr implicit type='UIImageView!' nothrow arg_labels=nilLiteral:\
+        (constructor_ref_call_expr implicit type='(()) -> UIImageView!' nothrow\
+          (declref_expr implicit type='(ImplicitlyUnwrappedOptional<UIImageView>.Type) -> (()) -> ImplicitlyUnwrappedOptional<UIImageView>' decl=Swift.(file).ImplicitlyUnwrappedOptional.init(nilLiteral:) [with UIImageView] function_ref=single)\
+          (type_expr implicit type='UIImageView!.Type' typerepr='<<NULL>>'))\
+        (tuple_expr implicit type='(nilLiteral: ())' names=nilLiteral\
+          (tuple_expr implicit type='()'))))\
+    (var_decl "userImageView" type='UIImageView!' interface type='UIImageView!' access=internal @objc storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7f8ac3531fb0' interface type='(TheCell) -> () -> UIImageView!' access=internal @objc getter_for=userImageView\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='UIImageView!'\
+              (member_ref_expr implicit type='@lvalue UIImageView!' accessKind=read decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24 direct_to_storage\
+                (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:13:24 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7f8ac3532220' interface type='(TheCell) -> (UIImageView!) -> ()' access=internal @objc setter_for=userImageView\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "value" type='UIImageView!' interface type='UIImageView!'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue UIImageView!' accessKind=write decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:13:24 function_ref=unapplied))\
+            (declref_expr implicit type='UIImageView!' decl=project.(file).TheCell.<anonymous>.value@/path/TheCell.swift:13:24 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7f8ac35327d0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=userImageView\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7f8ac3531fb0' interface type='(TheCell) -> () -> UIImageView!' access=internal @objc getter_for=userImageView\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='UIImageView!'\
+            (member_ref_expr implicit type='@lvalue UIImageView!' accessKind=read decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:13:24 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7f8ac3532220' interface type='(TheCell) -> (UIImageView!) -> ()' access=internal @objc setter_for=userImageView\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "value" type='UIImageView!' interface type='UIImageView!'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue UIImageView!' accessKind=write decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24 direct_to_storage\
+            (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:13:24 function_ref=unapplied))\
+          (declref_expr implicit type='UIImageView!' decl=project.(file).TheCell.<anonymous>.value@/path/TheCell.swift:13:24 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7f8ac35327d0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=userImageView\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='UILabel!'\
+        (pattern_named type='UILabel!' 'usernameLabel')\
+)\
+      (call_expr implicit type='UILabel!' nothrow arg_labels=nilLiteral:\
+        (constructor_ref_call_expr implicit type='(()) -> UILabel!' nothrow\
+          (declref_expr implicit type='(ImplicitlyUnwrappedOptional<UILabel>.Type) -> (()) -> ImplicitlyUnwrappedOptional<UILabel>' decl=Swift.(file).ImplicitlyUnwrappedOptional.init(nilLiteral:) [with UILabel] function_ref=single)\
+          (type_expr implicit type='UILabel!.Type' typerepr='<<NULL>>'))\
+        (tuple_expr implicit type='(nilLiteral: ())' names=nilLiteral\
+          (tuple_expr implicit type='()'))))\
+    (var_decl "usernameLabel" type='UILabel!' interface type='UILabel!' access=fileprivate @objc storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7f8ac3535040' interface type='(TheCell) -> () -> UILabel!' access=fileprivate @objc getter_for=usernameLabel\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='UILabel!'\
+              (member_ref_expr implicit type='@lvalue UILabel!' accessKind=read decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36 direct_to_storage\
+                (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:14:36 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7f8ac35352b0' interface type='(TheCell) -> (UILabel!) -> ()' access=fileprivate @objc setter_for=usernameLabel\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "value" type='UILabel!' interface type='UILabel!'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue UILabel!' accessKind=write decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:14:36 function_ref=unapplied))\
+            (declref_expr implicit type='UILabel!' decl=project.(file).TheCell.<anonymous>.value@/path/TheCell.swift:14:36 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7f8ac35357b0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=fileprivate materializeForSet_for=usernameLabel\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7f8ac3535040' interface type='(TheCell) -> () -> UILabel!' access=fileprivate @objc getter_for=usernameLabel\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='UILabel!'\
+            (member_ref_expr implicit type='@lvalue UILabel!' accessKind=read decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:14:36 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7f8ac35352b0' interface type='(TheCell) -> (UILabel!) -> ()' access=fileprivate @objc setter_for=usernameLabel\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "value" type='UILabel!' interface type='UILabel!'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue UILabel!' accessKind=write decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36 direct_to_storage\
+            (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:14:36 function_ref=unapplied))\
+          (declref_expr implicit type='UILabel!' decl=project.(file).TheCell.<anonymous>.value@/path/TheCell.swift:14:36 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7f8ac35357b0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=fileprivate materializeForSet_for=usernameLabel\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='String'\
+        (pattern_named type='String' 'usernameText')\
+        (type_ident\
+          (component id='String' bind=Swift.(file).String)))\
+      (string_literal_expr type='String' location=/path/TheCell.swift:16:32 range=[/path/TheCell.swift:16:32 - line:16:32] encoding=utf8 value="" builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:) initializer=**NULL**))\
+    (var_decl "usernameText" type='String' interface type='String' access=internal @objc storage_kind=stored_with_observers\
+      (func_decl implicit 'anonname=0x7f8ac210a4e0' interface type='(TheCell) -> () -> String' access=internal @objc getter_for=usernameText\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list)\
+        (result\
+          (type_ident\
+            (component id='String' bind=none)))\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='String'\
+              (member_ref_expr implicit type='@lvalue String' accessKind=read decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+                (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7f8ac210a7a0' interface type='(TheCell) -> (String) -> ()' access=internal @objc setter_for=usernameText\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "newValue" type='String' interface type='String'))\
+        (brace_stmt\
+          (pattern_binding_decl implicit\
+            (pattern_named implicit type='String' 'tmp')\
+            (load_expr implicit type='String'\
+              (member_ref_expr implicit type='@lvalue String' accessKind=read decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+                (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))))\
+\
+          (var_decl implicit "tmp" type='String' interface type='String' access=private let storage_kind=stored)\
+\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue String' accessKind=write decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))\
+            (declref_expr implicit type='String' decl=project.(file).TheCell.<anonymous>.newValue@/path/TheCell.swift:17:9 function_ref=unapplied))\
+          (call_expr implicit type='()' nothrow arg_labels=_:\
+            (dot_syntax_call_expr implicit type='(String) -> ()' nothrow\
+              (declref_expr implicit type='(TheCell) -> (String) -> ()' decl=project.(file).TheCell._@/path/TheCell.swift:17:9 function_ref=double)\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))\
+            (paren_expr implicit type='(String)'\
+              (declref_expr implicit type='String' decl=project.(file).TheCell.<anonymous>.tmp function_ref=unapplied)))))\
+      (func_decl implicit 'anonname=0x7f8ac35389d0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=usernameText\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+      (func_decl 'anonname=0x7f8ac20d9510' interface type='(TheCell) -> (String) -> ()' access=internal final didSet_for=usernameText\
+        (parameter_list\
+          (parameter "self" type='TheCell' interface type='TheCell'))\
+        (parameter_list\
+          (parameter "oldValue" type='String' interface type='String'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr type='@lvalue String?' accessKind=write location=/path/TheCell.swift:18:32 range=[/path/TheCell.swift:18:13 - line:18:32] decl=UIKit.(file).UILabel.text\
+              (load_expr implicit type='UILabel' location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18]\
+                (force_value_expr implicit type='@lvalue UILabel' accessKind=read location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18]\
+                  (member_ref_expr type='@lvalue UILabel!' accessKind=read location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18] decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36\
+                    (declref_expr type='TheCell' location=/path/TheCell.swift:18:13 range=[/path/TheCell.swift:18:13 - line:18:13] decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:17:9 function_ref=unapplied)))))\
+            (inject_into_optional implicit type='String?' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39]\
+              (load_expr implicit type='String' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39]\
+                (member_ref_expr type='@lvalue String' accessKind=read location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39] decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+                  (declref_expr implicit type='TheCell' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39] decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:17:9 function_ref=unapplied))))))))\
+    (func_decl 'anonname=0x7f8ac20d9510' interface type='(TheCell) -> (String) -> ()' access=internal final didSet_for=usernameText\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "oldValue" type='String' interface type='String'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr type='@lvalue String?' accessKind=write location=/path/TheCell.swift:18:32 range=[/path/TheCell.swift:18:13 - line:18:32] decl=UIKit.(file).UILabel.text\
+            (load_expr implicit type='UILabel' location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18]\
+              (force_value_expr implicit type='@lvalue UILabel' accessKind=read location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18]\
+                (member_ref_expr type='@lvalue UILabel!' accessKind=read location=/path/TheCell.swift:18:18 range=[/path/TheCell.swift:18:13 - line:18:18] decl=project.(file).TheCell.usernameLabel@/path/TheCell.swift:14:36\
+                  (declref_expr type='TheCell' location=/path/TheCell.swift:18:13 range=[/path/TheCell.swift:18:13 - line:18:13] decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:17:9 function_ref=unapplied)))))\
+          (inject_into_optional implicit type='String?' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39]\
+            (load_expr implicit type='String' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39]\
+              (member_ref_expr type='@lvalue String' accessKind=read location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39] decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+                (declref_expr implicit type='TheCell' location=/path/TheCell.swift:18:39 range=[/path/TheCell.swift:18:39 - line:18:39] decl=project.(file).TheCell.<anonymous>.self@/path/TheCell.swift:17:9 function_ref=unapplied)))))))\
+    (func_decl implicit 'anonname=0x7f8ac210a4e0' interface type='(TheCell) -> () -> String' access=internal @objc getter_for=usernameText\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list)\
+      (result\
+        (type_ident\
+          (component id='String' bind=none)))\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='String'\
+            (member_ref_expr implicit type='@lvalue String' accessKind=read decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7f8ac210a7a0' interface type='(TheCell) -> (String) -> ()' access=internal @objc setter_for=usernameText\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "newValue" type='String' interface type='String'))\
+      (brace_stmt\
+        (pattern_binding_decl implicit\
+          (pattern_named implicit type='String' 'tmp')\
+          (load_expr implicit type='String'\
+            (member_ref_expr implicit type='@lvalue String' accessKind=read decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+              (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))))\
+\
+        (var_decl implicit "tmp" type='String' interface type='String' access=private let storage_kind=stored)\
+\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue String' accessKind=write decl=project.(file).TheCell.usernameText@/path/TheCell.swift:16:9 direct_to_storage\
+            (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))\
+          (declref_expr implicit type='String' decl=project.(file).TheCell.<anonymous>.newValue@/path/TheCell.swift:17:9 function_ref=unapplied))\
+        (call_expr implicit type='()' nothrow arg_labels=_:\
+          (dot_syntax_call_expr implicit type='(String) -> ()' nothrow\
+            (declref_expr implicit type='(TheCell) -> (String) -> ()' decl=project.(file).TheCell._@/path/TheCell.swift:17:9 function_ref=double)\
+            (declref_expr implicit type='TheCell' decl=project.(file).TheCell.<anonymous>.self function_ref=unapplied))\
+          (paren_expr implicit type='(String)'\
+            (declref_expr implicit type='String' decl=project.(file).TheCell.<anonymous>.tmp function_ref=unapplied)))))\
+    (func_decl implicit 'anonname=0x7f8ac35389d0' interface type='(TheCell) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=usernameText\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (func_decl "awakeFromNib()" interface type='(TheCell) -> () -> ()' access=internal override=UIKit.(file).NSObject.awakeFromNib() @objc dynamic\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list)\
+      (brace_stmt\
+        (call_expr type='Void' location=/path/TheCell.swift:23:15 range=[/path/TheCell.swift:23:9 - line:23:28] nothrow arg_labels=\
+          (dot_syntax_call_expr type='() -> Void' location=/path/TheCell.swift:23:15 range=[/path/TheCell.swift:23:9 - line:23:15] super nothrow\
+            (declref_expr type='(NSObject) -> () -> Void' location=/path/TheCell.swift:23:15 range=[/path/TheCell.swift:23:15 - line:23:15] decl=UIKit.(file).NSObject.awakeFromNib() function_ref=single)\
+            (derived_to_base_expr implicit type='(NSObject)' location=/path/TheCell.swift:23:9 range=[/path/TheCell.swift:23:9 - line:23:9]\
+              (super_ref_expr type='UITableViewCell' location=/path/TheCell.swift:23:9 range=[/path/TheCell.swift:23:9 - line:23:9])))\
+          (tuple_expr type='()' location=/path/TheCell.swift:23:27 range=[/path/TheCell.swift:23:27 - line:23:28]))\
+        (assign_expr\
+          (member_ref_expr type='@lvalue Bool' accessKind=write location=/path/TheCell.swift:24:34 range=[/path/TheCell.swift:24:9 - line:24:34] decl=QuartzCore.(file).CALayer.masksToBounds\
+            (member_ref_expr type='CALayer' location=/path/TheCell.swift:24:28 range=[/path/TheCell.swift:24:9 - line:24:28] decl=UIKit.(file).UIView.layer\
+              (derived_to_base_expr implicit type='UIView' location=/path/TheCell.swift:24:14 range=[/path/TheCell.swift:24:9 - line:24:14]\
+                (load_expr implicit type='UIImageView' location=/path/TheCell.swift:24:14 range=[/path/TheCell.swift:24:9 - line:24:14]\
+                  (force_value_expr implicit type='@lvalue UIImageView' accessKind=read location=/path/TheCell.swift:24:14 range=[/path/TheCell.swift:24:9 - line:24:14]\
+                    (member_ref_expr type='@lvalue UIImageView!' accessKind=read location=/path/TheCell.swift:24:14 range=[/path/TheCell.swift:24:9 - line:24:14] decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24\
+                      (declref_expr type='TheCell' location=/path/TheCell.swift:24:9 range=[/path/TheCell.swift:24:9 - line:24:9] decl=project.(file).TheCell.awakeFromNib().self@/path/TheCell.swift:22:19 function_ref=unapplied)))))))\
+          (call_expr implicit type='Bool' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] nothrow arg_labels=_builtinBooleanLiteral:\
+            (constructor_ref_call_expr implicit type='(Int1) -> Bool' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] nothrow\
+              (declref_expr implicit type='(Bool.Type) -> (Int1) -> Bool' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] decl=Swift.(file).Bool.init(_builtinBooleanLiteral:) function_ref=single)\
+              (type_expr implicit type='Bool.Type' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] typerepr='Bool'))\
+            (tuple_expr implicit type='(_builtinBooleanLiteral: Builtin.Int1)' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] names=_builtinBooleanLiteral\
+              (boolean_literal_expr type='Builtin.Int1' location=/path/TheCell.swift:24:50 range=[/path/TheCell.swift:24:50 - line:24:50] value=true))))))\
+    (func_decl "setSelected(_:animated:)" interface type='(TheCell) -> (Bool, Bool) -> ()' access=internal override=UIKit.(file).UITableViewCell.setSelected(_:animated:) @objc dynamic\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "selected" type='Bool' interface type='Bool')\
+        (parameter "animated" apiName=animated type='Bool' interface type='Bool'))\
+      (brace_stmt\
+        (call_expr type='Void' location=/path/TheCell.swift:28:15 range=[/path/TheCell.swift:28:9 - line:28:55] nothrow arg_labels=_:animated:\
+          (dot_syntax_call_expr type='(Bool, Bool) -> Void' location=/path/TheCell.swift:28:15 range=[/path/TheCell.swift:28:9 - line:28:15] super nothrow\
+            (declref_expr type='(UITableViewCell) -> (Bool, Bool) -> Void' location=/path/TheCell.swift:28:15 range=[/path/TheCell.swift:28:15 - line:28:15] decl=UIKit.(file).UITableViewCell.setSelected(_:animated:) function_ref=single)\
+            (super_ref_expr type='UITableViewCell' location=/path/TheCell.swift:28:9 range=[/path/TheCell.swift:28:9 - line:28:9]))\
+          (tuple_expr type='(Bool, animated: Bool)' location=/path/TheCell.swift:28:26 range=[/path/TheCell.swift:28:26 - line:28:55] names='',animated\
+            (declref_expr type='Bool' location=/path/TheCell.swift:28:27 range=[/path/TheCell.swift:28:27 - line:28:27] decl=project.(file).TheCell.setSelected(_:animated:).selected@/path/TheCell.swift:27:33 function_ref=unapplied)\
+            (declref_expr type='Bool' location=/path/TheCell.swift:28:47 range=[/path/TheCell.swift:28:47 - line:28:47] decl=project.(file).TheCell.setSelected(_:animated:).animated@/path/TheCell.swift:27:49 function_ref=unapplied)))))\
+    (func_decl "layoutSubviews()" interface type='(TheCell) -> () -> ()' access=internal override=UIKit.(file).UIView.layoutSubviews() @objc dynamic\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list)\
+      (brace_stmt\
+        (call_expr type='Void' location=/path/TheCell.swift:34:15 range=[/path/TheCell.swift:34:9 - line:34:30] nothrow arg_labels=\
+          (dot_syntax_call_expr type='() -> Void' location=/path/TheCell.swift:34:15 range=[/path/TheCell.swift:34:9 - line:34:15] super nothrow\
+            (declref_expr type='(UIView) -> () -> Void' location=/path/TheCell.swift:34:15 range=[/path/TheCell.swift:34:15 - line:34:15] decl=UIKit.(file).UIView.layoutSubviews() function_ref=single)\
+            (derived_to_base_expr implicit type='(UIView)' location=/path/TheCell.swift:34:9 range=[/path/TheCell.swift:34:9 - line:34:9]\
+              (super_ref_expr type='UITableViewCell' location=/path/TheCell.swift:34:9 range=[/path/TheCell.swift:34:9 - line:34:9])))\
+          (tuple_expr type='()' location=/path/TheCell.swift:34:29 range=[/path/TheCell.swift:34:29 - line:34:30]))\
+        (assign_expr\
+          (member_ref_expr type='@lvalue CGFloat' accessKind=write location=/path/TheCell.swift:36:34 range=[/path/TheCell.swift:36:9 - line:36:34] decl=QuartzCore.(file).CALayer.cornerRadius\
+            (member_ref_expr type='CALayer' location=/path/TheCell.swift:36:28 range=[/path/TheCell.swift:36:9 - line:36:28] decl=UIKit.(file).UIView.layer\
+              (derived_to_base_expr implicit type='UIView' location=/path/TheCell.swift:36:14 range=[/path/TheCell.swift:36:9 - line:36:14]\
+                (load_expr implicit type='UIImageView' location=/path/TheCell.swift:36:14 range=[/path/TheCell.swift:36:9 - line:36:14]\
+                  (force_value_expr implicit type='@lvalue UIImageView' accessKind=read location=/path/TheCell.swift:36:14 range=[/path/TheCell.swift:36:9 - line:36:14]\
+                    (member_ref_expr type='@lvalue UIImageView!' accessKind=read location=/path/TheCell.swift:36:14 range=[/path/TheCell.swift:36:9 - line:36:14] decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24\
+                      (declref_expr type='TheCell' location=/path/TheCell.swift:36:9 range=[/path/TheCell.swift:36:9 - line:36:9] decl=project.(file).TheCell.layoutSubviews().self@/path/TheCell.swift:33:19 function_ref=unapplied)))))))\
+          (binary_expr type='CGFloat' location=/path/TheCell.swift:36:81 range=[/path/TheCell.swift:36:49 - line:36:83] nothrow\
+            (dot_syntax_call_expr implicit type='(CGFloat, CGFloat) -> CGFloat' location=/path/TheCell.swift:36:81 range=[/path/TheCell.swift:36:81 - line:36:81] nothrow\
+              (declref_expr type='(CGFloat.Type) -> (CGFloat, CGFloat) -> CGFloat' location=/path/TheCell.swift:36:81 range=[/path/TheCell.swift:36:81 - line:36:81] decl=CoreGraphics.(file).CGFloat./ function_ref=unapplied)\
+              (type_expr implicit type='CGFloat.Type' location=/path/TheCell.swift:36:81 range=[/path/TheCell.swift:36:81 - line:36:81] typerepr='CGFloat'))\
+            (tuple_expr implicit type='(CGFloat, CGFloat)' location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:83]\
+              (load_expr implicit type='CGFloat' location=/path/TheCell.swift:36:74 range=[/path/TheCell.swift:36:49 - line:36:74]\
+                (member_ref_expr type='@lvalue CGFloat' accessKind=read location=/path/TheCell.swift:36:74 range=[/path/TheCell.swift:36:49 - line:36:74] decl=CoreGraphics.(file).CGSize.height direct_to_storage\
+                  (member_ref_expr type='@lvalue CGSize' accessKind=read location=/path/TheCell.swift:36:69 range=[/path/TheCell.swift:36:49 - line:36:69] decl=CoreGraphics.(file).CGRect.size direct_to_storage\
+                    (member_ref_expr type='@lvalue CGRect' accessKind=read location=/path/TheCell.swift:36:63 range=[/path/TheCell.swift:36:49 - line:36:63] decl=UIKit.(file).UIView.frame\
+                      (derived_to_base_expr implicit type='UIView' location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:49]\
+                        (load_expr implicit type='UIImageView' location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:49]\
+                          (force_value_expr implicit type='@lvalue UIImageView' accessKind=read location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:49]\
+                            (member_ref_expr type='@lvalue UIImageView!' accessKind=read location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:49] decl=project.(file).TheCell.userImageView@/path/TheCell.swift:13:24\
+                              (declref_expr implicit type='TheCell' location=/path/TheCell.swift:36:49 range=[/path/TheCell.swift:36:49 - line:36:49] decl=project.(file).TheCell.layoutSubviews().self@/path/TheCell.swift:33:19 function_ref=unapplied)))))))))\
+              (call_expr implicit type='CGFloat' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] nothrow arg_labels=integerLiteral:\
+                (constructor_ref_call_expr implicit type='(Int) -> CGFloat' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] nothrow\
+                  (declref_expr implicit type='(CGFloat.Type) -> (Int) -> CGFloat' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] decl=CoreGraphics.(file).CGFloat.init(integerLiteral:) function_ref=single)\
+                  (type_expr implicit type='CGFloat.Type' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] typerepr='CGFloat'))\
+                (tuple_expr implicit type='(integerLiteral: Int)' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] names=integerLiteral\
+                  (call_expr implicit type='Int' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] nothrow arg_labels=_builtinIntegerLiteral:\
+                    (constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] nothrow\
+                      (declref_expr implicit type='(Int.Type) -> (_MaxBuiltinIntegerType) -> Int' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] decl=Swift.(file).Int.init(_builtinIntegerLiteral:) function_ref=single)\
+                      (type_expr implicit type='Int.Type' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] typerepr='Int'))\
+                    (tuple_expr implicit type='(_builtinIntegerLiteral: Int2048)' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] names=_builtinIntegerLiteral\
+                      (integer_literal_expr type='Int2048' location=/path/TheCell.swift:36:83 range=[/path/TheCell.swift:36:83 - line:36:83] value=2))))))))))\
+    (destructor_decl implicit "deinit" interface type='(TheCell) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init(style:reuseIdentifier:)" interface type='(TheCell.Type) -> (UITableViewCellStyle, String?) -> TheCell' access=internal override=UIKit.(file).UITableViewCell.init(style:reuseIdentifier:) @objc designated\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "style" apiName=style type='UITableViewCellStyle' interface type='UITableViewCellStyle')\
+        (parameter "reuseIdentifier" apiName=reuseIdentifier type='String?' interface type='String?'))\
+      (brace_stmt\
+        (rebind_self_in_constructor_expr implicit type='()'\
+          (call_expr implicit type='UITableViewCell' nothrow arg_labels=style:reuseIdentifier:\
+            (dot_syntax_call_expr implicit type='(UITableViewCellStyle, String?) -> UITableViewCell' super nothrow\
+              (other_constructor_ref_expr implicit type='(UITableViewCell) -> (UITableViewCellStyle, String?) -> UITableViewCell' decl=UIKit.(file).UITableViewCell.init(style:reuseIdentifier:))\
+              (super_ref_expr implicit type='UITableViewCell'))\
+            (tuple_expr implicit type='(style: UITableViewCellStyle, reuseIdentifier: String?)' names=style,reuseIdentifier\
+              (declref_expr implicit type='UITableViewCellStyle' decl=project.(file).TheCell.init(style:reuseIdentifier:).style function_ref=unapplied)\
+              (declref_expr implicit type='String?' decl=project.(file).TheCell.init(style:reuseIdentifier:).reuseIdentifier function_ref=unapplied))))\
+        (return_stmt implicit)))\
+    (constructor_decl implicit "init(coder:)" interface type='(TheCell.Type) -> (NSCoder) -> TheCell?' access=internal override=UIKit.(file).UITableViewCell.init(coder:) @objc required designated failable=Optional\
+      (parameter_list\
+        (parameter "self" type='TheCell' interface type='TheCell'))\
+      (parameter_list\
+        (parameter "aDecoder" apiName=coder type='NSCoder' interface type='NSCoder'))\
+      (brace_stmt\
+        (rebind_self_in_constructor_expr implicit type='()'\
+          (call_expr implicit type='UITableViewCell?' nothrow arg_labels=coder:\
+            (dot_syntax_call_expr implicit type='(NSCoder) -> UITableViewCell?' super nothrow\
+              (other_constructor_ref_expr implicit type='(UITableViewCell) -> (NSCoder) -> UITableViewCell?' decl=UIKit.(file).UITableViewCell.init(coder:))\
+              (super_ref_expr implicit type='UITableViewCell'))\
+            (tuple_expr implicit type='(coder: NSCoder)' names=coder\
+              (declref_expr implicit type='NSCoder' decl=project.(file).TheCell.init(coder:).aDecoder function_ref=unapplied))))\
+        (return_stmt implicit)))))

@@ -3,8 +3,9 @@ require 'parser/swift_ast_parser'
 
 class SwiftAstDependenciesGenerator
 
-  def initialize(ast_file)
+  def initialize(ast_file, verbose = false)
     @ast_file = ast_file
+    @verbose = verbose
   end
 
   # @return [DependencyTree]
@@ -15,7 +16,7 @@ class SwiftAstDependenciesGenerator
     @generics_context = []
 
     @ast_tree = SwiftAST::Parser.new().parse_build_log_output(File.read(@ast_file))
-    # @ast_tree.dump
+    @ast_tree.dump if @verbose
     scan_source_files
 
     @tree
@@ -156,7 +157,7 @@ class SwiftAstDependenciesGenerator
   end 
 
   def normalized_name(the_name)
-    the_name[/(\w|\d)+/]
+    the_name.sub("inout ", "")[/(\w|\d|\.)+/]
   end
 
   def add_tree_dependency(from_name, to_name, type) 

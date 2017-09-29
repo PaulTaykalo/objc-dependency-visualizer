@@ -26,7 +26,8 @@ class DependencyTreeGenerator
     options[:derived_data_paths] = ['~/Library/Developer/Xcode/DerivedData', '~/Library/Caches/appCode*/DerivedData']
     options[:project_name] = ''
     options[:output_format] = 'json'
-    options[:verbose] = 'true'
+    options[:verbose] = true
+    options[:ast_parsing_info] = false
 
     OptionParser.new do |o|
       o.separator 'General options:'
@@ -50,6 +51,7 @@ class DependencyTreeGenerator
       o.on('-d', '--use-dwarf-info', 'Use DWARF Information also') { |v|
         options[:use_dwarf] = v
       }
+
       o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') do |v|
         options[:swift_dependencies] = v
       end
@@ -60,6 +62,10 @@ class DependencyTreeGenerator
       o.on('-a FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
         options[:swift_ast_dump_file] = v
       end
+
+      o.on('-q', '--ast-parsing-info', 'Show ast parsing info (for swift ast parser only)') { |v|
+        options[:ast_parsing_info] = true
+      }
 
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') do |f|
         options[:output_format] = f
@@ -155,7 +161,8 @@ class DependencyTreeGenerator
   def build_ast_dependency_tree
     require 'swift_ast_dependencies_generator'
     generator = SwiftAstDependenciesGenerator.new(
-      @options[:swift_ast_dump_file]
+      @options[:swift_ast_dump_file],
+      @options[:ast_parsing_info]
     )
     generator.generate_dependencies
 

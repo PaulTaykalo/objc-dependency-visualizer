@@ -11,8 +11,9 @@ module SwiftAST
       @scanner = StringScanner.new(string)
       return unless @scanner.scan_until(/^\(source_file\\/)
       @scanner.pos = @scanner.pos - 13
-      node = scan_children.first
-      node
+      children = scan_children
+      return if children.empty?
+      node = Node.new("ast", [], children)
     end 
 
 
@@ -33,61 +34,71 @@ module SwiftAST
       children = []
       while true
         return children unless @scanner.scan(/(\s|\\|\n|\r|\t)*\(/)
-        children << Node.new(scan_parameter?, scan_parameters, scan_children)
+        children << Node.new(scan_name?, scan_parameters, scan_children)
         @scanner.scan(/(\s|\\|\n|\r|\t)*\)/)
       end  
       children
     end  
 
-    def scan_parameter?(unwrap_strings = true)
-      prefix = @scanner.scan(/(\s|\\)*(\w|\d|<|"|'|@|_|\/|\[|\*)/)
-      return nil unless prefix
+    def scan_name? 
+      el_name = @scanner.scan(/\w+/)
+      el_name
+    end  
 
-      char = prefix[-1]
-      case 
-      when char == "\""
-        result = char + @scanner.scan_until(/"/)
-        result = result[1..-2] if unwrap_strings
-      when char == "'"
-        result = char + @scanner.scan_until(/'/)
-        result = result[1..-2] if unwrap_strings
-        result += (@scanner.scan(/./) + scan_parameter?(false) || "") if isalphaOrDot(@scanner.peek(1))
-      when char == "<"
-        result = char + @scanner.scan_until(/>/)
-      when char == "["
-        result = char + scan_range
-      when char == "*" 
-        result = char + @scanner.scan_until(/\*NULL\*\*/) if @scanner.peek(7) == "*NULL**"
-      when isAlphaDigit(char) || char == "/"
-        rest = @scanner.scan(/([\w\.@\/,-])*/)
-        param_name = (char + rest)
-        result = param_name
+    def scan_parameter?()
+      #white spaces are skipped
 
-        next_char = @scanner.peek(1)
-        if next_char == ":"
-          result += (scan_line_and_column || @scanner.scan(/:/))
-        elsif next_char == "="
-          result +=  @scanner.scan(/=/) + ( scan_parameter?(false) || "" )
-        elsif next_char == "("
-          rest = @scanner.scan_until(/\)/) 
-          rest += ( @scanner.scan(/./) + scan_parameter?(false) || "" ) if isalphaOrDot(@scanner.peek(1))
-          result += rest
-        elsif next_char == "<"
-          rest = @scanner.scan_until(/>/) 
-          rest += ( @scanner.scan(/./) + scan_parameter?(false) || "" ) if isalphaOrDot(@scanner.peek(1))
-          result += rest
-        end  
-      end 
+      # scan everything until space or opening sequence like ( < ' ". 
+      # Since we can end up with closing bracket - we alos check for )
+
+      prefix = @scanner.scan(/[^\s()<'"\[]+/) 
+
+      next_char = @scanner.peek(1)
+      return nil unless next_char
+
+      case next_char
+      when " "   # next parameter
+        result = prefix
+      when "\n"   # next parameter
+        result = prefix
+      when ")"   # closing bracket == end of element
+        result = prefix
+      when "\""  # doube quoted string 
+        result = @scanner.scan(/./) + @scanner.scan_until(/"/)
+        result = result[1..-2] unless prefix             
+        result = (prefix || "") + result
+      when "'"  # single quoted string 
+        result =  @scanner.scan(/./) + @scanner.scan_until(/'/)
+        result = result[1..-2] unless prefix             
+        result = (prefix || "") + result + (scan_parameter? || "")
+      when "<"  # kinda generic
+        result = (prefix || "") +@scanner.scan(/./) + @scanner.scan_until(/>/) + (scan_parameter? || "")
+      when "("
+        return nil unless prefix
+        result = prefix + @scanner.scan_until(/\)/) + (scan_parameter? || "")
+       when "["
+        result = (prefix || "") + scan_range
+
+      end  
+
       result
-    end    
+
+    end
 
     def scan_range
-      to_bracket = @scanner.scan_until(/\[|\]/)
-      if to_bracket.end_with? "["
-        to_bracket += scan_range #find closing of the opened
-        to_bracket += scan_range #find closing of the original
+      return unless @scanner.peek(1) == "["
+      result = @scanner.scan(/./)
+
+      while true
+        inside = @scanner.scan(/[^\]\[]+/)  #everything but [ or ]
+        result += inside || ""
+        next_char = @scanner.peek(1)
+
+        return result + @scanner.scan(/./) if next_char == "]" # we found the end
+        result += scan_range if next_char == "["
+        raise "Unexpected character #{next_char} - [ or ] expected" if next_char != "[" && next_char != "]"
       end
-      return to_bracket
+
     end  
 
     def scan_line_and_column
@@ -103,6 +114,7 @@ module SwiftAST
     def isalphaOrDot(str)
       !str.match(/[^A-Za-z@_.,]/)
     end
+
 
   end
 

@@ -44,7 +44,7 @@ class SwiftAstParserTest < Minitest::Test
   end  
 
   def test_custom_node_with_assignment
-    ast = SwiftAST::Parser.new.parse("(assignment weather=cool temperature=123")
+    ast = SwiftAST::Parser.new.parse("(assignment weather=cool temperature=123)")
     assert_equal ast.name, "assignment"
     assert_equal ast.parameters, ["weather=cool", "temperature=123"]
   end  
@@ -145,16 +145,42 @@ class SwiftAstParserTest < Minitest::Test
     
   def test_some_unusual_params
     source = %{
-    (string_expr builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:) initializer=**NULL** names='',animated
+    (string_expr 
+        builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:) 
+        initializer=**NULL** 
+        names='',animated 
+        req===(_:_:) 
+        decl=CoreGraphics.(file).CGFloat.+
+        discriminator=0.$0@/path/TheView.swift:115:39
+        decl=Swift.(file).??
+        [with String]
+        decl=Swift.(file).+= 
       (parameter_list)\
     )
     }
 
     ast = SwiftAST::Parser.new.parse(source)
     assert_equal ast.name, "string_expr"
-    assert_equal ast.parameters, ["builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)", "initializer=**NULL**", "names='',animated"]
+    assert_equal ast.parameters, [
+      "builtin_initializer=Swift.(file).String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)", 
+      "initializer=**NULL**", 
+      "names='',animated",
+      "req===(_:_:)",
+      "decl=CoreGraphics.(file).CGFloat.+",
+      "discriminator=0.$0@/path/TheView.swift:115:39",
+      "decl=Swift.(file).??",
+      "[with String]",
+      "decl=Swift.(file).+="
+    ]
     assert_equal ast.children.count, 1
 
+  end  
+
+  def test_raw_log_parsing
+    source = IO.read('./test/fixtures/swift-dump-ast/cell-file.ast')
+    ast = SwiftAST::Parser.new.parse_build_log_output(source)
+    assert_equal ast.name, "ast"
+    assert_equal ast.children.count, 2
   end  
 
 end

@@ -34,7 +34,17 @@ module SwiftAST
       children = []
       while true
         return children unless @scanner.scan(/(\s|\\|\n|\r|\t)*\(/)
-        children << Node.new(scan_name?, scan_parameters, scan_children)
+        node_name = scan_name?
+        node_parameters = scan_parameters
+        node_children = scan_children
+        while next_params = scan_parameters   # these are stupid params alike
+          break if next_params.length == 0
+          node_parameters += next_params
+          node_children += scan_children
+        end  
+        node = Node.new(node_name, node_parameters, node_children)
+
+        children << node
         @scanner.scan(/(\s|\\|\n|\r|\t)*\)/)
       end  
       children
@@ -45,41 +55,53 @@ module SwiftAST
       el_name
     end  
 
-    def scan_parameter?()
+    def scan_parameter?(is_parsing_rvalue = false)
       #white spaces are skipped
 
       # scan everything until space or opening sequence like ( < ' ". 
       # Since we can end up with closing bracket - we alos check for )
 
-      prefix = @scanner.scan(/[^\s()<'"\[]+/) 
+      prefix = @scanner.scan(/[^\s()'"\[\\]+/) if is_parsing_rvalue
+      prefix = @scanner.scan(/[^\s()<'"\[\\=]+/) unless is_parsing_rvalue
 
       next_char = @scanner.peek(1)
       return nil unless next_char
+      should_unwrap_strings = !is_parsing_rvalue && !prefix
 
       case next_char
       when " "   # next parameter
         result = prefix
+      when "\\"   # next parameter
+        @scanner.scan(/./)
+        result = prefix
+
       when "\n"   # next parameter
         result = prefix
       when ")"   # closing bracket == end of element
         result = prefix
       when "\""  # doube quoted string 
         result = @scanner.scan(/./) + @scanner.scan_until(/"/)
-        result = result[1..-2] unless prefix             
+        result = result[1..-2] if should_unwrap_strings             
         result = (prefix || "") + result
       when "'"  # single quoted string 
         result =  @scanner.scan(/./) + @scanner.scan_until(/'/)
-        result = result[1..-2] unless prefix             
-        result = (prefix || "") + result + (scan_parameter? || "")
+        result = result[1..-2] if should_unwrap_strings             
+        result = (prefix || "") + result + (scan_parameter?(is_parsing_rvalue) || "")
       when "<"  # kinda generic
-        result = (prefix || "") +@scanner.scan(/./) + @scanner.scan_until(/>/) + (scan_parameter? || "")
+        result = (prefix || "") + @scanner.scan(/./)
+        #in some cases this can be last char, just because we can end up with a=sdsd.function.< 
+        result += @scanner.scan_until(/>/) + (scan_parameter?(is_parsing_rvalue) || "") 
       when "("
-        return nil unless prefix
-        result = prefix + @scanner.scan_until(/\)/) + (scan_parameter? || "")
+        return nil if !prefix && !is_parsing_rvalue
+        result = (prefix || "") + @scanner.scan_until(/\)/) + (scan_parameter?(is_parsing_rvalue) || "")
        when "["
-        result = (prefix || "") + scan_range
+        result = (prefix || "") + scan_range + (scan_parameter?(is_parsing_rvalue) || "")
+       when "=" 
+        result = prefix + @scanner.scan(/./) + (scan_parameter?(true) || "")
 
       end  
+
+      # puts "prefix is '#{prefix}'  ||#{is_parsing_rvalue} result =#{result}"
 
       result
 
@@ -139,8 +161,10 @@ module SwiftAST
     end    
 
     def dump(level = 0)
+      @@line = 0 if level == 0
       puts "\n" if level == 0
-      puts " " * level + "[#{@name} #{@parameters}"
+      puts " " * level + "[#{@@line}][#{@name} #{@parameters}"
+      @@line = @@line +1
       @children.each { |child| child.dump(level + 1) }
     end  
 

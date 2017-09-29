@@ -155,6 +155,9 @@ class SwiftAstParserTest < Minitest::Test
         decl=Swift.(file).??
         [with String]
         decl=Swift.(file).+= 
+        decl=Swift.(file)...<
+        decl=Swift.(file).<
+        captures=(self)
       (parameter_list)\
     )
     }
@@ -170,11 +173,38 @@ class SwiftAstParserTest < Minitest::Test
       "discriminator=0.$0@/path/TheView.swift:115:39",
       "decl=Swift.(file).??",
       "[with String]",
-      "decl=Swift.(file).+="
+      "decl=Swift.(file).+=",
+      "decl=Swift.(file)...<",
+      "decl=Swift.(file).<",
+      "captures=(self)"
     ]
     assert_equal ast.children.count, 1
 
   end  
+
+  def test_unusual_function_params
+        source = %{
+    (string_expr 
+        builtin_initializer=String
+        [with String[String: StringProtocol module Swift], String[String: StringProtocol module Swift], String[String: StringProtocol module Swift]]0: String
+        (parameter_list)1: String
+        (parameter_list)
+    )
+    }
+
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "string_expr"
+    assert_equal ast.children.length, 2
+    assert_equal ast.parameters, [
+      "builtin_initializer=String",
+      "[with String[String: StringProtocol module Swift], String[String: StringProtocol module Swift], String[String: StringProtocol module Swift]]0:",
+      "String",
+      "1:",
+      "String"
+    ]
+
+  end  
+
 
   def test_raw_log_parsing
     source = IO.read('./test/fixtures/swift-dump-ast/cell-file.ast')

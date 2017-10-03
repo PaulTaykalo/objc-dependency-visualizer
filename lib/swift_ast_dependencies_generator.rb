@@ -23,7 +23,16 @@ class SwiftAstDependenciesGenerator
   end
 
   def scan_source_files
-    classes = @ast_tree.find_nodes("class_decl")
+    source_files = @ast_tree.find_nodes("source_file")
+    return scan_source_files_classes(@ast_tree) if source_files.empty?
+
+    source_files.each { |source_file|
+      scan_source_files_classes(source_file)       
+    }
+  end
+
+  def scan_source_files_classes(root)
+    classes = root.find_nodes("class_decl")
     classes.each { |node| 
       next unless classname = node.parameters.first
       @tree.register(classname, DependencyItemType::CLASS) 

@@ -9,9 +9,11 @@ module SwiftAST
     
     def parse_build_log_output(string)
       @scanner = StringScanner.new(string)
-      return unless @scanner.scan_until(/^\(source_file\\?/)
-      @scanner.pos = @scanner.pos - 13
+      return unless @scanner.scan_until(/^\(source_file/)
+
+      @scanner.pos = @scanner.pos - 12
       children = scan_children
+
       return if children.empty?
       Node.new("ast", [], children)
     end 
@@ -33,8 +35,9 @@ module SwiftAST
     def scan_children(level = 0)
       children = []
       while true
-        return children unless whitespaces = @scanner.scan(/(\s|\\|\n|\r|\t)*\(/)
+        return children unless whitespaces = whitespaces_at(level)
         node_name = scan_name?
+
         return children if node_name == "source_file" && level != 0 && unscan(node_name + whitespaces)
         node_parameters = scan_parameters
         node_children = scan_children(level + 1)
@@ -49,6 +52,16 @@ module SwiftAST
         @scanner.scan(/(\s|\\|\n|\r|\t)*\)/)
       end  
       children
+    end  
+
+    def whitespaces_at(level = 0)
+      whitespaces = @scanner.scan(/(\s|\\|\n|\r|\t)*\(/)
+      if level == 0 && whitespaces.nil?
+         whitespaces = @scanner.scan(/.*?\(source_file/m)
+         return nil unless whitespaces
+         unscan("source_file")
+      end
+      whitespaces 
     end  
 
     def unscan(string)

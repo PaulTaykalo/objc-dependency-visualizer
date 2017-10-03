@@ -225,7 +225,6 @@ class SwiftAstParserTest < Minitest::Test
     }
     ast = SwiftAST::Parser.new.parse_build_log_output(source)
     assert_equal ast.name, "ast"
-    ast.dump
     assert_equal 2, ast.children.count
 
     

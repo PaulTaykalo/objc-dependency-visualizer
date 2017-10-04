@@ -263,7 +263,7 @@ def is_primitive_swift_type?(dest)
 end
 
 def is_filtered_swift_type?(dest)
-  /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil || /^Builtin\./.match(dest) != nil
+  /(ClusterType|ScalarType|LiteralType|\.Type)$/.match(dest) != nil || /^Builtin\./.match(dest) != nil
 end
 
 def is_filtered_objc_type?(dest)

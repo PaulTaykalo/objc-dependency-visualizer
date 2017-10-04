@@ -98,6 +98,7 @@ class SwiftPrimitives
       'AnySequence',
       'Array',
       'ArraySlice',
+      'Array.Index',
       'AutoreleasingUnsafeMutablePointer',
       'Bool',
       'COpaquePointer',
@@ -126,7 +127,9 @@ class SwiftPrimitives
       'GeneratorSequence',
       'HalfOpenInterval',
       'IndexingGenerator',
+      'IndexingIterator',
       'Int',
+      'Int1',
       'Int16',
       'Int32',
       'Int64',
@@ -145,6 +148,7 @@ class SwiftPrimitives
       'ManagedBufferPointer',
       'Mirror',
       'MutableSlice',
+      'Never',
       'ObjectIdentifier',
       'Optional',
       'PermutationGenerator',
@@ -259,7 +263,7 @@ def is_primitive_swift_type?(dest)
 end
 
 def is_filtered_swift_type?(dest)
-  /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil #or /^([a-z])/.match(dest) != nil',
+  /(ClusterType|ScalarType|LiteralType)$/.match(dest) != nil || /^Builtin\./.match(dest) != nil
 end
 
 def is_filtered_objc_type?(dest)

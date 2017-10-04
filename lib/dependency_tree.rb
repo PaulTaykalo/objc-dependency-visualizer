@@ -80,8 +80,8 @@ class DependencyTree
   def filter
     @types_registry.each { |item, type|
       next if yield item, type
-      @types_registry[item] = nil
-      @registry[item] = nil
+      @types_registry.delete(item)
+      @registry.delete(item)
       selected_links = @links.select { |link| link[:source] != item && link[:dest] != item }
       filtered_links = @links.select { |link| link[:source] == item || link[:dest] == item }
       filtered_links.each { |link| remove_link_type(link) }
@@ -90,7 +90,7 @@ class DependencyTree
   end
 
   def remove_link_type(link)
-    @links_registry[link_key(link[:source], link[:dest])] = nil
+    @links_registry.delete(link_key(link[:source], link[:dest]))
   end
 
   private

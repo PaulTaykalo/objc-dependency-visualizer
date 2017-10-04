@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E422FCB41F8585D00047DDA2 /* FileWithStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E422FCB31F8585D00047DDA2 /* FileWithStructs.swift */; };
 		E44F24AD1E6AC62D0098DD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44F24AC1E6AC62D0098DD2E /* AppDelegate.swift */; };
 		E44F24BF1E6AC63B0098DD2E /* FirstFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44F24BE1E6AC63B0098DD2E /* FirstFile.swift */; };
 		E44F24C11E6D3B320098DD2E /* SecondFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44F24C01E6D3B320098DD2E /* SecondFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E422FCB31F8585D00047DDA2 /* FileWithStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWithStructs.swift; sourceTree = "<group>"; };
 		E44F24A91E6AC62D0098DD2E /* SourcekittenWithComplexDependencies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcekittenWithComplexDependencies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44F24AC1E6AC62D0098DD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E44F24B81E6AC62D0098DD2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 				E44F24B81E6AC62D0098DD2E /* Info.plist */,
 				E44F24BE1E6AC63B0098DD2E /* FirstFile.swift */,
 				E44F24C01E6D3B320098DD2E /* SecondFile.swift */,
+				E422FCB31F8585D00047DDA2 /* FileWithStructs.swift */,
 			);
 			path = SourcekittenExample;
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E422FCB41F8585D00047DDA2 /* FileWithStructs.swift in Sources */,
 				E44F24BF1E6AC63B0098DD2E /* FirstFile.swift in Sources */,
 				E44F24C11E6D3B320098DD2E /* SecondFile.swift in Sources */,
 				E44F24AD1E6AC62D0098DD2E /* AppDelegate.swift in Sources */,

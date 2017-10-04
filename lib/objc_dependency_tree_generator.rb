@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 require 'optparse'
 require 'yaml'
 require 'json'
@@ -10,7 +11,6 @@ require 'dependency_tree'
 require 'tree_serializer'
 
 class DependencyTreeGenerator
-
   def initialize(options)
     @options = options
     @options[:derived_data_project_pattern] = '*-*' unless @options[:derived_data_project_pattern]
@@ -28,6 +28,7 @@ class DependencyTreeGenerator
     options[:output_format] = 'json'
     options[:verbose] = true
     options[:ast_parsing_info] = false
+    options[:ignore_primitive_types] = true
 
     OptionParser.new do |o|
       o.separator 'General options:'
@@ -48,9 +49,9 @@ class DependencyTreeGenerator
         options[:exclusion_prefixes] = exclusion_prefixes
       end
 
-      o.on('-d', '--use-dwarf-info', 'Use DWARF Information also') { |v|
+      o.on('-d', '--use-dwarf-info', 'Use DWARF Information also') do |v|
         options[:use_dwarf] = v
-      }
+      end
 
       o.on('-w', '--swift-dependencies', 'Generate swift project dependencies') do |v|
         options[:swift_dependencies] = v
@@ -63,9 +64,9 @@ class DependencyTreeGenerator
         options[:swift_ast_dump_file] = v
       end
 
-      o.on('-q', '--ast-parsing-info', 'Show ast parsing info (for swift ast parser only)') { |v|
+      o.on('-q', '--ast-parsing-info', 'Show ast parsing info (for swift ast parser only)') do |_v|
         options[:ast_parsing_info] = true
-      }
+      end
 
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') do |f|
         options[:output_format] = f
@@ -80,25 +81,21 @@ class DependencyTreeGenerator
         exit
       end
       o.parse!
-
     end
 
     options
-
   end
 
   # @return [DependencyTree]
-  def find_dependencies
+  def generate_dependency_links
     return {} if !@options || @options.empty?
 
     links = {}
     links_block = lambda { |source, dest|
-      if is_valid_dest?(source, @exclusion_prefixes)
+      if source
         links[source] = {} unless links[source]
-      end  
-      if source != dest and is_valid_dest?(dest, @exclusion_prefixes) && is_valid_dest?(source, @exclusion_prefixes)
-        links[source][dest] = 'set up'
       end
+      links[source][dest] = 'set up' if dest && dest && source != dest
     }
 
     unless @object_files_directories
@@ -117,14 +114,11 @@ class DependencyTreeGenerator
       exit 1
     end
 
-
     if @options[:swift_dependencies]
       SwiftDependenciesGenerator.new.generate_dependencies(
         @object_files_directories,
         &links_block
       )
-    elsif @options[:swift_ast_dump_file]
-
     else
       ObjcDependenciesGenerator.new.generate_dependencies(
         @object_files_directories,
@@ -137,16 +131,20 @@ class DependencyTreeGenerator
   end
 
   def build_dependency_tree
-    if @options[:sourcekitten_dependencies_file]
-      return build_sourcekitten_dependency_tree
-    end
+    tree = generate_depdendency_tree
+    tree.filter { |item, _| is_valid_dest?(item, @exclusion_prefixes) } if @options[:ignore_primitive_types]
+    tree
+  end
 
-    if @options[:swift_ast_dump_file]
-      return build_ast_dependency_tree
-    end
+  def generate_depdendency_tree
+    return build_sourcekitten_dependency_tree if @options[:sourcekitten_dependencies_file]
+    return build_ast_dependency_tree if @options[:swift_ast_dump_file]
+    return tree_from_links
+  end
 
+  def tree_from_links
     tree = DependencyTree.new
-    links = find_dependencies
+    links = generate_dependency_links
 
     links.each do |source, dest_hash|
       tree.register(source)
@@ -165,7 +163,6 @@ class DependencyTreeGenerator
       @options[:ast_parsing_info]
     )
     generator.generate_dependencies
-
   end
 
   def build_sourcekitten_dependency_tree
@@ -188,6 +185,4 @@ class DependencyTreeGenerator
       output
     end
   end
-
-
 end

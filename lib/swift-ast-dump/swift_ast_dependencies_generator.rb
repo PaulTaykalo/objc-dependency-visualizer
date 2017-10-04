@@ -44,6 +44,12 @@ class SwiftAstDependenciesGenerator
       @tree.register(protoname, DependencyItemType::PROTOCOL) 
     }
 
+    structs = @ast_tree.find_nodes("struct_decl")
+    structs.each { |node| 
+      next unless struct_name = node.parameters.first
+      @tree.register(struct_name, DependencyItemType::STRUCTURE) 
+    }
+
     classes.each { |node| 
       next unless classname = node.parameters.first
       generic_names = register_generic_parameters(node, classname) 
@@ -63,6 +69,20 @@ class SwiftAstDependenciesGenerator
       return unless proto_name = node.parameters.first
       register_inheritance(node, proto_name) 
       register_function_parameters(node, proto_name) 
+    }
+
+    structs.each { |node|
+      next unless classname = node.parameters.first
+      generic_names = register_generic_parameters(node, classname) 
+      @generics_context << generic_names
+      register_typealiases(node, classname)
+
+      register_inheritance(node, classname) 
+      register_variables(node, classname) 
+      register_calls(node, classname) 
+      register_function_parameters(node, classname) 
+
+      @generics_context.pop
     }
 
     extensions = @ast_tree.find_nodes("extension_decl")

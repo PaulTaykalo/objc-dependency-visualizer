@@ -188,4 +188,46 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
     tree = generator.build_dependency_tree
     assert tree, 'Parser should be able to parse real-world examples'
   end
+
+  def test_ignoring_primitive_types
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/cell-file.ast',
+      ignore_primitive_types: true
+    )
+    tree = generator.build_dependency_tree
+    assert tree, 'Parser should be able to parse real-world examples'
+    assert !tree.isRegistered?('Int'), 'Parser should ignore primitive types'
+  end
+
+  def test_resolving_structs
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/file-with-structs.ast'
+    )
+    tree = generator.build_dependency_tree
+    assert tree, 'Parser should be able to parse real-world examples'
+    assert tree.isRegistered?('ProtocolForStructs')
+    assert tree.isRegistered?('StructWithoutProtocols'), "Generator should be able to resolve structs"
+    assert_equal tree.type('StructWithoutProtocols'), DependencyItemType::STRUCTURE
+
+    assert tree.isRegistered?('StructWithProtocol'), "Generator should be able to resolve structs"
+    assert_equal tree.type('StructWithProtocol'), DependencyItemType::STRUCTURE
+
+    assert tree.connected?('StructWithProtocol', 'ProtocolForStructs'), "Generator should be able to resolve structs inheritance"
+
+  end
+
+  def test_resolving_structs_variables
+    generator = DependencyTreeGenerator.new(
+      swift_ast_dump_file: './test/fixtures/swift-dump-ast/file-with-structs.ast'
+    )
+    tree = generator.build_dependency_tree
+    assert tree, 'Parser should be able to parse real-world examples'
+    assert tree.isRegistered?('StructWithOtherStructs')
+    assert_equal tree.type('StructWithOtherStructs'), DependencyItemType::STRUCTURE
+
+    assert tree.connected?('StructWithOtherStructs', 'StructWithoutProtocols'), "Generator should be able to resolve structs variables"
+    assert tree.connected?('StructWithOtherStructs', 'StructWithProtocol'), "Generator should be able to resolve structs variables"
+
+  end
+
 end

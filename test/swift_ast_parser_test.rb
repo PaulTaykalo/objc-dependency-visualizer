@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'parser/swift_ast_parser'
+require_relative '../lib/../lib/swift-ast-dump/swift_ast_parser'
 
 class SwiftAstParserTest < Minitest::Test
 

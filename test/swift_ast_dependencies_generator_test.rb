@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'objc_dependency_tree_generator'
-require 'sourcekitten_dependencies_generator'
+require 'sourcekitten/sourcekitten_dependencies_generator'
 
 class SwiftAstDependenciesGeneratorTest < Minitest::Test
   def test_links_generation

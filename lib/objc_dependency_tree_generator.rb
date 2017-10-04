@@ -2,10 +2,10 @@
 require 'optparse'
 require 'yaml'
 require 'json'
-require 'objc_dependency_tree_generator_helper'
-require 'swift_dependencies_generator'
-require 'objc_dependencies_generator'
-require 'sourcekitten_dependencies_generator'
+require 'helpers/objc_dependency_tree_generator_helper'
+require 'swift/swift_dependencies_generator'
+require 'objc/objc_dependencies_generator'
+require 'sourcekitten/sourcekitten_dependencies_generator'
 require 'dependency_tree'
 require 'tree_serializer'
 
@@ -159,7 +159,7 @@ class DependencyTreeGenerator
   end
 
   def build_ast_dependency_tree
-    require 'swift_ast_dependencies_generator'
+    require_relative 'swift-ast-dump/swift_ast_dependencies_generator'
     generator = SwiftAstDependenciesGenerator.new(
       @options[:swift_ast_dump_file],
       @options[:ast_parsing_info]

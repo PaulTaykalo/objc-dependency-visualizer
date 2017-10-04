@@ -1,5 +1,5 @@
-require 'objc_dependency_tree_generator_helper'
-require 'parser/swift_ast_parser'
+require 'helpers/objc_dependency_tree_generator_helper'
+require 'swift-ast-dump/swift_ast_parser'
 
 class SwiftAstDependenciesGenerator
 

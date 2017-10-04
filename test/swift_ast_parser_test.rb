@@ -205,7 +205,6 @@ class SwiftAstParserTest < Minitest::Test
 
   end  
 
-
   def test_raw_log_parsing
     source = IO.read('./test/fixtures/swift-dump-ast/cell-file.ast')
     ast = SwiftAST::Parser.new.parse_build_log_output(source)
@@ -226,8 +225,43 @@ class SwiftAstParserTest < Minitest::Test
     ast = SwiftAST::Parser.new.parse_build_log_output(source)
     assert_equal ast.name, "ast"
     assert_equal 2, ast.children.count
-
     
   end
+
+  def test_hashtags_in_elements_names 
+    source = %{
+      (#if_decl
+        (#if: active)
+        )
+    }
+
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "#if_decl"
+    assert_equal ast.children.count, 1
+    assert_equal ast.children.first.name, "#if:"
+
+  end  
+
+  def test_if_config_elements
+     source = %{
+  (class_decl "ROLogger" interface type='ROLogger.Type' access=internal @_fixed_layout inherits: Loggable
+    (#if_decl
+(#if: active
+        (sequence_expr type='<null>'
+          (unresolved_decl_ref_expr type='<null>' name=DEBUG function_ref=unapplied)
+          (unresolved_decl_ref_expr type='<null>' name=|| function_ref=unapplied)
+          (unresolved_decl_ref_expr type='<null>' name=BETA function_ref=unapplied))
+        (struct_decl "LeLogger" interface type='ROLogger.LeLogger.Type' access=fileprivate @_fixed_layout)    
+
+    }
+
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, "class_decl"
+    assert_equal ast.children.count, 1
+    assert_equal ast.parameters, ["ROLogger", "interface", "type='ROLogger.Type'", "access=internal" ,"@_fixed_layout" ,"inherits:" ,"Loggable"]
+    assert_equal ast.children.first.name, "#if_decl"
+    assert_equal ast.children.first.children.first.name, "#if:"
+
+  end  
 
 end

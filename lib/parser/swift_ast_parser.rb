@@ -32,17 +32,24 @@ module SwiftAST
       parameters
     end  
 
+    def scan_parameters_from_types
+      first_param = @scanner.scan(/\d+:/)
+      return [] unless first_param
+      return [first_param] + scan_parameters
+    end  
+
     def scan_children(level = 0)
       children = []
       while true
         return children unless whitespaces = whitespaces_at(level)
         node_name = scan_name?
-
         return children if node_name == "source_file" && level != 0 && unscan(node_name + whitespaces)
         node_parameters = scan_parameters
+
         node_children = scan_children(level + 1)
-        while next_params = scan_parameters   # these are stupid params alike
-          break if next_params.length == 0
+
+        while next_params = scan_parameters_from_types  # these are stupid params alike
+          break if next_params.empty?
           node_parameters += next_params
           node_children += scan_children(level + 1)
         end  
@@ -69,7 +76,7 @@ module SwiftAST
     end  
 
     def scan_name? 
-      el_name = @scanner.scan(/\w+/)
+      el_name = @scanner.scan(/#?[\w:]+/)
       el_name
     end  
 
@@ -182,7 +189,7 @@ module SwiftAST
       @@line = 0 if level == 0
       puts "\n" if level == 0
       puts " " * level + "[#{@@line}][#{@name} #{@parameters}"
-      @@line = @@line +1
+      @@line = @@line + 1
       @children.each { |child| child.dump(level + 1) }
     end  
 

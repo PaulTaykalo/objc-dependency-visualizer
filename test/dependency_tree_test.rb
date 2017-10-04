@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'dependency_tree'
 
-class DependencyTreeTest < Test::Unit::TestCase
+class DependencyTreeTest < Minitest::Test
 
   def test_initial_state
     tree = DependencyTree.new

@@ -1,0 +1,97 @@
+(source_file\
+  (import_decl 'UIKit')\
+  (class_decl "AppDelegate" interface type='AppDelegate.Type' access=internal @objc @_fixed_layout inherits: UIResponder, UIApplicationDelegate\
+    (pattern_binding_decl\
+      (pattern_typed type='UIWindow?'\
+        (pattern_named type='UIWindow?' 'window')\
+)\
+      (call_expr implicit type='UIWindow?' nothrow arg_labels=nilLiteral:\
+        (constructor_ref_call_expr implicit type='(()) -> UIWindow?' nothrow\
+          (declref_expr implicit type='(Optional<UIWindow>.Type) -> (()) -> Optional<UIWindow>' decl=Swift.(file).Optional.init(nilLiteral:) [with UIWindow] function_ref=single)\
+          (type_expr implicit type='UIWindow?.Type' typerepr='<<NULL>>'))\
+        (tuple_expr implicit type='(nilLiteral: ())' names=nilLiteral\
+          (tuple_expr implicit type='()'))))\
+    (var_decl "window" type='UIWindow?' interface type='UIWindow?' access=internal @objc storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7f85f59dec30' interface type='(AppDelegate) -> () -> UIWindow?' access=internal @objc getter_for=window\
+        (parameter_list\
+          (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='UIWindow?'\
+              (member_ref_expr implicit type='@lvalue UIWindow?' accessKind=read decl=SourcekittenWithComplexDependencies.(file).AppDelegate.window@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 direct_to_storage\
+                (declref_expr implicit type='AppDelegate' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7f85f59deea0' interface type='(AppDelegate) -> (UIWindow?) -> ()' access=internal @objc setter_for=window\
+        (parameter_list\
+          (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+        (parameter_list\
+          (parameter "value" type='UIWindow?' interface type='UIWindow?'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue UIWindow?' accessKind=write decl=SourcekittenWithComplexDependencies.(file).AppDelegate.window@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 direct_to_storage\
+              (declref_expr implicit type='AppDelegate' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))\
+            (declref_expr implicit type='UIWindow?' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7f85f59df460' interface type='(AppDelegate) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=window\
+        (parameter_list\
+          (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7f85f59dec30' interface type='(AppDelegate) -> () -> UIWindow?' access=internal @objc getter_for=window\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='UIWindow?'\
+            (member_ref_expr implicit type='@lvalue UIWindow?' accessKind=read decl=SourcekittenWithComplexDependencies.(file).AppDelegate.window@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 direct_to_storage\
+              (declref_expr implicit type='AppDelegate' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7f85f59deea0' interface type='(AppDelegate) -> (UIWindow?) -> ()' access=internal @objc setter_for=window\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (parameter_list\
+        (parameter "value" type='UIWindow?' interface type='UIWindow?'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue UIWindow?' accessKind=write decl=SourcekittenWithComplexDependencies.(file).AppDelegate.window@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 direct_to_storage\
+            (declref_expr implicit type='AppDelegate' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))\
+          (declref_expr implicit type='UIWindow?' decl=SourcekittenWithComplexDependencies.(file).AppDelegate.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:14:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7f85f59df460' interface type='(AppDelegate) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=window\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (func_decl "application(_:didFinishLaunchingWithOptions:)" interface type='(AppDelegate) -> (UIApplication, [UIApplicationLaunchOptionsKey : Any]?) -> Bool' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (parameter_list\
+        (parameter "application" type='UIApplication' interface type='UIApplication')\
+        (parameter "launchOptions" apiName=didFinishLaunchingWithOptions type='[UIApplicationLaunchOptionsKey : Any]?' interface type='[UIApplicationLaunchOptionsKey : Any]?'))\
+      (result\
+        (type_ident\
+          (component id='Bool' bind=Swift.(file).Bool)))\
+      (brace_stmt\
+        (return_stmt\
+          (call_expr implicit type='Bool' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] nothrow arg_labels=_builtinBooleanLiteral:\
+            (constructor_ref_call_expr implicit type='(Int1) -> Bool' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] nothrow\
+              (declref_expr implicit type='(Bool.Type) -> (Int1) -> Bool' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] decl=Swift.(file).Bool.init(_builtinBooleanLiteral:) function_ref=single)\
+              (type_expr implicit type='Bool.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] typerepr='Bool'))\
+            (tuple_expr implicit type='(_builtinBooleanLiteral: Builtin.Int1)' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] names=_builtinBooleanLiteral\
+              (boolean_literal_expr type='Builtin.Int1' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/AppDelegate.swift:19:16 - line:19:16] value=true))))))\
+    (destructor_decl implicit "deinit" interface type='(AppDelegate) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(AppDelegate.Type) -> () -> AppDelegate' access=internal override=UIKit.(file).UIResponder.init() @objc designated\
+      (parameter_list\
+        (parameter "self" type='AppDelegate' interface type='AppDelegate'))\
+      (parameter_list)\
+      (brace_stmt\
+        (rebind_self_in_constructor_expr implicit type='()'\
+          (call_expr implicit type='UIResponder' nothrow arg_labels=\
+            (dot_syntax_call_expr implicit type='() -> UIResponder' super nothrow\
+              (other_constructor_ref_expr implicit type='(UIResponder) -> () -> UIResponder' decl=UIKit.(file).UIResponder.init())\
+              (super_ref_expr implicit type='UIResponder'))\
+            (tuple_expr implicit type='()')))\
+        (return_stmt implicit)))))

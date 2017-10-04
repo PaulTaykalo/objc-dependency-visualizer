@@ -1,0 +1,331 @@
+(source_file\
+  (import_decl 'Foundation')\
+  (import_decl 'UIKit')\
+  (protocol "ProtocolForGeneric" <Self : ProtocolForGeneric> interface type='ProtocolForGeneric.Protocol' access=internal @_fixed_layout requirement signature=<Self>)\
+  (protocol "ProtocolForGeneric2" <Self : ProtocolForGeneric2> interface type='ProtocolForGeneric2.Protocol' access=internal @_fixed_layout requirement signature=<Self>)\
+  (class_decl "GenericClass" <A : ProtocolForGeneric> interface type='GenericClass<A>.Type' access=internal @_fixed_layout\
+    (destructor_decl implicit "deinit" interface type='<A where A : ProtocolForGeneric> (GenericClass<A>) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='GenericClass<A>' interface type='GenericClass<A>'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='<A where A : ProtocolForGeneric> (GenericClass<A>.Type) -> () -> GenericClass<A>' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='GenericClass<A>' interface type='GenericClass<A>'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "GenericClass2" <B : ProtocolForGeneric & ProtocolForGeneric2> interface type='GenericClass2<B>.Type' access=internal @_fixed_layout\
+    (destructor_decl implicit "deinit" interface type='<B where B : ProtocolForGeneric, B : ProtocolForGeneric2> (GenericClass2<B>) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='GenericClass2<B>' interface type='GenericClass2<B>'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='<B where B : ProtocolForGeneric, B : ProtocolForGeneric2> (GenericClass2<B>.Type) -> () -> GenericClass2<B>' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='GenericClass2<B>' interface type='GenericClass2<B>'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "GenericClass3" <C : ProtocolForGeneric, D : ProtocolForGeneric2> interface type='GenericClass3<C, D>.Type' access=internal @_fixed_layout\
+    (destructor_decl implicit "deinit" interface type='<C, D where C : ProtocolForGeneric, D : ProtocolForGeneric2> (GenericClass3<C, D>) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='GenericClass3<C, D>' interface type='GenericClass3<C, D>'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='<C, D where C : ProtocolForGeneric, D : ProtocolForGeneric2> (GenericClass3<C, D>.Type) -> () -> GenericClass3<C, D>' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='GenericClass3<C, D>' interface type='GenericClass3<C, D>'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "TheButton" interface type='TheButton.Type' access=internal @objc @_fixed_layout inherits: UIButton\
+    (destructor_decl implicit "deinit" interface type='(TheButton) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='TheButton' interface type='TheButton'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init(frame:)" interface type='(TheButton.Type) -> (CGRect) -> TheButton' access=internal override=UIKit.(file).UIButton.init(frame:) @objc designated\
+      (parameter_list\
+        (parameter "self" type='TheButton' interface type='TheButton'))\
+      (parameter_list\
+        (parameter "frame" apiName=frame type='CGRect' interface type='CGRect'))\
+      (brace_stmt\
+        (rebind_self_in_constructor_expr implicit type='()'\
+          (call_expr implicit type='UIButton' nothrow arg_labels=frame:\
+            (dot_syntax_call_expr implicit type='(CGRect) -> UIButton' super nothrow\
+              (other_constructor_ref_expr implicit type='(UIButton) -> (CGRect) -> UIButton' decl=UIKit.(file).UIButton.init(frame:))\
+              (super_ref_expr implicit type='UIButton'))\
+            (tuple_expr implicit type='(frame: CGRect)' names=frame\
+              (declref_expr implicit type='CGRect' decl=SourcekittenWithComplexDependencies.(file).TheButton.init(frame:).frame function_ref=unapplied))))\
+        (return_stmt implicit)))\
+    (constructor_decl implicit "init(coder:)" interface type='(TheButton.Type) -> (NSCoder) -> TheButton?' access=internal override=UIKit.(file).UIButton.init(coder:) @objc required designated failable=Optional\
+      (parameter_list\
+        (parameter "self" type='TheButton' interface type='TheButton'))\
+      (parameter_list\
+        (parameter "aDecoder" apiName=coder type='NSCoder' interface type='NSCoder'))\
+      (brace_stmt\
+        (rebind_self_in_constructor_expr implicit type='()'\
+          (call_expr implicit type='UIButton?' nothrow arg_labels=coder:\
+            (dot_syntax_call_expr implicit type='(NSCoder) -> UIButton?' super nothrow\
+              (other_constructor_ref_expr implicit type='(UIButton) -> (NSCoder) -> UIButton?' decl=UIKit.(file).UIButton.init(coder:))\
+              (super_ref_expr implicit type='UIButton'))\
+            (tuple_expr implicit type='(coder: NSCoder)' names=coder\
+              (declref_expr implicit type='NSCoder' decl=SourcekittenWithComplexDependencies.(file).TheButton.init(coder:).aDecoder function_ref=unapplied))))\
+        (return_stmt implicit))))\
+  (class_decl "GenericClassWithProp" <E : ProtocolForGeneric> interface type='GenericClassWithProp<E>.Type' access=internal @_fixed_layout\
+    (pattern_binding_decl\
+      (pattern_typed type='E'\
+        (pattern_named type='E' 'item')\
+        (type_ident\
+          (component id='E' bind=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.E@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:22:28))))\
+    (var_decl "item" type='E' interface type='E' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7fcdb69a7f30' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> () -> E' access=internal getter_for=item\
+        (parameter_list\
+          (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='E'\
+              (member_ref_expr implicit type='@lvalue E' accessKind=read decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 [with E[abstract:ProtocolForGeneric]] direct_to_storage\
+                (declref_expr implicit type='GenericClassWithProp<E>' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7fcdb69a81a0' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> (E) -> ()' access=internal setter_for=item\
+        (parameter_list\
+          (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+        (parameter_list\
+          (parameter "value" type='E' interface type='E'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue E' accessKind=write decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 [with E[abstract:ProtocolForGeneric]] direct_to_storage\
+              (declref_expr implicit type='GenericClassWithProp<E>' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))\
+            (declref_expr implicit type='E' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7fcdb69a87b0' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=item\
+        (parameter_list\
+          (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7fcdb69a7f30' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> () -> E' access=internal getter_for=item\
+      (parameter_list\
+        (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='E'\
+            (member_ref_expr implicit type='@lvalue E' accessKind=read decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 [with E[abstract:ProtocolForGeneric]] direct_to_storage\
+              (declref_expr implicit type='GenericClassWithProp<E>' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7fcdb69a81a0' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> (E) -> ()' access=internal setter_for=item\
+      (parameter_list\
+        (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+      (parameter_list\
+        (parameter "value" type='E' interface type='E'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue E' accessKind=write decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 [with E[abstract:ProtocolForGeneric]] direct_to_storage\
+            (declref_expr implicit type='GenericClassWithProp<E>' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))\
+          (declref_expr implicit type='E' decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7fcdb69a87b0' interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=item\
+      (parameter_list\
+        (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (constructor_decl "init(item:)" interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>.Type) -> (E) -> GenericClassWithProp<E>' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='E' interface type='E'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr type='@lvalue E' accessKind=write location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:14 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:9 - line:25:14] decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:23:9 [with E[abstract:ProtocolForGeneric]] direct_to_storage\
+            (declref_expr type='GenericClassWithProp<E>' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:9 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:9 - line:25:9] decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.init(item:).self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:24:5 function_ref=unapplied))\
+          (declref_expr type='E' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:21 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:25:21 - line:25:21] decl=SourcekittenWithComplexDependencies.(file).GenericClassWithProp.init(item:).item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:24:10 function_ref=unapplied))\
+        (return_stmt implicit)))\
+    (destructor_decl implicit "deinit" interface type='<E where E : ProtocolForGeneric> (GenericClassWithProp<E>) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='GenericClassWithProp<E>' interface type='GenericClassWithProp<E>'))\
+      (brace_stmt)))\
+  (protocol "ProtocolWithGenericFunction" <Self : ProtocolWithGenericFunction> interface type='ProtocolWithGenericFunction.Protocol' access=internal @_fixed_layout requirement signature=<Self>\
+    (func_decl "genericFunction(item:)" <F> interface type='<Self, F where Self : ProtocolWithGenericFunction> (Self) -> (F) -> F' access=internal\
+      (parameter_list\
+        (parameter "self" type='Self' interface type='Self'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='F' interface type='F'))\
+      (result\
+        (type_ident\
+          (component id='F' bind=SourcekittenWithComplexDependencies.(file).ProtocolWithGenericFunction.genericFunction(item:).F@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:30:26))))\
+    (func_decl "genericFunction2(item:)" <G : ProtocolForGeneric2> interface type='<Self, G where Self : ProtocolWithGenericFunction, G : ProtocolForGeneric2> (Self) -> (G) -> G' access=internal\
+      (parameter_list\
+        (parameter "self" type='Self' interface type='Self'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='G' interface type='G'))\
+      (result\
+        (type_ident\
+          (component id='G' bind=SourcekittenWithComplexDependencies.(file).ProtocolWithGenericFunction.genericFunction2(item:).G@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:31:27))))\
+    (func_decl "genericFunction3(item:)" <N> interface type='<Self, N where Self : ProtocolWithGenericFunction> (Self) -> (N) -> String' access=internal\
+      (parameter_list\
+        (parameter "self" type='Self' interface type='Self'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='N' interface type='N'))\
+      (result\
+        (type_ident\
+          (component id='String' bind=Swift.(file).String)))))\
+  (class_decl "ClassWithGenericFunction" interface type='ClassWithGenericFunction.Type' access=internal @_fixed_layout\
+    (func_decl "genericFunction(item:)" <J> interface type='<J> (ClassWithGenericFunction) -> (J) -> J' access=internal captures=(<generic> )\
+      (parameter_list\
+        (parameter "self" type='ClassWithGenericFunction' interface type='ClassWithGenericFunction'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='J' interface type='J'))\
+      (result\
+        (type_ident\
+          (component id='J' bind=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunction(item:).J@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:37:26)))\
+      (brace_stmt\
+        (return_stmt\
+          (declref_expr type='J' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:38:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:38:16 - line:38:16] decl=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunction(item:).item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:37:29 function_ref=unapplied))))\
+    (destructor_decl implicit "deinit" interface type='(ClassWithGenericFunction) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='ClassWithGenericFunction' interface type='ClassWithGenericFunction'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(ClassWithGenericFunction.Type) -> () -> ClassWithGenericFunction' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='ClassWithGenericFunction' interface type='ClassWithGenericFunction'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (extension_decl ClassWithGenericFunction\
+    (func_decl "genericFunctionInExtension(item:)" <K> interface type='<K> (ClassWithGenericFunction) -> (K) -> K' access=internal captures=(<generic> )\
+      (parameter_list\
+        (parameter "self" type='ClassWithGenericFunction' interface type='ClassWithGenericFunction'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='K' interface type='K'))\
+      (result\
+        (type_ident\
+          (component id='K' bind=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunctionInExtension(item:).K@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:43:37)))\
+      (brace_stmt\
+        (return_stmt\
+          (declref_expr type='K' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:44:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:44:16 - line:44:16] decl=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunctionInExtension(item:).item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:43:40 function_ref=unapplied)))))\
+  (protocol "ProtocolWithGenericFunctionToImplement" <Self : ProtocolWithGenericFunctionToImplement> interface type='ProtocolWithGenericFunctionToImplement.Protocol' access=internal @_fixed_layout requirement signature=<Self>\
+    (func_decl "genericFunctionFromProtocol(item:)" <L> interface type='<Self, L where Self : ProtocolWithGenericFunctionToImplement> (Self) -> (L) -> L' access=internal\
+      (parameter_list\
+        (parameter "self" type='Self' interface type='Self'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='L' interface type='L'))\
+      (result\
+        (type_ident\
+          (component id='L' bind=SourcekittenWithComplexDependencies.(file).ProtocolWithGenericFunctionToImplement.genericFunctionFromProtocol(item:).L@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:50:38)))))\
+  (extension_decl ClassWithGenericFunction inherits: ProtocolWithGenericFunctionToImplement\
+    (func_decl "genericFunctionFromProtocol(item:)" <M> interface type='<M> (ClassWithGenericFunction) -> (M) -> M' access=internal captures=(<generic> )\
+      (parameter_list\
+        (parameter "self" type='ClassWithGenericFunction' interface type='ClassWithGenericFunction'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='M' interface type='M'))\
+      (result\
+        (type_ident\
+          (component id='M' bind=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunctionFromProtocol(item:).M@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:53:38)))\
+      (brace_stmt\
+        (return_stmt\
+          (declref_expr type='M' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:54:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:54:16 - line:54:16] decl=SourcekittenWithComplexDependencies.(file).ClassWithGenericFunction.genericFunctionFromProtocol(item:).item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:53:41 function_ref=unapplied)))))\
+  (protocol "ProtocolForTypeAlias" <Self : ProtocolForTypeAlias> interface type='ProtocolForTypeAlias.Protocol' access=internal @_fixed_layout requirement signature=<Self>)\
+  (class_decl "ClassWithTypeaLias" interface type='ClassWithTypeaLias.Type' access=public @_fixed_layout\
+    (typealias "H" interface type='ClassWithTypeaLias.H.Protocol' access=internal type='ProtocolForTypeAlias')\
+    (pattern_binding_decl\
+      (pattern_typed type='(ClassWithTypeaLias.H) -> ()'\
+        (pattern_named type='(ClassWithTypeaLias.H) -> ()' 'item')\
+        (type_function\
+          (type_tuple\
+            (type_ident\
+              (component id='H' bind=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.H@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:63:15)))\
+          (type_tuple)))\
+      (closure_expr type='(ClassWithTypeaLias.H) -> ()' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:27 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:27 - line:64:32] discriminator=0\
+        (parameter_list\
+          (parameter 'anonname=0x7fcdb497d5e0' type='(ClassWithTypeaLias.H)' interface type='(ClassWithTypeaLias.H)'))\
+        (brace_stmt)))\
+    (var_decl "item" type='(ClassWithTypeaLias.H) -> ()' interface type='(ClassWithTypeaLias.H) -> ()' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7fcdb69c8440' interface type='(ClassWithTypeaLias) -> () -> (ClassWithTypeaLias.H) -> ()' access=internal getter_for=item\
+        (parameter_list\
+          (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='(ClassWithTypeaLias.H) -> ()'\
+              (member_ref_expr implicit type='@lvalue (ClassWithTypeaLias.H) -> ()' accessKind=read decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 direct_to_storage\
+                (declref_expr implicit type='ClassWithTypeaLias' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7fcdb69c86b0' interface type='(ClassWithTypeaLias) -> (@escaping (ClassWithTypeaLias.H) -> ()) -> ()' access=internal setter_for=item\
+        (parameter_list\
+          (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+        (parameter_list\
+          (parameter "value" type='(ClassWithTypeaLias.H) -> ()' interface type='(ClassWithTypeaLias.H) -> ()'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue (ClassWithTypeaLias.H) -> ()' accessKind=write decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 direct_to_storage\
+              (declref_expr implicit type='ClassWithTypeaLias' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))\
+            (declref_expr implicit type='(ClassWithTypeaLias.H) -> ()' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7fcdb69c8c00' interface type='(ClassWithTypeaLias) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=item\
+        (parameter_list\
+          (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7fcdb69c8440' interface type='(ClassWithTypeaLias) -> () -> (ClassWithTypeaLias.H) -> ()' access=internal getter_for=item\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='(ClassWithTypeaLias.H) -> ()'\
+            (member_ref_expr implicit type='@lvalue (ClassWithTypeaLias.H) -> ()' accessKind=read decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 direct_to_storage\
+              (declref_expr implicit type='ClassWithTypeaLias' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7fcdb69c86b0' interface type='(ClassWithTypeaLias) -> (@escaping (ClassWithTypeaLias.H) -> ()) -> ()' access=internal setter_for=item\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+      (parameter_list\
+        (parameter "value" type='(ClassWithTypeaLias.H) -> ()' interface type='(ClassWithTypeaLias.H) -> ()'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue (ClassWithTypeaLias.H) -> ()' accessKind=write decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.item@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 direct_to_storage\
+            (declref_expr implicit type='ClassWithTypeaLias' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))\
+          (declref_expr implicit type='(ClassWithTypeaLias.H) -> ()' decl=SourcekittenWithComplexDependencies.(file).ClassWithTypeaLias.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:64:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7fcdb69c8c00' interface type='(ClassWithTypeaLias) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=item\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (destructor_decl implicit "deinit" interface type='(ClassWithTypeaLias) -> () -> ()' access=public @objc\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(ClassWithTypeaLias.Type) -> () -> ClassWithTypeaLias' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLias' interface type='ClassWithTypeaLias'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "ClassWithTypeaLiasInFunctionParams" interface type='ClassWithTypeaLiasInFunctionParams.Type' access=public @_fixed_layout\
+    (typealias "I" interface type='ClassWithTypeaLiasInFunctionParams.I.Protocol' access=internal type='ProtocolForTypeAlias')\
+    (func_decl "doSomething(name:)" interface type='(ClassWithTypeaLiasInFunctionParams) -> (ClassWithTypeaLiasInFunctionParams.I) -> ()' access=internal\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLiasInFunctionParams' interface type='ClassWithTypeaLiasInFunctionParams'))\
+      (parameter_list\
+        (parameter "name" apiName=name type='ClassWithTypeaLiasInFunctionParams.I' interface type='ClassWithTypeaLiasInFunctionParams.I'))\
+      (brace_stmt))\
+    (func_decl "doSomethingElse()" interface type='(ClassWithTypeaLiasInFunctionParams) -> () -> ClassWithTypeaLiasInFunctionParams.I?' access=internal\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLiasInFunctionParams' interface type='ClassWithTypeaLiasInFunctionParams'))\
+      (parameter_list)\
+      (result\
+)\
+      (brace_stmt\
+        (return_stmt\
+          (call_expr implicit type='ClassWithTypeaLiasInFunctionParams.I?' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16] nothrow arg_labels=nilLiteral:\
+            (constructor_ref_call_expr implicit type='(()) -> ClassWithTypeaLiasInFunctionParams.I?' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16] nothrow\
+              (declref_expr implicit type='(Optional<ClassWithTypeaLiasInFunctionParams.I>.Type) -> (()) -> Optional<ClassWithTypeaLiasInFunctionParams.I>' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16] decl=Swift.(file).Optional.init(nilLiteral:) [with ClassWithTypeaLiasInFunctionParams.I] function_ref=single)\
+              (type_expr implicit type='ClassWithTypeaLiasInFunctionParams.I?.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16] typerepr='ClassWithTypeaLiasInFunctionParams.I?'))\
+            (tuple_expr implicit type='(nilLiteral: ())' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16] names=nilLiteral\
+              (tuple_expr type='()' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/SecondFile.swift:71:16 - line:71:16]))))))\
+    (destructor_decl implicit "deinit" interface type='(ClassWithTypeaLiasInFunctionParams) -> () -> ()' access=public @objc\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLiasInFunctionParams' interface type='ClassWithTypeaLiasInFunctionParams'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(ClassWithTypeaLiasInFunctionParams.Type) -> () -> ClassWithTypeaLiasInFunctionParams' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='ClassWithTypeaLiasInFunctionParams' interface type='ClassWithTypeaLiasInFunctionParams'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit)))))

@@ -1,11 +1,13 @@
 os: 
   - osx
-osx_image: xcode6.4
+osx_image: xcode9
 sudo: false
 cache: bundler
 language: 
   - objective-c
 rvm:
-  - 1.9.3
+  - 2.3.3
+before_install:
+  - bundle install  
 script:
   - rake

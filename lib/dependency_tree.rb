@@ -9,6 +9,7 @@ module DependencyLinkType
   INHERITANCE = 'inheritance'.freeze
   IVAR = 'ivar'.freeze
   CALL = 'call'.freeze
+  PARAMETER = 'parameter'.freeze
   UNKNOWN = 'unknown'.freeze
 end
 
@@ -64,7 +65,7 @@ class DependencyTree
     @types_registry.keys
   end
 
-  def link_type(source, dest)
+def link_type(source, dest)
     @links_registry[link_key(source, dest)] || DependencyLinkType::UNKNOWN
   end
 

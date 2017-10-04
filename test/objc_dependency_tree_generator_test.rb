@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'objc_dependency_tree_generator'
 
-class ObCDependencyTreeGeneratorTest < Test::Unit::TestCase
+class ObCDependencyTreeGeneratorTest < Minitest::Test
   def test_links_generation
     generator = DependencyTreeGenerator.new({})
     tree = generator.build_dependency_tree

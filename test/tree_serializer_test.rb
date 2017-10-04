@@ -1,14 +1,14 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'tree_serializer'
 require 'dependency_tree'
 require 'json'
 
 
-class TreeSerializerTest < Test::Unit::TestCase
+class TreeSerializerTest < Minitest::Test
 
   def test_serialization_not_empty
     serializer = TreeSerializer.new(DependencyTree.new)
-    assert_not_nil(serializer.serialize('json'), 'Serializer should not return nils')
+    assert(nil != serializer.serialize('json'), 'Serializer should not return nils')
   end
 
   def test_link_serialization
@@ -16,7 +16,7 @@ class TreeSerializerTest < Test::Unit::TestCase
     tree.add('sourceItem', 'destItem')
     output = TreeSerializer.new(tree).serialize('json')
     json = JSON.parse(output)
-    assert_not_nil(json['links'], 'Links should be present in output')
+    assert(nil != json['links'], 'Links should be present in output')
 
     first_link = json['links'].first
     assert_equal(first_link['source'], 'sourceItem', 'Links should have correct source set up')
@@ -28,8 +28,8 @@ class TreeSerializerTest < Test::Unit::TestCase
     tree.register('sourceItem', DependencyItemType::CLASS)
     output = TreeSerializer.new(tree).serialize('json')
     json = JSON.parse(output)
-    assert_not_nil(json['objects'], 'Objects should be present in output')
-    assert_not_nil(json['objects']['sourceItem'], 'Objects should be present in output')
+    assert(nil != json['objects'], 'Objects should be present in output')
+    assert(nil != json['objects']['sourceItem'], 'Objects should be present in output')
     assert_equal(json['objects']['sourceItem']['type'], DependencyItemType::CLASS, 'Objects should be present in output')
   end
 
@@ -38,7 +38,7 @@ class TreeSerializerTest < Test::Unit::TestCase
     tree.add('sourceItem', 'destItem', DependencyLinkType::INHERITANCE)
     output = TreeSerializer.new(tree).serialize('json')
     json = JSON.parse(output)
-    assert_not_nil(json['links'], 'Links should be present in output')
+    assert(nil != json['links'], 'Links should be present in output')
 
     first_link = json['links'].first
     assert_equal(first_link['source'], 'sourceItem', 'Links should have correct source set up')

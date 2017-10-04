@@ -1,0 +1,446 @@
+(source_file\
+  (import_decl 'Foundation')\
+  (protocol "Protocol1" <Self : Protocol1> interface type='Protocol1.Protocol' access=internal @_fixed_layout requirement signature=<Self>)\
+  (class_decl "Protocol1Impl" interface type='Protocol1Impl.Type' access=internal @_fixed_layout inherits: Protocol1\
+    (destructor_decl implicit "deinit" interface type='(Protocol1Impl) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='Protocol1Impl' interface type='Protocol1Impl'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(Protocol1Impl.Type) -> () -> Protocol1Impl' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='Protocol1Impl' interface type='Protocol1Impl'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (protocol "Protocol2" <Self : Protocol2> interface type='Protocol2.Protocol' access=internal @_fixed_layout requirement signature=<Self>)\
+  (class_decl "Protocol2Impl" interface type='Protocol2Impl.Type' access=internal @_fixed_layout inherits: Protocol2\
+    (destructor_decl implicit "deinit" interface type='(Protocol2Impl) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='Protocol2Impl' interface type='Protocol2Impl'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(Protocol2Impl.Type) -> () -> Protocol2Impl' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='Protocol2Impl' interface type='Protocol2Impl'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "Class1" interface type='Class1.Type' access=internal @_fixed_layout\
+    (pattern_binding_decl\
+      (pattern_typed type='Protocol1'\
+        (pattern_named type='Protocol1' 'p1')\
+        (type_ident\
+          (component id='Protocol1' bind=SourcekittenWithComplexDependencies.(file).Protocol1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:12:10)))\
+      (erasure_expr implicit type='Protocol1' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 - line:19:39]\
+        (normal_conformance type=Protocol1Impl protocol=Protocol1)\
+        (call_expr type='Protocol1Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 - line:19:39] nothrow arg_labels=\
+          (constructor_ref_call_expr type='() -> Protocol1Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 - line:19:25] nothrow\
+            (declref_expr implicit type='(Protocol1Impl.Type) -> () -> Protocol1Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 - line:19:25] decl=SourcekittenWithComplexDependencies.(file).Protocol1Impl.init()@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:13:7 function_ref=single)\
+            (type_expr type='Protocol1Impl.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:25 - line:19:25] typerepr='Protocol1Impl'))\
+          (tuple_expr type='()' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:38 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:38 - line:19:39]))))\
+    (var_decl "p1" type='Protocol1' interface type='Protocol1' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa61981800' interface type='(Class1) -> () -> Protocol1' access=internal getter_for=p1\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='Protocol1'\
+              (member_ref_expr implicit type='@lvalue Protocol1' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61981a70' interface type='(Class1) -> (Protocol1) -> ()' access=internal setter_for=p1\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='Protocol1' interface type='Protocol1'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue Protocol1' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))\
+            (declref_expr implicit type='Protocol1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa61982330' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p1\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa61981800' interface type='(Class1) -> () -> Protocol1' access=internal getter_for=p1\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='Protocol1'\
+            (member_ref_expr implicit type='@lvalue Protocol1' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61981a70' interface type='(Class1) -> (Protocol1) -> ()' access=internal setter_for=p1\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='Protocol1' interface type='Protocol1'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue Protocol1' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p1@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))\
+          (declref_expr implicit type='Protocol1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:19:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa61982330' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p1\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='Protocol2?'\
+        (pattern_named type='Protocol2?' 'p2')\
+)\
+      (inject_into_optional implicit type='Protocol2?' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:40]\
+        (erasure_expr implicit type='Protocol2' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:40]\
+          (normal_conformance type=Protocol2Impl protocol=Protocol2)\
+          (call_expr type='Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:40] nothrow arg_labels=\
+            (constructor_ref_call_expr type='() -> Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:26] nothrow\
+              (declref_expr implicit type='(Protocol2Impl.Type) -> () -> Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:26] decl=SourcekittenWithComplexDependencies.(file).Protocol2Impl.init()@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:16:7 function_ref=single)\
+              (type_expr type='Protocol2Impl.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:26 - line:20:26] typerepr='Protocol2Impl'))\
+            (tuple_expr type='()' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:39 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:39 - line:20:40])))))\
+    (var_decl "p2" type='Protocol2?' interface type='Protocol2?' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa619826c0' interface type='(Class1) -> () -> Protocol2?' access=internal getter_for=p2\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='Protocol2?'\
+              (member_ref_expr implicit type='@lvalue Protocol2?' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p2@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61979780' interface type='(Class1) -> (Protocol2?) -> ()' access=internal setter_for=p2\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='Protocol2?' interface type='Protocol2?'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue Protocol2?' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p2@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))\
+            (declref_expr implicit type='Protocol2?' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa61979cd0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p2\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa619826c0' interface type='(Class1) -> () -> Protocol2?' access=internal getter_for=p2\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='Protocol2?'\
+            (member_ref_expr implicit type='@lvalue Protocol2?' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p2@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61979780' interface type='(Class1) -> (Protocol2?) -> ()' access=internal setter_for=p2\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='Protocol2?' interface type='Protocol2?'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue Protocol2?' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p2@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))\
+          (declref_expr implicit type='Protocol2?' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:20:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa61979cd0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p2\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='Int'\
+        (pattern_named type='Int' 'p3')\
+        (type_ident\
+          (component id='Int' bind=Swift.(file).Int)))\
+      (call_expr implicit type='Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] nothrow arg_labels=_builtinIntegerLiteral:\
+        (constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] nothrow\
+          (declref_expr implicit type='(Int.Type) -> (_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] decl=Swift.(file).Int.init(_builtinIntegerLiteral:) function_ref=single)\
+          (type_expr implicit type='Int.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] typerepr='Int'))\
+        (tuple_expr implicit type='(_builtinIntegerLiteral: Int2048)' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] names=_builtinIntegerLiteral\
+          (integer_literal_expr type='Int2048' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:19 - line:21:19] value=123))))\
+    (var_decl "p3" type='Int' interface type='Int' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa619870f0' interface type='(Class1) -> () -> Int' access=internal getter_for=p3\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='Int'\
+              (member_ref_expr implicit type='@lvalue Int' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p3@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61987380' interface type='(Class1) -> (Int) -> ()' access=internal setter_for=p3\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='Int' interface type='Int'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue Int' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p3@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))\
+            (declref_expr implicit type='Int' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa619878d0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p3\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa619870f0' interface type='(Class1) -> () -> Int' access=internal getter_for=p3\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='Int'\
+            (member_ref_expr implicit type='@lvalue Int' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p3@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61987380' interface type='(Class1) -> (Int) -> ()' access=internal setter_for=p3\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='Int' interface type='Int'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue Int' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p3@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))\
+          (declref_expr implicit type='Int' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:21:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa619878d0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p3\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='Double'\
+        (pattern_named type='Double' 'p4')\
+        (type_ident\
+          (component id='Double' bind=Swift.(file).Double)))\
+      (call_expr implicit type='Double' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] nothrow arg_labels=_builtinIntegerLiteral:\
+        (constructor_ref_call_expr implicit type='(Int2048) -> Double' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] nothrow\
+          (declref_expr implicit type='(Double.Type) -> (Int2048) -> Double' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] decl=Swift.(file).Double.init(_builtinIntegerLiteral:) function_ref=single)\
+          (type_expr implicit type='Double.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] typerepr='Double'))\
+        (tuple_expr implicit type='(_builtinIntegerLiteral: Int2048)' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] names=_builtinIntegerLiteral\
+          (integer_literal_expr type='Int2048' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:22 - line:22:22] value=24))))\
+    (var_decl "p4" type='Double' interface type='Double' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa61987cd0' interface type='(Class1) -> () -> Double' access=internal getter_for=p4\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='Double'\
+              (member_ref_expr implicit type='@lvalue Double' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p4@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61987f40' interface type='(Class1) -> (Double) -> ()' access=internal setter_for=p4\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='Double' interface type='Double'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue Double' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p4@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))\
+            (declref_expr implicit type='Double' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa619884b0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p4\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa61987cd0' interface type='(Class1) -> () -> Double' access=internal getter_for=p4\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='Double'\
+            (member_ref_expr implicit type='@lvalue Double' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p4@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61987f40' interface type='(Class1) -> (Double) -> ()' access=internal setter_for=p4\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='Double' interface type='Double'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue Double' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p4@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))\
+          (declref_expr implicit type='Double' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:22:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa619884b0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p4\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='[Int]'\
+        (pattern_named type='[Int]' 'p5')\
+        (type_array\
+          (type_ident\
+            (component id='Int' bind=Swift.(file).Int))))\
+      (array_expr type='[Int]' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:21 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:21 - line:23:24]\
+        (call_expr implicit type='Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] nothrow arg_labels=_builtinIntegerLiteral:\
+          (constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] nothrow\
+            (declref_expr implicit type='(Int.Type) -> (_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] decl=Swift.(file).Int.init(_builtinIntegerLiteral:) function_ref=single)\
+            (type_expr implicit type='Int.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] typerepr='Int'))\
+          (tuple_expr implicit type='(_builtinIntegerLiteral: Int2048)' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] names=_builtinIntegerLiteral\
+            (integer_literal_expr type='Int2048' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:22 - line:23:22] value=26)))))\
+    (var_decl "p5" type='[Int]' interface type='[Int]' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa61997d90' interface type='(Class1) -> () -> [Int]' access=internal getter_for=p5\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='[Int]'\
+              (member_ref_expr implicit type='@lvalue [Int]' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p5@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61998000' interface type='(Class1) -> ([Int]) -> ()' access=internal setter_for=p5\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='[Int]' interface type='[Int]'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue [Int]' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p5@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))\
+            (declref_expr implicit type='[Int]' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa61998570' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p5\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa61997d90' interface type='(Class1) -> () -> [Int]' access=internal getter_for=p5\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='[Int]'\
+            (member_ref_expr implicit type='@lvalue [Int]' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p5@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61998000' interface type='(Class1) -> ([Int]) -> ()' access=internal setter_for=p5\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='[Int]' interface type='[Int]'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue [Int]' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p5@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))\
+          (declref_expr implicit type='[Int]' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:23:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa61998570' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p5\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (pattern_binding_decl\
+      (pattern_typed type='Any'\
+        (pattern_named type='Any' 'p6')\
+        (type_composite))\
+      (erasure_expr implicit type='Any' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19]\
+        (call_expr implicit type='Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] nothrow arg_labels=_builtinIntegerLiteral:\
+          (constructor_ref_call_expr implicit type='(_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] nothrow\
+            (declref_expr implicit type='(Int.Type) -> (_MaxBuiltinIntegerType) -> Int' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] decl=Swift.(file).Int.init(_builtinIntegerLiteral:) function_ref=single)\
+            (type_expr implicit type='Int.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] typerepr='Int'))\
+          (tuple_expr implicit type='(_builtinIntegerLiteral: Int2048)' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] names=_builtinIntegerLiteral\
+            (integer_literal_expr type='Int2048' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:19 - line:24:19] value=17)))))\
+    (var_decl "p6" type='Any' interface type='Any' access=internal storage_kind=stored_with_trivial_accessors\
+      (func_decl implicit 'anonname=0x7ffa61998800' interface type='(Class1) -> () -> Any' access=internal getter_for=p6\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list)\
+        (brace_stmt\
+          (return_stmt implicit\
+            (load_expr implicit type='Any'\
+              (member_ref_expr implicit type='@lvalue Any' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p6@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 direct_to_storage\
+                (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))))))\
+      (func_decl implicit 'anonname=0x7ffa61998a70' interface type='(Class1) -> (Any) -> ()' access=internal setter_for=p6\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "value" type='Any' interface type='Any'))\
+        (brace_stmt\
+          (assign_expr\
+            (member_ref_expr implicit type='@lvalue Any' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p6@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))\
+            (declref_expr implicit type='Any' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))))\
+      (func_decl implicit 'anonname=0x7ffa61998fc0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p6\
+        (parameter_list\
+          (parameter "self" type='Class1' interface type='Class1'))\
+        (parameter_list\
+          (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+          (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable))))\
+    (func_decl implicit 'anonname=0x7ffa61998800' interface type='(Class1) -> () -> Any' access=internal getter_for=p6\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit\
+          (load_expr implicit type='Any'\
+            (member_ref_expr implicit type='@lvalue Any' accessKind=read decl=SourcekittenWithComplexDependencies.(file).Class1.p6@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 direct_to_storage\
+              (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))))))\
+    (func_decl implicit 'anonname=0x7ffa61998a70' interface type='(Class1) -> (Any) -> ()' access=internal setter_for=p6\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "value" type='Any' interface type='Any'))\
+      (brace_stmt\
+        (assign_expr\
+          (member_ref_expr implicit type='@lvalue Any' accessKind=write decl=SourcekittenWithComplexDependencies.(file).Class1.p6@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 direct_to_storage\
+            (declref_expr implicit type='Class1' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))\
+          (declref_expr implicit type='Any' decl=SourcekittenWithComplexDependencies.(file).Class1.<anonymous>.value@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:24:9 function_ref=unapplied))))\
+    (func_decl implicit 'anonname=0x7ffa61998fc0' interface type='(Class1) -> (Builtin.RawPointer, inout Builtin.UnsafeValueBuffer) -> (Builtin.RawPointer, Builtin.RawPointer?)' access=internal materializeForSet_for=p6\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list\
+        (parameter "buffer" type='Builtin.RawPointer' interface type='Builtin.RawPointer')\
+        (parameter "callbackStorage" type='inout Builtin.UnsafeValueBuffer' interface type='inout Builtin.UnsafeValueBuffer' mutable)))\
+    (destructor_decl implicit "deinit" interface type='(Class1) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(Class1.Type) -> () -> Class1' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='Class1' interface type='Class1'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit))))\
+  (class_decl "ClassWithFunctions" interface type='ClassWithFunctions.Type' access=internal @_fixed_layout\
+    (func_decl "funcWithParam(item:)" interface type='(ClassWithFunctions) -> (Protocol1) -> ()' access=internal\
+      (parameter_list\
+        (parameter "self" type='ClassWithFunctions' interface type='ClassWithFunctions'))\
+      (parameter_list\
+        (parameter "item" apiName=item type='Protocol1' interface type='Protocol1'))\
+      (brace_stmt))\
+    (func_decl "funcWithReturnValue()" interface type='(ClassWithFunctions) -> () -> Protocol2' access=internal\
+      (parameter_list\
+        (parameter "self" type='ClassWithFunctions' interface type='ClassWithFunctions'))\
+      (parameter_list)\
+      (result\
+        (type_ident\
+          (component id='Protocol2' bind=SourcekittenWithComplexDependencies.(file).Protocol2@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:15:10)))\
+      (brace_stmt\
+        (return_stmt\
+          (erasure_expr implicit type='Protocol2' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 - line:32:30]\
+            (normal_conformance type=Protocol2Impl protocol=Protocol2)\
+            (call_expr type='Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 - line:32:30] nothrow arg_labels=\
+              (constructor_ref_call_expr type='() -> Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 - line:32:16] nothrow\
+                (declref_expr implicit type='(Protocol2Impl.Type) -> () -> Protocol2Impl' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 - line:32:16] decl=SourcekittenWithComplexDependencies.(file).Protocol2Impl.init()@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:16:7 function_ref=single)\
+                (type_expr type='Protocol2Impl.Type' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:16 - line:32:16] typerepr='Protocol2Impl'))\
+              (tuple_expr type='()' location=/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:29 range=[/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FirstFile.swift:32:29 - line:32:30]))))))\
+    (destructor_decl implicit "deinit" interface type='(ClassWithFunctions) -> () -> ()' access=internal @objc\
+      (parameter_list\
+        (parameter "self" type='ClassWithFunctions' interface type='ClassWithFunctions'))\
+      (brace_stmt))\
+    (constructor_decl implicit "init()" interface type='(ClassWithFunctions.Type) -> () -> ClassWithFunctions' access=internal designated\
+      (parameter_list\
+        (parameter "self" type='ClassWithFunctions' interface type='ClassWithFunctions'))\
+      (parameter_list)\
+      (brace_stmt\
+        (return_stmt implicit)))))

@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'dependency_tree'
 
 class DependencyTreeTest < Minitest::Test
-
   def test_initial_state
     tree = DependencyTree.new
     assert_equal(0, tree.links_count, 'should have no links at the start')
@@ -68,7 +67,6 @@ class DependencyTreeTest < Minitest::Test
     assert_equal(tree.type('source'), DependencyItemType::CLASS)
   end
 
-
   def test_identical_links
     tree = DependencyTree.new
     tree.add('source', 'dest')
@@ -96,4 +94,15 @@ class DependencyTreeTest < Minitest::Test
     assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::CALL)
   end
 
+  def test_dependency_tree_filter
+    tree = DependencyTree.new
+    tree.add('source', 'dest', DependencyLinkType::CALL)
+    tree.add('source', 'dest', DependencyLinkType::UNKNOWN)
+    tree.filter {|name, type| name != 'source' }
+    assert(!tree.isRegistered?('source'))
+    assert(!tree.connected?('source', 'dest'))
+    assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::UNKNOWN)
+
+
+  end
 end

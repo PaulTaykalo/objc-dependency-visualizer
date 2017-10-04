@@ -46,7 +46,6 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
     assert tree.connected?('Protocol1Impl', 'Protocol1')
     assert_equal tree.link_type('Protocol1Impl', 'Protocol1'), DependencyLinkType::INHERITANCE
     assert_equal tree.link_type('Protocol2Impl', 'Protocol2'), DependencyLinkType::INHERITANCE
-
   end
 
   def test_variables_dependency
@@ -78,20 +77,19 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
 
     assert tree.connected?('ClassWithFunctions', 'Protocol2Impl')
     assert_equal tree.link_type('ClassWithFunctions', 'Protocol2Impl'), DependencyLinkType::CALL
-
-  end  
+  end
 
   def test_generics_dependencies
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ProtocolForGeneric'))
     assert(tree.isRegistered?('ProtocolForGeneric2'))
 
-    assert_nil tree.type('<A : ProtocolForGeneric>'), "Dependency should resolve generics and not take them as declaration"
-    assert !tree.isRegistered?('<A : ProtocolForGeneric>'), "Dependency should resolve generics and not take them as declaration"
+    assert_nil tree.type('<A : ProtocolForGeneric>'), 'Dependency should resolve generics and not take them as declaration'
+    assert !tree.isRegistered?('<A : ProtocolForGeneric>'), 'Dependency should resolve generics and not take them as declaration'
 
     assert tree.connected?('GenericClass', 'ProtocolForGeneric')
     assert tree.connected?('GenericClass2', 'ProtocolForGeneric')
@@ -101,103 +99,93 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
     assert tree.connected?('GenericClass3', 'ProtocolForGeneric2')
 
     assert tree.connected?('GenericClassWithProp', 'ProtocolForGeneric')
-    
-  end  
+  end
 
   def test_generics_usages_should_not_be_registered
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ProtocolForGeneric'))
     assert(tree.isRegistered?('ProtocolForGeneric2'))
-    assert(!tree.isRegistered?('E'), "Parser should skip regisestering generic parameters")
+    assert(!tree.isRegistered?('E'), 'Parser should skip regisestering generic parameters')
 
     assert tree.connected?('GenericClassWithProp', 'ProtocolForGeneric')
-    assert !tree.connected?('GenericClassWithProp', 'E'), "Parser should skip regisestering generic parameters"
+    assert !tree.connected?('GenericClassWithProp', 'E'), 'Parser should skip regisestering generic parameters'
 
     assert(!tree.isRegistered?('GenericClassWithProp<E>'))
-
-  end  
+  end
 
   def test_generic_functions_in_protocols
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ProtocolWithGenericFunction'))
-    assert(!tree.isRegistered?('F'), "Parser should skip regisestering generic parameters")
-    assert(!tree.isRegistered?('G'), "Parser should skip regisestering generic parameters")
-    assert(!tree.isRegistered?('N'), "Parser should skip regisestering generic parameters")
+    assert(!tree.isRegistered?('F'), 'Parser should skip regisestering generic parameters')
+    assert(!tree.isRegistered?('G'), 'Parser should skip regisestering generic parameters')
+    assert(!tree.isRegistered?('N'), 'Parser should skip regisestering generic parameters')
 
     assert(tree.isRegistered?('ClassWithGenericFunction'))
-    assert(!tree.isRegistered?('J'), "Parser should skip regisestering generic parameters")
+    assert(!tree.isRegistered?('J'), 'Parser should skip regisestering generic parameters')
 
     assert(tree.isRegistered?('ProtocolWithGenericFunctionToImplement'))
-    assert(!tree.isRegistered?('K'), "Parser should skip regisestering generic parameters")
-
-  end 
+    assert(!tree.isRegistered?('K'), 'Parser should skip regisestering generic parameters')
+  end
 
   def test_generic_functions_restrictions
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ProtocolWithGenericFunction'))
-    assert tree.connected?('ProtocolWithGenericFunction', 'ProtocolForGeneric2'), "Parser should get types from generic restrictions of type `func a<P: Type>()`"
-
-  end  
+    assert tree.connected?('ProtocolWithGenericFunction', 'ProtocolForGeneric2'), 'Parser should get types from generic restrictions of type `func a<P: Type>()`'
+  end
 
   def test_extesion_dependencies
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ClassWithGenericFunction'))
     assert(tree.isRegistered?('ProtocolWithGenericFunctionToImplement'))
-    assert tree.connected?('ClassWithGenericFunction', 'ProtocolWithGenericFunctionToImplement'), "Parser should get types from extension inheritance `extension C: Type`"
-    assert(!tree.isRegistered?('M'), "Parser should skip regisestering generic parameters")
-
-  end  
+    assert tree.connected?('ClassWithGenericFunction', 'ProtocolWithGenericFunctionToImplement'), 'Parser should get types from extension inheritance `extension C: Type`'
+    assert(!tree.isRegistered?('M'), 'Parser should skip regisestering generic parameters')
+  end
 
   def test_typealias_dependencies
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ClassWithTypeaLias'))
     assert(tree.isRegistered?('ProtocolForTypeAlias'))
-    assert(!tree.isRegistered?('H'), "Parser should skip regisestering typealias parameters")
-    assert tree.connected?('ClassWithTypeaLias', 'ProtocolForTypeAlias'), "Parser should get types from typealiases `typealias H = Protocol`"
-
-  end  
+    assert(!tree.isRegistered?('H'), 'Parser should skip regisestering typealias parameters')
+    assert tree.connected?('ClassWithTypeaLias', 'ProtocolForTypeAlias'), 'Parser should get types from typealiases `typealias H = Protocol`'
+  end
 
   def test_typealias_dependencies_in_params
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/second-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
 
     assert(tree.isRegistered?('ClassWithTypeaLiasInFunctionParams'))
     assert(tree.isRegistered?('ProtocolForTypeAlias'))
-    assert(!tree.isRegistered?('I'), "Parser should skip regisestering typealias parameters")
-    assert tree.connected?('ClassWithTypeaLiasInFunctionParams', 'ProtocolForTypeAlias'), "Parser should get types from typealiases `typealias H = Protocol`"
-
-  end  
+    assert(!tree.isRegistered?('I'), 'Parser should skip regisestering typealias parameters')
+    assert tree.connected?('ClassWithTypeaLiasInFunctionParams', 'ProtocolForTypeAlias'), 'Parser should get types from typealiases `typealias H = Protocol`'
+  end
 
   def test_realwordl_example
     generator = DependencyTreeGenerator.new(
       swift_ast_dump_file: './test/fixtures/swift-dump-ast/cell-file.ast'
-      )
+    )
     tree = generator.build_dependency_tree
-    assert tree, "Parser should be able to parse real-world examples"
-  end  
-  
-
-
+    assert tree, 'Parser should be able to parse real-world examples'
+  end
 end

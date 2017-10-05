@@ -39,7 +39,7 @@ class DependencyTree
   end
 
   def connected?(source, dest)
-    @links.any? { |item| item[:source] == source && item[:dest] == dest }
+    @links.any? {|item| item[:source] == source && item[:dest] == dest}
   end
 
   def isEmpty?
@@ -65,7 +65,7 @@ class DependencyTree
     @types_registry.keys
   end
 
-def link_type(source, dest)
+  def link_type(source, dest)
     @links_registry[link_key(source, dest)] || DependencyLinkType::UNKNOWN
   end
 
@@ -75,6 +75,22 @@ def link_type(source, dest)
       l[:type] = type unless type == DependencyLinkType::UNKNOWN
       l
     end
+  end
+
+  def filter
+    @types_registry.each { |item, type|
+      next if yield item, type
+      @types_registry.delete(item)
+      @registry.delete(item)
+      selected_links = @links.select { |link| link[:source] != item && link[:dest] != item }
+      filtered_links = @links.select { |link| link[:source] == item || link[:dest] == item }
+      filtered_links.each { |link| remove_link_type(link) }
+      @links = selected_links
+    }
+  end
+
+  def remove_link_type(link)
+    @links_registry.delete(link_key(link[:source], link[:dest]))
   end
 
   private

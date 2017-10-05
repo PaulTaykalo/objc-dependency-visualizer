@@ -1,0 +1,68 @@
+(source_file
+  (import_decl 'Foundation')
+  (protocol "ProtocolForStructs" <Self : ProtocolForStructs> interface type='ProtocolForStructs.Protocol' access=internal @_fixed_layout requirement signature=<Self>)
+  (struct_decl "StructWithoutProtocols" interface type='StructWithoutProtocols.Type' access=internal @_fixed_layout
+    (constructor_decl implicit "init()" interface type='(StructWithoutProtocols.Type) -> () -> StructWithoutProtocols' access=internal designated
+      (parameter_list
+        (parameter "self" type='inout StructWithoutProtocols' interface type='inout StructWithoutProtocols' mutable))
+      (parameter_list)
+      (brace_stmt
+        (return_stmt implicit))))
+  (struct_decl "StructWithProtocol" interface type='StructWithProtocol.Type' access=internal @_fixed_layout inherits: ProtocolForStructs
+    (constructor_decl implicit "init()" interface type='(StructWithProtocol.Type) -> () -> StructWithProtocol' access=internal designated
+      (parameter_list
+        (parameter "self" type='inout StructWithProtocol' interface type='inout StructWithProtocol' mutable))
+      (parameter_list)
+      (brace_stmt
+        (return_stmt implicit))))
+  (struct_decl "StructWithOtherStructs" interface type='StructWithOtherStructs.Type' access=internal @_fixed_layout
+    (pattern_binding_decl
+      (pattern_typed type='StructWithoutProtocols'
+        (pattern_named type='StructWithoutProtocols' 'a')
+        (type_ident
+          (component id='StructWithoutProtocols' bind=SourcekittenWithComplexDependencies.(file).StructWithoutProtocols@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:12:8))))
+    (var_decl "a" type='StructWithoutProtocols' interface type='StructWithoutProtocols' access=internal let storage_kind=stored_with_trivial_accessors
+      (func_decl implicit 'anonname=0x7fbef90aad00' interface type='(StructWithOtherStructs) -> () -> StructWithoutProtocols' access=internal getter_for=a
+        (parameter_list
+          (parameter "self" type='StructWithOtherStructs' interface type='StructWithOtherStructs'))
+        (parameter_list)
+        (brace_stmt
+          (return_stmt implicit
+            (member_ref_expr implicit type='StructWithoutProtocols' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.a@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:16:9 direct_to_storage
+              (declref_expr implicit type='StructWithOtherStructs' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:16:9 function_ref=unapplied))))))
+    (func_decl implicit 'anonname=0x7fbef90aad00' interface type='(StructWithOtherStructs) -> () -> StructWithoutProtocols' access=internal getter_for=a
+      (parameter_list
+        (parameter "self" type='StructWithOtherStructs' interface type='StructWithOtherStructs'))
+      (parameter_list)
+      (brace_stmt
+        (return_stmt implicit
+          (member_ref_expr implicit type='StructWithoutProtocols' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.a@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:16:9 direct_to_storage
+            (declref_expr implicit type='StructWithOtherStructs' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:16:9 function_ref=unapplied)))))
+    (pattern_binding_decl
+      (pattern_typed type='StructWithProtocol'
+        (pattern_named type='StructWithProtocol' 'b')
+        (type_ident
+          (component id='StructWithProtocol' bind=SourcekittenWithComplexDependencies.(file).StructWithProtocol@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:13:8))))
+    (var_decl "b" type='StructWithProtocol' interface type='StructWithProtocol' access=internal let storage_kind=stored_with_trivial_accessors
+      (func_decl implicit 'anonname=0x7fbef90ab0c0' interface type='(StructWithOtherStructs) -> () -> StructWithProtocol' access=internal getter_for=b
+        (parameter_list
+          (parameter "self" type='StructWithOtherStructs' interface type='StructWithOtherStructs'))
+        (parameter_list)
+        (brace_stmt
+          (return_stmt implicit
+            (member_ref_expr implicit type='StructWithProtocol' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.b@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:17:9 direct_to_storage
+              (declref_expr implicit type='StructWithOtherStructs' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:17:9 function_ref=unapplied))))))
+    (func_decl implicit 'anonname=0x7fbef90ab0c0' interface type='(StructWithOtherStructs) -> () -> StructWithProtocol' access=internal getter_for=b
+      (parameter_list
+        (parameter "self" type='StructWithOtherStructs' interface type='StructWithOtherStructs'))
+      (parameter_list)
+      (brace_stmt
+        (return_stmt implicit
+          (member_ref_expr implicit type='StructWithProtocol' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.b@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:17:9 direct_to_storage
+            (declref_expr implicit type='StructWithOtherStructs' decl=SourcekittenWithComplexDependencies.(file).StructWithOtherStructs.<anonymous>.self@/Users/paultaykalo/Projects/objc-dependency-visualizer/test/fixtures/sourcekitten-with-properties/SourcekittenExample/FileWithStructs.swift:17:9 function_ref=unapplied)))))
+    (constructor_decl implicit "init(a:b:)" interface type='(StructWithOtherStructs.Type) -> (StructWithoutProtocols, StructWithProtocol) -> StructWithOtherStructs' access=internal designated
+      (parameter_list
+        (parameter "self" type='inout StructWithOtherStructs' interface type='inout StructWithOtherStructs' mutable))
+      (parameter_list
+        (parameter "a" apiName=a type='StructWithoutProtocols' interface type='StructWithoutProtocols')
+        (parameter "b" apiName=b type='StructWithProtocol' interface type='StructWithProtocol')))))

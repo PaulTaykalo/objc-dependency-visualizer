@@ -1,6 +1,7 @@
 require 'json'
-require 'objc_dependency_tree_generator_helper'
+require 'helpers/objc_dependency_tree_generator_helper'
 require 'rexml/document'
+require 'helpers/swift_primitives'
 
 module SKDeclarationType
   SWIFT_EXTENSION = 'source.lang.swift.decl.extension'.freeze

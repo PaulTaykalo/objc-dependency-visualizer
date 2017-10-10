@@ -29,6 +29,7 @@ class DependencyTreeGenerator
     options[:verbose] = true
     options[:ast_parsing_info] = false
     options[:ignore_primitive_types] = true
+    options[:show_inheritance_only] = false
 
     OptionParser.new do |o|
       o.separator 'General options:'
@@ -67,6 +68,10 @@ class DependencyTreeGenerator
       o.on('-q', '--ast-parsing-info', 'Show ast parsing info (for swift ast parser only)') do |_v|
         options[:ast_parsing_info] = true
       end
+
+      o.on('--inheritance-only', 'Show only inheritance dependencies') do
+        options[:show_inheritance_only] = true
+      end  
 
       o.on('-f FORMAT', 'Output format. json by default. Possible values are [dot|json-pretty|json|json-var|yaml]') do |f|
         options[:output_format] = f
@@ -133,6 +138,7 @@ class DependencyTreeGenerator
   def build_dependency_tree
     tree = generate_depdendency_tree
     tree.filter { |item, _| is_valid_dest?(item, @exclusion_prefixes) } if @options[:ignore_primitive_types]
+    tree.filter_links { |_ , _ , type | type == DependencyLinkType::INHERITANCE } if @options[:show_inheritance_only]
     tree
   end
 

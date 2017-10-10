@@ -89,6 +89,12 @@ class DependencyTree
     }
   end
 
+  def filter_links
+    @links = @links.select { |link|
+      yield link[:source], link[:dest], link_type(link[:source], link[:dest])
+    }
+  end  
+
   def remove_link_type(link)
     @links_registry.delete(link_key(link[:source], link[:dest]))
   end

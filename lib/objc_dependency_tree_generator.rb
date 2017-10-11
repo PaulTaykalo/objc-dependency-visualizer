@@ -27,7 +27,7 @@ class DependencyTreeGenerator
     options[:project_name] = ''
     options[:output_format] = 'json'
     options[:verbose] = true
-    options[:ast_parsing_info] = false
+    options[:swift_ast_show_parsed_tree] = false
     options[:ignore_primitive_types] = true
     options[:show_inheritance_only] = false
 
@@ -61,12 +61,12 @@ class DependencyTreeGenerator
         options[:sourcekitten_dependencies_file] = v
       end
 
-      o.on('-a FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
+      o.on('--ast-file FILENAME', 'Generate dependencies from the swift ast dump output (ast)') do |v|
         options[:swift_ast_dump_file] = v
       end
 
-      o.on('-q', '--ast-parsing-info', 'Show ast parsing info (for swift ast parser only)') do |_v|
-        options[:ast_parsing_info] = true
+      o.on('--ast-show-parsed-tree', 'Show ast parsing info (for swift ast parser only)') do |_v|
+        options[:swift_ast_show_parsed_tree] = true
       end
 
       o.on('--inheritance-only', 'Show only inheritance dependencies') do
@@ -91,48 +91,14 @@ class DependencyTreeGenerator
     options
   end
 
-  # @return [DependencyTree]
-  def generate_dependency_links
-    return {} if !@options || @options.empty?
-
-    links = {}
-    links_block = lambda { |source, dest|
-      if source
-        links[source] = {} unless links[source]
-      end
-      links[source][dest] = 'set up' if dest && dest && source != dest
-    }
-
-    unless @object_files_directories
-      @object_files_directories = find_project_output_directory(
-        @options[:derived_data_paths],
-        @options[:project_name],
-        @options[:derived_data_project_pattern],
-        @options[:target_names],
-        @options[:verbose]
+  def find_objecte_files_directories
+    find_project_output_directory(
+      @options[:derived_data_paths],
+      @options[:project_name],
+      @options[:derived_data_project_pattern],
+      @options[:target_names],
+      @options[:verbose]
       )
-      return {} unless @object_files_directories
-    end
-
-    unless @object_files_directories
-      puts parser.help
-      exit 1
-    end
-
-    if @options[:swift_dependencies]
-      SwiftDependenciesGenerator.new.generate_dependencies(
-        @object_files_directories,
-        &links_block
-      )
-    else
-      ObjcDependenciesGenerator.new.generate_dependencies(
-        @object_files_directories,
-        @options[:use_dwarf],
-        &links_block
-      )
-    end
-
-    links
   end
 
   def build_dependency_tree
@@ -145,28 +111,30 @@ class DependencyTreeGenerator
   def generate_depdendency_tree
     return build_sourcekitten_dependency_tree if @options[:sourcekitten_dependencies_file]
     return build_ast_dependency_tree if @options[:swift_ast_dump_file]
-    return tree_from_links
+    return tree_from_object_files_directory
   end
 
-  def tree_from_links
+  def tree_from_object_files_directory
     tree = DependencyTree.new
-    links = generate_dependency_links
 
-    links.each do |source, dest_hash|
-      tree.register(source)
-      dest_hash.each do |dest, _|
-        tree.add(source, dest)
-      end
+    return tree if !@options || @options.empty?
+    @object_files_directories ||= find_objecte_files_directories
+    return tree unless @object_files_directories
+
+    update_tree_block = lambda { |source, target| tree.add(source, target) } 
+    if @options[:swift_dependencies]
+      SwiftDependenciesGenerator.new.generate_dependencies(@object_files_directories, &update_tree_block)
+    else
+      ObjcDependenciesGenerator.new.generate_dependencies(@object_files_directories, @options[:use_dwarf], &update_tree_block)
     end
-
     tree
-  end
+  end  
 
   def build_ast_dependency_tree
     require_relative 'swift-ast-dump/swift_ast_dependencies_generator'
     generator = SwiftAstDependenciesGenerator.new(
       @options[:swift_ast_dump_file],
-      @options[:ast_parsing_info]
+      @options[:swift_ast_show_parsed_tree]
     )
     generator.generate_dependencies
   end
@@ -184,10 +152,8 @@ class DependencyTreeGenerator
     output = serializer.serialize(@options[:output_format])
 
     if @options[:target_file_name]
-      target = File.open(@options[:target_file_name], 'w')
-      target.write(output.to_s)
+      File.open(@options[:target_file_name], 'w').write(output.to_s)
     else
-
       output
     end
   end

@@ -3,9 +3,10 @@ require 'swift-ast-dump/swift_ast_parser'
 
 class SwiftAstDependenciesGenerator
 
-  def initialize(ast_file, verbose = false)
+  def initialize(ast_file, dump_parsed_tree, verbose = false)
     @ast_file = ast_file
     @verbose = verbose
+    @dump_parsed_tree = dump_parsed_tree
   end
 
   # @return [DependencyTree]
@@ -16,7 +17,7 @@ class SwiftAstDependenciesGenerator
     @generics_context = []
 
     @ast_tree = SwiftAST::Parser.new().parse_build_log_output(File.read(@ast_file))
-    @ast_tree.dump if @verbose
+    @ast_tree.dump if @dump_parsed_tree
     scan_source_files
 
     @tree

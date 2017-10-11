@@ -6,7 +6,7 @@ def find_project_output_directory(derived_data_paths, project_prefix, project_su
 
   # all we need is log
   log = lambda { |message|
-    $stderr.puts arg if verbose
+    $stderr.puts message if verbose
   }
 
   paths = []

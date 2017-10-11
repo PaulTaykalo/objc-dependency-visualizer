@@ -67,8 +67,13 @@ class SwiftAstDependenciesGenerator
 
     protocols.each { |node|
       return unless proto_name = node.parameters.first
+      generic_names = register_generic_parameters(node, proto_name) 
+      @generics_context << generic_names
+
       register_inheritance(node, proto_name) 
       register_function_parameters(node, proto_name) 
+      @generics_context.pop
+
     }
 
     structs.each { |node|
@@ -103,7 +108,7 @@ class SwiftAstDependenciesGenerator
   end
 
   def register_typealiases(node, name)
-    node.find_nodes("typealias").each { |typealias|
+    node.on_node("typealias") { |typealias|
       typealias.parameters.select { |el| el.start_with?("type=") }.each { |type_decl|
         type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
         add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
@@ -143,15 +148,16 @@ class SwiftAstDependenciesGenerator
 
 
   def register_variables(node, name)  
-    node.find_nodes("var_decl").each { |variable|
+    node.on_node("var_decl") { |variable|
       next unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
       type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
       add_tree_dependency(name, type_name, DependencyLinkType::IVAR)
     }
   end  
 
+
   def register_calls(node, name)
-    node.find_nodes("call_expr").each { |variable|
+    node.on_node("call_expr") { |variable|
       next unless type_decl = variable.parameters.find { |el| el.start_with?("type=") }
       type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
       add_tree_dependency(name, type_name, DependencyLinkType::CALL)
@@ -159,22 +165,22 @@ class SwiftAstDependenciesGenerator
   end
 
   def register_function_parameters(node, name)  
-    node.find_nodes("func_decl").each { |func_decl|
+    node.on_node("func_decl") { |func_decl|
 
       generic_names = register_generic_parameters(func_decl, name)
       @generics_context << generic_names
 
-      func_decl.find_nodes("parameter_list").each { |param_list|
-        param_list.find_nodes("parameter").each { |parameter|
+      func_decl.on_node("parameter_list") { |param_list|
+        param_list.on_node("parameter") { |parameter|
           next unless type_decl = parameter.parameters.find { |el| el.start_with?("type=") }
           type_name = type_decl.sub("type=", '')[1..-2].chomp("?")
           add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
         }
       }
 
-      func_decl.find_nodes("result").each { |result_decl|
-        result_decl.find_nodes("type_ident").each { |type_id|
-          type_id.find_nodes("component").each { |comp|
+      func_decl.on_node("result") { |result_decl|
+        result_decl.on_node("type_ident") { |type_id|
+          type_id.on_node("component") { |comp|
             next unless type_decl = comp.parameters.find { |el| el.start_with?("id=") }
             type_name = type_decl.sub("id=", '')[1..-2].chomp("?")
             add_tree_dependency(name, type_name, DependencyLinkType::PARAMETER)
@@ -204,8 +210,6 @@ class SwiftAstDependenciesGenerator
     return unless from
     @tree.add(from, to, type)
   end
-
-
 
 
 end

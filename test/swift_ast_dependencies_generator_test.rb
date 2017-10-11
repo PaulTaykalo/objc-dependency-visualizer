@@ -187,6 +187,9 @@ class SwiftAstDependenciesGeneratorTest < Minitest::Test
     )
     tree = generator.build_dependency_tree
     assert tree, 'Parser should be able to parse real-world examples'
+    assert tree.isRegistered?('HMSegmentedControl'), 'Parser should be able to get complext dependencies'
+    assert tree.isRegistered?('UIColor'), 'Parser should be able to get complext dependencies like Color'
+    
   end
 
   def test_ignoring_primitive_types

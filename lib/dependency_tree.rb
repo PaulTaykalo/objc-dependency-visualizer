@@ -96,12 +96,15 @@ class DependencyTree
   end  
 
   def remove_link_type(link)
-    @links_registry.delete(link_key(link[:source], link[:dest]))
+    source, dest = link[:source], link[:dest]
+    return unless source && dest
+    @links_registry.delete(link_key(source, dest))
   end
 
   private
 
   def register_link(source, dest, type)
+    return unless source && dest
     link_key = link_key(source, dest)
     registered_link = @links_registry[link_key]
     if registered_link.nil? || registered_link == DependencyLinkType::UNKNOWN

@@ -94,6 +94,21 @@ class DependencyTreeTest < Minitest::Test
     assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::CALL)
   end
 
+  def test_adding_link_with_nil_values
+    tree = DependencyTree.new
+    tree.add(nil, 'source')
+    tree.add('dest', nil)
+    tree.add(nil, nil)
+    assert(tree.isRegistered?('source'))
+    assert(tree.isRegistered?('dest'))
+  end
+
+  def test_removing_empty_links
+    tree = DependencyTree.new
+    tree.remove_link_type({})
+    
+  end
+
   def test_dependency_tree_filter
     tree = DependencyTree.new
     tree.add('source', 'dest', DependencyLinkType::CALL)
@@ -102,7 +117,5 @@ class DependencyTreeTest < Minitest::Test
     assert(!tree.isRegistered?('source'))
     assert(!tree.connected?('source', 'dest'))
     assert_equal(tree.link_type('source', 'dest'), DependencyLinkType::UNKNOWN)
-
-
   end
 end

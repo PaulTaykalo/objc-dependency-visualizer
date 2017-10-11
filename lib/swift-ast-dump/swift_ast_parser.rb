@@ -204,6 +204,14 @@ module SwiftAST
       }
       found_nodes
     end  
+
+    def on_node(type, &block)
+      @children.each { |child|
+        yield child if child.name == type
+        child.on_node(type, &block)
+      }
+    end
+
   end      
 
 end

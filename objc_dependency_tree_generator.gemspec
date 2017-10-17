@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'objc-dependency-tree-generator'
-  s.version     = '0.0.8'
-  s.date        = '2016-04-05'
+  s.version     = '0.1.0'
+  s.date        = '2017-10-17'
   s.summary     = 'Objective-C and Swift dependency tree generator'
   s.description = <<-THEEND
 Tool that allows to generate Objective-C and Swift dependency tree from object files
@@ -10,11 +10,7 @@ objc_dependency_tree_generator -h
 THEEND
   s.authors     = ['Paul Taykalo']
   s.email       = 'tt.kilew@gmail.com'
-  s.files       = ['lib/objc_dependency_tree_generator.rb',
-                   'lib/objc_dependency_tree_generator_helper.rb',
-                   'lib/objc_dependencies_generator.rb',
-                   'lib/swift_dependencies_generator.rb'
-  ]
+  s.files       = Dir['lib/**/*.rb']
   s.homepage    =
       'https://github.com/PaulTaykalo/objc-dependency-visualizer'
   s.license       = 'MIT'

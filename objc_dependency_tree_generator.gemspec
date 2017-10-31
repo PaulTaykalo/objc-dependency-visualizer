@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'objc-dependency-tree-generator'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2017-10-17'
   s.summary     = 'Objective-C and Swift dependency tree generator'
   s.description = <<-THEEND

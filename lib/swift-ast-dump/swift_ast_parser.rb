@@ -1,4 +1,5 @@
 module SwiftAST
+  autoload :StringScanner, 'strscan'
   class Parser 
     def parse(string)
       @scanner = StringScanner.new(string)

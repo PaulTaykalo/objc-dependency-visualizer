@@ -204,6 +204,19 @@ class SwiftAstParserTest < Minitest::Test
     assert_equal ast.children.count, 2
   end
 
+  def test_enum_case_usage
+    source = %{
+      (pattern_enum_element type='(CameraAuthorizationStatus)' (CameraAuthorizationStatus).authorized)
+    }
+    ast = SwiftAST::Parser.new.parse(source)
+    assert_equal ast.name, 'pattern_enum_element'
+    assert_equal ast.parameters, [
+      "type='(CameraAuthorizationStatus)'",
+      "(CameraAuthorizationStatus).authorized"
+    ]
+    
+  end
+
   def test_unlcosed_elements
     source = %{
 (source_file\

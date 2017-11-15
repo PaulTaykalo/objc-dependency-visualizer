@@ -118,6 +118,11 @@ module SwiftAST
         #in some cases this can be last char, just because we can end up with a=sdsd.function.< 
         result += @scanner.scan_until(/>/) + (scan_parameter?(is_parsing_rvalue) || "") 
       when "("
+        #rare case for enums in type (EnumType).enumValue
+        if !prefix && @scanner.check(/\(\w+\)\.\w+/)
+          return @scanner.scan(/\(\w+\)\.\w+/)
+        end  
+
         return nil if !prefix && !is_parsing_rvalue
         result = (prefix || "") + @scanner.scan_until(/\)/) + (scan_parameter?(is_parsing_rvalue) || "")
        when "["

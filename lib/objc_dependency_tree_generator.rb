@@ -40,7 +40,7 @@ class DependencyTreeGenerator
         options[:derived_data_paths] = [derived_data]
         options[:derived_data_project_pattern] = '*'
       end
-      o.on('-output PROJECT_NAME', 'Search project .o files by specified project name') do |project_name|
+      o.on('-s PROJECT_NAME', 'Search project .o files by specified project name') do |project_name|
         options[:project_name] = project_name
       end
       o.on('-t TARGET_NAME', '--target', 'Target of project', Array) do |target_name|

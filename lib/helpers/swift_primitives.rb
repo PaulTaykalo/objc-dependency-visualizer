@@ -2,6 +2,19 @@
 class SwiftPrimitives
   @@primitive_swift_types =
     Set.new([
+      # 'BaseViewController',
+      #  'View',
+      #  'ViewSetupable',
+      # 'FlowController',
+      # 'ApplicationFactory',
+      # 'ApiClient',
+      # 'DeliveryOrder',
+      # 'MBProgressHUD',
+      # 'Order',
+       #Others:
+      '_findStringSwitchCase',
+      'DispatchQueue',
+      'URLComponents',
       'BOOL',
       'alignofValue',
       'anyGenerator',
@@ -107,6 +120,7 @@ class SwiftPrimitives
       'ClosedInterval',
       'CollectionOfOne',
       'ContiguousArray',
+       'Codable',
       'Data',
       'Date',
       'Dictionary',
@@ -145,6 +159,7 @@ class SwiftPrimitives
       'LazyMapGenerator',
       'LazyMapSequence',
       'LazySequence',
+      'Locale',
       'ManagedBufferPointer',
       'Mirror',
       'MutableSlice',
@@ -249,7 +264,11 @@ class SwiftPrimitives
       'TimeInterval',
       'Timer',
       'URLRequest',
-      'URLCache'      
+      'URLCache',
+      #Additional System ones:
+       'Decodable',
+      'CodingKey',
+      'Decoder'
     ]).freeze
 
   def self.primitive_types

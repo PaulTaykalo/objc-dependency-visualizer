@@ -55,7 +55,7 @@ class TreeSerializer
     indent = "\t"
     s = "digraph dependencies {\n#{indent}node [fontname=monospace, fontsize=9, shape=box, style=rounded]\n"
     object_to_serialize[:links].each do |link|
-      s += "#{indent}\"#{link['source']}\" -> \"#{link['dest']}\"\n"
+      s += "#{indent}\"#{link[:source]}\" -> \"#{link[:dest]}\"\n"
     end
     s += "}\n"
     s

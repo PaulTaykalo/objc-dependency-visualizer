@@ -29,7 +29,7 @@ open index.html
 Examples are [here](https://github.com/PaulTaykalo/objc-dependency-visualizer/wiki/Usage-examples)
 
 ### Tell the world about the awesomeness of your project structure
-Share image to the Twitter with [#objcdependencyvisualizer](https://twitter.com/search/realtime?q=%23objcdependencyvisualizer) hashtag
+Share image to the Twitter with [#objcdependencyvisualizer](https://twitter.com/search?q=%23objcdependencyvisualizer) hashtag
 
 
 ### Hard way - or "I want to read what I'm doing!"
